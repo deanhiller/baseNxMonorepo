@@ -1,0 +1,13 @@
+{
+    "name": "@myorg/apis",
+    "version": "0.0.1",
+    "private": true,
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@webpieces/http-api": "0.2.93",
+        "@myorg/root-api-util": "0.0.1",
+        "tslib": "2.8.1"
+    }
+}

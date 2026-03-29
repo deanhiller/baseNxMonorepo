@@ -1,0 +1,107 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+        "@nx/js:tsc": {
+            "cache": true,
+            "dependsOn": [
+                "validate-no-file-import-cycles",
+                "architecture:validate-complete",
+                "^build"
+            ],
+            "inputs": ["default", "^default"]
+        },
+        "@angular/build:application": {
+            "cache": true,
+            "dependsOn": [
+                "validate-no-file-import-cycles",
+                "architecture:validate-complete",
+                "^build"
+            ],
+            "inputs": ["default", "^default"]
+        },
+        "lint": {
+            "cache": true,
+            "inputs": [
+                "default",
+                "{workspaceRoot}/eslint.config.mjs",
+                "{workspaceRoot}/eslint.webpieces.config.mjs"
+            ]
+        },
+        "validate-code": {
+            "options": {
+                "methodMaxLimit": {
+                    "limit": 80,
+                    "mode": "NEW_AND_MODIFIED_METHODS",
+                    "disableAllowed": false,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "fileMaxLimit": {
+                    "limit": 902,
+                    "mode": "MODIFIED_FILES",
+                    "disableAllowed": false,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "requireReturnType": {
+                    "mode": "NEW_AND_MODIFIED_METHODS",
+                    "disableAllowed": false,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "noInlineTypeLiterals": {
+                    "mode": "NEW_AND_MODIFIED_METHODS",
+                    "disableAllowed": false,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "noAnyUnknown": {
+                    "mode": "MODIFIED_CODE",
+                    "disableAllowed": true,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "validateDtos": {
+                    "mode": "OFF",
+                    "disableAllowed": false,
+                    "prismaSchemaPath": "libraries/prisma-schema/prisma/schema.prisma",
+                    "dtoSourcePaths": ["libraries/apis/src"],
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "prismaConverter": {
+                    "mode": "OFF",
+                    "disableAllowed": true,
+                    "schemaPath": "libraries/prisma-schema/prisma/schema.prisma",
+                    "convertersPaths": ["services/server/src/converters"],
+                    "enforcePaths": ["services/server/src/"],
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "noDestructure": {
+                    "mode": "MODIFIED_CODE",
+                    "disableAllowed": false,
+                    "ignoreModifiedUntilEpoch": 1773155201
+                },
+                "noDirectApiInResolver": {
+                    "mode": "OFF",
+                    "disableAllowed": true,
+                    "enforcePaths": ["services/client/src/"],
+                    "ignoreModifiedUntilEpoch": 1773155201
+                }
+            }
+        }
+    },
+    "plugins": [
+        {
+            "plugin": "@nx/eslint/plugin",
+            "options": {
+                "targetName": "lint",
+                "useFlatConfig": true
+            }
+        },
+        {
+            "plugin": "@nx/jest/plugin",
+            "options": {
+                "targetName": "test"
+            }
+        },
+        {
+            "plugin": "@webpieces/dev-config",
+            "options": {}
+        }
+    ]
+}

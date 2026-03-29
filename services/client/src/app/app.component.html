@@ -1,0 +1,21 @@
+<div>
+    <h1>{{ title }}</h1>
+
+    <p><strong>API Base URL:</strong> {{ apiBaseUrl }}</p>
+
+    <button (click)="callGreetApi()" [disabled]="loading">Call Greet API</button>
+
+    <p *ngIf="loading">Loading...</p>
+
+    <div *ngIf="error">
+        <h3>Error:</h3>
+        <pre>{{ error }}</pre>
+    </div>
+
+    <div *ngIf="greetResponse">
+        <h3>Response:</h3>
+        <pre>{{ greetResponse | json }}</pre>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

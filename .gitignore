@@ -1,0 +1,36 @@
+.nx-cache*
+.worktrees/
+.env
+
+.angular
+
+**/src/generated
+dist/
+tmp/
+
+.bin/
+
+nxrepo
+.idea
+*/**/build
+*/**/node_modules
+
+# Keep environment variables out of version control (aside from templates)
+.env.local
+.env.*.local
+
+**/.DS_Store
+
+#python
+**/__pycache__
+*.py[cod]
+**/.venv
+
+node_modules
+.nx/cache
+.nx/workspace-data
+.rollup.cache
+static/
+
+# Brainstorm session artifacts
+.superpowers/

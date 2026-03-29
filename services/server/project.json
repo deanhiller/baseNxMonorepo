@@ -1,0 +1,29 @@
+{
+    "name": "server",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "services/server/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/services/server",
+                "main": "services/server/src/server.ts",
+                "tsConfig": "services/server/tsconfig.app.json",
+                "assets": []
+            },
+            "dependsOn": ["apis:build"]
+        },
+        "serve": {
+            "continuous": true,
+            "executor": "@nx/js:node",
+            "dependsOn": ["build"],
+            "options": {
+                "buildTarget": "server:build",
+                "runBuildTargetDependencies": false
+            }
+        }
+    },
+    "tags": []
+}

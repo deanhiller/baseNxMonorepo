@@ -1,0 +1,10 @@
+{
+    "name": "@myorg/client",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@myorg/apis": "0.0.1",
+        "@webpieces/http-client": "0.2.93",
+        "@webpieces/core-util": "0.2.93"
+    }
+}

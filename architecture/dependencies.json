@@ -1,0 +1,32 @@
+{
+    "apis": {
+        "level": 1,
+        "dependsOn": [
+            "root-api-util"
+        ]
+    },
+    "architecture": {
+        "level": 0,
+        "dependsOn": []
+    },
+    "client": {
+        "level": 2,
+        "dependsOn": [
+            "apis"
+        ]
+    },
+    "monorepo": {
+        "level": 0,
+        "dependsOn": []
+    },
+    "root-api-util": {
+        "level": 0,
+        "dependsOn": []
+    },
+    "server": {
+        "level": 2,
+        "dependsOn": [
+            "apis"
+        ]
+    }
+}

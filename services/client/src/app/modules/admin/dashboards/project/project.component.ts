@@ -15,6 +15,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
+import { GreetResponse } from '@myorg/apis';
+import { GreetService } from 'app/modules/admin/dashboards/project/greet.service';
 import { ProjectService } from 'app/modules/admin/dashboards/project/project.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
@@ -47,6 +49,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     chartMonthlyExpenses: ApexOptions = {};
     chartYearlyExpenses: ApexOptions = {};
     data: any;
+    greetResponse: GreetResponse | null = null;
     selectedProject: string = 'ACME Corp. Backend App';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -55,6 +58,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _projectService: ProjectService,
+        private _greetService: GreetService,
         private _router: Router
     ) {}
 
@@ -66,6 +70,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // Get the greeting from the server (data loaded by resolver)
+        this._greetService.greetResponse$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((response: GreetResponse | null) => {
+                this.greetResponse = response;
+            });
+
         // Get the data
         this._projectService.data$
             .pipe(takeUntil(this._unsubscribeAll))

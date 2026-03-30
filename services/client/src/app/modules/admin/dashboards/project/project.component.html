@@ -18,7 +18,7 @@
                             <div
                                 class="truncate text-2xl font-semibold leading-7 tracking-tight md:text-5xl md:leading-snug"
                             >
-                                {{ t('welcome-back') }}, Brian!
+                                {{ greetResponse?.greeting || t('welcome-back') + ', Brian!' }}
                             </div>
                         </ng-container>
                         <div class="flex items-center">

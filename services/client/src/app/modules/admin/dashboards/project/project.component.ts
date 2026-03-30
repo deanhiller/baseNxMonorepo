@@ -193,7 +193,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     filter: {
                         type: 'darken',
                         value: 0.75,
-                    } as any,
+                    },
                 },
             },
             stroke: {
@@ -263,7 +263,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     filter: {
                         type: 'darken',
                         value: 0.75,
-                    } as any,
+                    },
                 },
             },
             stroke: {

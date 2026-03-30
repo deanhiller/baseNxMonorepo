@@ -11,12 +11,15 @@ import {
 } from '@angular/router';
 import { provideFuse } from '@fuse';
 import { TranslocoService, provideTransloco } from '@ngneat/transloco';
+import { ExampleApi } from '@myorg/apis';
+import { ClientConfig, createApiClient } from '@webpieces/http-client';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+import { EnvironmentConfig } from '../services/EnvironmentConfig';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -79,6 +82,22 @@ export const appConfig: ApplicationConfig = {
                 return () => firstValueFrom(translocoService.load(defaultLang));
             },
             multi: true,
+        },
+
+        // Webpieces API Client
+        {
+            provide: ClientConfig,
+            useFactory: (envConfig: EnvironmentConfig) => {
+                return new ClientConfig(envConfig.apiBaseUrl());
+            },
+            deps: [EnvironmentConfig],
+        },
+        {
+            provide: ExampleApi,
+            useFactory: (config: ClientConfig) => {
+                return createApiClient(ExampleApi, config);
+            },
+            deps: [ClientConfig],
         },
 
         // Fuse

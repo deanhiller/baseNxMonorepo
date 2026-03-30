@@ -50,7 +50,8 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
     opened: boolean = false;
     selectedChat: Chat;
     private _mutationObserver: MutationObserver;
-    private _scrollStrategy!: ScrollStrategy;
+    private _scrollStrategy: ScrollStrategy =
+        this._scrollStrategyOptions.block();
     private _overlay: HTMLElement;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -64,9 +65,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
         private _ngZone: NgZone,
         private _quickChatService: QuickChatService,
         private _scrollStrategyOptions: ScrollStrategyOptions
-    ) {
-        this._scrollStrategy = this._scrollStrategyOptions.block();
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Decorated methods

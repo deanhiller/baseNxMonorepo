@@ -106,7 +106,7 @@ export class NotesListComponent implements OnInit, OnDestroy {
             distinctUntilChanged(),
             map(([notes, filter, searchQuery]) => {
                 if (!notes || !notes.length) {
-                    return [];
+                    return;
                 }
 
                 // Store the filtered notes

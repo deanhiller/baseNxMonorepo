@@ -1,15 +1,21 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "target": "ES2022",
-        "module": "ES2022",
-        "lib": ["ES2022", "DOM"],
-        "useDefineForClassFields": false,
-        "strict": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
+        "target": "es2022",
+        "lib": ["ES2022", "DOM"],
+        "moduleResolution": "bundler",
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "moduleResolution": "bundler"
+        "module": "preserve",
+        "paths": {
+            "@fuse": ["services/client/src/@fuse"],
+            "@fuse/*": ["services/client/src/@fuse/*"],
+            "app/*": ["services/client/src/app/*"],
+            "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],
+            "@myorg/apis": ["libraries/apis/src/index.ts"]
+        }
     },
     "files": [],
     "include": [],

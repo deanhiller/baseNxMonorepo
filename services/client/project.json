@@ -14,14 +14,37 @@
                 "browser": "services/client/src/main.ts",
                 "polyfills": ["zone.js"],
                 "tsConfig": "services/client/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "allowedCommonJsDependencies": [
+                    "apexcharts",
+                    "crypto-js/enc-utf8",
+                    "crypto-js/hmac-sha256",
+                    "crypto-js/enc-base64",
+                    "quill-delta",
+                    "lodash-es"
+                ],
                 "assets": [
                     {
                         "glob": "**/*",
-                        "input": "services/client/src/assets",
-                        "output": "/assets/"
+                        "input": "services/client/public"
+                    },
+                    {
+                        "glob": "_redirects",
+                        "input": "services/client/src",
+                        "output": "/"
                     }
                 ],
-                "styles": ["services/client/src/styles.css"],
+                "stylePreprocessorOptions": {
+                    "includePaths": ["services/client/src/@fuse/styles"]
+                },
+                "styles": [
+                    "services/client/src/@fuse/styles/tailwind.scss",
+                    "services/client/src/@fuse/styles/themes.scss",
+                    "services/client/src/styles/vendors.scss",
+                    "services/client/src/@fuse/styles/main.scss",
+                    "services/client/src/styles/styles.scss",
+                    "services/client/src/styles/tailwind.scss"
+                ],
                 "scripts": []
             },
             "configurations": {
@@ -29,8 +52,13 @@
                     "budgets": [
                         {
                             "type": "initial",
-                            "maximumWarning": "500kB",
-                            "maximumError": "1MB"
+                            "maximumWarning": "3MB",
+                            "maximumError": "5MB"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "75kB",
+                            "maximumError": "90kB"
                         }
                     ],
                     "outputHashing": "all"

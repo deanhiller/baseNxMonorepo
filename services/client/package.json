@@ -4,7 +4,28 @@
     "private": true,
     "dependencies": {
         "@myorg/apis": "0.0.1",
+        "@ngneat/transloco": "6.0.4",
+        "@webpieces/core-util": "0.2.93",
         "@webpieces/http-client": "0.2.93",
-        "@webpieces/core-util": "0.2.93"
+        "apexcharts": "3.53.0",
+        "crypto-js": "4.2.0",
+        "highlight.js": "11.9.0",
+        "lodash-es": "4.17.21",
+        "luxon": "3.4.4",
+        "ng-apexcharts": "1.13.0",
+        "ngx-quill": "28.0.2",
+        "perfect-scrollbar": "1.5.5",
+        "quill": "2.0.2"
+    },
+    "devDependencies": {
+        "@tailwindcss/typography": "0.5.13",
+        "@types/crypto-js": "4.2.2",
+        "@types/lodash-es": "4.17.12",
+        "@types/luxon": "3.4.2",
+        "autoprefixer": "10.4.19",
+        "chroma-js": "2.4.2",
+        "lodash": "^4.17.23",
+        "postcss": "8.4.38",
+        "tailwindcss": "3.4.3"
     }
 }

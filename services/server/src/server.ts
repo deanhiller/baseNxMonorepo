@@ -18,7 +18,7 @@ async function main(): Promise<void> {
             process.on('SIGTERM', () => resolve(undefined));
             process.on('SIGINT', () => resolve(undefined));
         });
-    } catch (err: any) {
+    } catch (err: unknown) {
         const error = toError(err);
         console.error('[Server] Startup error:', error);
         process.exit(1);

@@ -33,35 +33,35 @@
                     "limit": 80,
                     "mode": "NEW_AND_MODIFIED_METHODS",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "fileMaxLimit": {
                     "limit": 902,
                     "mode": "MODIFIED_FILES",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "requireReturnType": {
                     "mode": "NEW_AND_MODIFIED_METHODS",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "noInlineTypeLiterals": {
                     "mode": "NEW_AND_MODIFIED_METHODS",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "noAnyUnknown": {
                     "mode": "MODIFIED_CODE",
                     "disableAllowed": true,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "validateDtos": {
                     "mode": "OFF",
                     "disableAllowed": false,
                     "prismaSchemaPath": "libraries/prisma-schema/prisma/schema.prisma",
                     "dtoSourcePaths": ["libraries/apis/src"],
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "prismaConverter": {
                     "mode": "OFF",
@@ -69,18 +69,18 @@
                     "schemaPath": "libraries/prisma-schema/prisma/schema.prisma",
                     "convertersPaths": ["services/server/src/converters"],
                     "enforcePaths": ["services/server/src/"],
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "noDestructure": {
                     "mode": "MODIFIED_CODE",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 },
                 "noDirectApiInResolver": {
                     "mode": "OFF",
                     "disableAllowed": true,
                     "enforcePaths": ["services/client/src/"],
-                    "ignoreModifiedUntilEpoch": 1773155201
+                    "ignoreModifiedUntilEpoch": 1774950510
                 }
             }
         }

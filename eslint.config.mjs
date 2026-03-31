@@ -8,6 +8,17 @@ import webpiecesConfig from './eslint.webpieces.config.mjs';
 import noJsonPropertyPrimitiveType from './tools/eslint-rules/no-json-property-primitive-type.mjs';
 
 export default [
+    // Ignore vendored Fuse Angular template code (third-party, not our code)
+    {
+        ignores: [
+            'services/client/src/@fuse/**',
+            'services/client/src/app/mock-api/**',
+            'services/client/src/app/core/**',
+            'services/client/src/app/layout/**',
+            'services/client/src/app/modules/admin/**',
+        ],
+    },
+
     // WebPieces ESLint rules (no-unmanaged-exceptions, catch-error-pattern, etc.)
     ...webpiecesConfig,
     // TypeScript files configuration

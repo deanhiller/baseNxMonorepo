@@ -9,11 +9,11 @@ import angularConfig from './eslint.webpieces-angular.config.mjs';
 
 export default [
     // Ignore vendored Fuse Angular template code (third-party, not our code)
+    // TODO: Removing these ignores one-by-one as we fix violations (see PLAN-eslint-fuse-cleanup.md)
     {
         ignores: [
             'services/client/src/@fuse/**',
             'services/client/src/app/mock-api/**',
-            'services/client/src/app/core/**',
             'services/client/src/app/layout/**',
             'services/client/src/app/modules/admin/**',
         ],

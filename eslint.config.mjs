@@ -5,7 +5,7 @@ import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
 import webpiecesConfig from './eslint.webpieces.config.mjs';
-import noJsonPropertyPrimitiveType from './tools/eslint-rules/no-json-property-primitive-type.mjs';
+import angularConfig from './eslint.webpieces-angular.config.mjs';
 
 export default [
     // Ignore vendored Fuse Angular template code (third-party, not our code)
@@ -21,6 +21,8 @@ export default [
 
     // WebPieces ESLint rules (no-unmanaged-exceptions, catch-error-pattern, etc.)
     ...webpiecesConfig,
+    // Angular-specific rules (template rules, no-console, signal bans, etc.)
+    ...angularConfig,
     // TypeScript files configuration
     {
         files: ['**/*.ts', '**/*.tsx'],
@@ -41,21 +43,6 @@ export default [
         rules: {
             // TypeScript rules
             '@typescript-eslint/no-inferrable-types': 'off',
-        },
-    },
-
-    // Ban @JsonProperty({ type: String/Number/Boolean }) — breaks production deserialization
-    {
-        files: ['**/*.ts'],
-        plugins: {
-            'custom-json-property': {
-                rules: {
-                    'no-primitive-type': noJsonPropertyPrimitiveType,
-                },
-            },
-        },
-        rules: {
-            'custom-json-property/no-primitive-type': 'error',
         },
     },
 

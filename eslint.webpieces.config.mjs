@@ -24,6 +24,7 @@ export default [
             '@webpieces/max-method-lines': ['error', { max: 150 }],
             '@webpieces/max-file-lines': ['error', { max: 901 }],
             '@webpieces/enforce-architecture': 'error',
+            '@webpieces/no-json-property-primitive-type': 'error',
         },
     },
 ];

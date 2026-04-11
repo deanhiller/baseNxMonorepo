@@ -6,8 +6,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.14",
-    "@angular-eslint/eslint-plugin-template": "^20.7.0",
-    "@angular-eslint/template-parser": "^20.7.0",
+    "@angular-eslint/eslint-plugin-template": "20.7.0",
+    "@angular-eslint/template-parser": "20.7.0",
     "@angular/animations": "19.2.14",
     "@angular/build": "19.2.14",
     "@angular/cdk": "19.2.14",

@@ -130,21 +130,14 @@ const theming = plugin.withOptions(
                 '../../styles/user-themes.scss'
             );
 
-            /* Read the file and get its data */
-            let data;
-            try {
-                data = fs.readFileSync(filename, { encoding: 'utf8' });
-            } catch (err) {
-                console.error(err);
-            }
+            /* Read the file and get its data (may not exist on first run) */
+            const data = fs.existsSync(filename)
+                ? fs.readFileSync(filename, { encoding: 'utf8' })
+                : null;
 
             /* Write the file if the map has been changed */
             if (data !== sassMap) {
-                try {
-                    fs.writeFileSync(filename, sassMap, { encoding: 'utf8' });
-                } catch (err) {
-                    console.error(err);
-                }
+                fs.writeFileSync(filename, sassMap, { encoding: 'utf8' });
             }
 
             /**

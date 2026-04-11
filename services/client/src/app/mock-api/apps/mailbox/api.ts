@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-method-lines -- vendored Fuse mock-api; size cleanup deferred */
 import { Injectable } from '@angular/core';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
 import {

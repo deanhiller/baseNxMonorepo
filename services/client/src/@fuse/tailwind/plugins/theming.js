@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-method-lines -- vendored Fuse Tailwind plugin; size cleanup deferred */
 const chroma = require('chroma-js');
 const _ = require('lodash');
 const fs = require('fs');

@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-file-lines -- vendored Fuse demo routes; size cleanup deferred */
 import { Routes } from '@angular/router';
 import { CardedFullwidthContentScrollComponent } from 'app/modules/admin/ui/page-layouts/carded/fullwidth/content-scroll/fullwidth.component';
 import { CardedFullwidthNormalScrollComponent } from 'app/modules/admin/ui/page-layouts/carded/fullwidth/normal-scroll/fullwidth.component';

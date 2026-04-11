@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-file-lines -- vendored Fuse mock-api fixture; size cleanup deferred */
 import { DateTime } from 'luxon';
 
 /* Get the current instant */

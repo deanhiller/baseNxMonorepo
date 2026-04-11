@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-method-lines -- vendored Fuse demo dashboard; size cleanup deferred */
 import { CurrencyPipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,

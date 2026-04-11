@@ -1,3 +1,4 @@
+/* eslint-disable @webpieces/max-method-lines -- vendored Fuse demo component; size cleanup deferred */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

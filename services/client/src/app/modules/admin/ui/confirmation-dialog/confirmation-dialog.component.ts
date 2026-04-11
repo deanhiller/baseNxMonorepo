@@ -100,8 +100,8 @@ export class ConfirmationDialogComponent implements OnInit {
         );
 
         // Subscribe to afterClosed from the dialog reference
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
+        dialogRef.afterClosed().subscribe(() => {
+            // Dialog closed
         });
     }
 }

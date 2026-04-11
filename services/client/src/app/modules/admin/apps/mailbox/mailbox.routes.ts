@@ -199,8 +199,6 @@ const mailsResolver = (
 
         // Error here means the requested page is not available
         catchError((error) => {
-            // Log the error
-            console.error(error.message);
 
             // Get the parent url and append the last possible page number to the parent url
             const url =
@@ -235,8 +233,6 @@ const mailResolver = (
         // not available on the requested page or not
         // available at all
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');

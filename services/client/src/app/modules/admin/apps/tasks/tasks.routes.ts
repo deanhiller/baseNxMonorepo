@@ -27,8 +27,6 @@ const taskResolver = (
     return tasksService.getTaskById(route.paramMap.get('id')).pipe(
         // Error here means the requested task is not available
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');

@@ -28,8 +28,6 @@ const boardResolver = (
     return scrumboardService.getBoard(route.paramMap.get('boardId')).pipe(
         // Error here means the requested board is not available
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');
@@ -59,8 +57,6 @@ const cardResolver = (
     return scrumboardService.getCard(route.paramMap.get('cardId')).pipe(
         // Error here means the requested card is not available
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');

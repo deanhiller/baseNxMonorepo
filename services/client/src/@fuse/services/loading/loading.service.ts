@@ -91,8 +91,7 @@ export class FuseLoadingService {
      */
     setProgress(value: number): void {
         if (value < 0 || value > 100) {
-            console.error('Progress value must be between 0 and 100!');
-            return;
+            throw new Error('Progress value must be between 0 and 100!');
         }
 
         this._progress$.next(value);
@@ -107,8 +106,7 @@ export class FuseLoadingService {
     _setLoadingStatus(status: boolean, url: string): void {
         // Return if the url was not provided
         if (!url) {
-            console.error('The request URL must be provided!');
-            return;
+            throw new Error('The request URL must be provided!');
         }
 
         if (status === true) {

@@ -84,7 +84,6 @@ export class HelpCenterSupportComponent implements OnInit {
      */
     sendForm(): void {
         // Send your form here using an http request
-        console.log('Your message has been sent!');
 
         // Show a success message (it can also be an error message)
         // and remove it after 5 seconds

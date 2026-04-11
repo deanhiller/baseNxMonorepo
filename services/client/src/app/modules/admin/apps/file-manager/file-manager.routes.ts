@@ -27,8 +27,6 @@ const folderResolver = (
     return fileManagerService.getItems(route.paramMap.get('folderId')).pipe(
         // Error here means the requested folder is not available
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');
@@ -58,8 +56,6 @@ const itemResolver = (
     return fileManagerService.getItemById(route.paramMap.get('id')).pipe(
         // Error here means the requested item is not available
         catchError((error) => {
-            // Log the error
-            console.error(error);
 
             // Get the parent url
             const parentUrl = state.url.split('/').slice(0, -1).join('/');

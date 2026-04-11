@@ -110,8 +110,8 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
         // Open the dialog
         const dialogRef = this._matDialog.open(MailboxComposeComponent);
 
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
+        dialogRef.afterClosed().subscribe(() => {
+            // Dialog closed
         });
     }
 

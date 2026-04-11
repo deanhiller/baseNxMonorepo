@@ -69,9 +69,7 @@ export class FuseNavigationService {
     deleteNavigation(key: string): void {
         // Check if the navigation exists
         if (!this._navigationStore.has(key)) {
-            console.warn(
-                `Navigation with the key '${key}' does not exist in the store.`
-            );
+            // Key not found — delete is a no-op
         }
 
         // Delete from the storage

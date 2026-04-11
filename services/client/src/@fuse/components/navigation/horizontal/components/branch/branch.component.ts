@@ -19,6 +19,7 @@ import { FuseHorizontalNavigationDividerItemComponent } from '@fuse/components/n
 import { FuseHorizontalNavigationComponent } from '@fuse/components/navigation/horizontal/horizontal.component';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -35,6 +36,7 @@ import { Subject, takeUntil } from 'rxjs';
         FuseHorizontalNavigationDividerItemComponent,
         MatTooltipModule,
         MatIconModule,
+        TypedTemplateOutletDirective,
     ],
 })
 export class FuseHorizontalNavigationBranchItemComponent
@@ -51,6 +53,10 @@ export class FuseHorizontalNavigationBranchItemComponent
     @Input() item: FuseNavigationItem;
     @Input() name: string;
     @ViewChild('matMenu', { static: true }) matMenu: MatMenu;
+
+    // webpieces-disable no-any-unknown -- FuseNavigationItem is an interface; Object is a valid runtime Constructor and the cast narrows let-item to FuseNavigationItem for template type-checking
+    protected readonly FuseNavigationItemCtor =
+        Object as unknown as new () => FuseNavigationItem;
 
     private _fuseHorizontalNavigationComponent: FuseHorizontalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();

@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMasonryComponent } from '@fuse/components/masonry';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { NotesDetailsComponent } from 'app/modules/admin/apps/notes/details/details.component';
 import { NotesLabelsComponent } from 'app/modules/admin/apps/notes/labels/labels.component';
@@ -30,6 +31,10 @@ import {
     map,
     takeUntil,
 } from 'rxjs';
+
+/* Runtime shape of a single column emitted by FuseMasonryComponent's columnsTemplate
+ * (FuseMasonryComponent declares it as TemplateRef<any>). Notes are the items here. */
+type NotesMasonryColumns = Array<{ items: Note[] }>;
 
 @Component({
     selector: 'notes-list',
@@ -47,6 +52,7 @@ import {
         MatInputModule,
         FuseMasonryComponent,
         AsyncPipe,
+        TypedTemplateOutletDirective,
     ],
 })
 export class NotesListComponent implements OnInit, OnDestroy {
@@ -58,6 +64,10 @@ export class NotesListComponent implements OnInit, OnDestroy {
     filter$: BehaviorSubject<string> = new BehaviorSubject('notes');
     searchQuery$: BehaviorSubject<string> = new BehaviorSubject(null);
     masonryColumns: number = 4;
+
+    // webpieces-disable no-any-unknown -- FuseMasonryComponent declares columnsTemplate as TemplateRef<any>; cast narrows let-columns to the real runtime shape for template type-checking
+    protected readonly NotesMasonryColumnsCtor =
+        Object as unknown as new () => NotesMasonryColumns;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 

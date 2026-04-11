@@ -37,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { fuseAnimations } from '@fuse/animations';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryService } from 'app/modules/admin/apps/ecommerce/inventory/inventory.service';
 import {
@@ -103,6 +104,7 @@ import {
         MatRippleModule,
         AsyncPipe,
         CurrencyPipe,
+        TypedTemplateOutletDirective,
     ],
 })
 export class InventoryListComponent
@@ -110,6 +112,10 @@ export class InventoryListComponent
 {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
+
+    // webpieces-disable no-any-unknown -- InventoryProduct is an interface; cast narrows let-product to the right type for template type-checking
+    protected readonly InventoryProductCtor =
+        Object as unknown as new () => InventoryProduct;
 
     products$: Observable<InventoryProduct[]>;
 

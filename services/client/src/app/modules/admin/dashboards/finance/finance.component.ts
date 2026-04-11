@@ -1,11 +1,9 @@
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     OnDestroy,
     OnInit,
-    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,8 +11,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FinanceService } from 'app/modules/admin/dashboards/finance/finance.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
@@ -31,29 +27,15 @@ import { Subject, takeUntil } from 'rxjs';
         MatMenuModule,
         MatDividerModule,
         NgApexchartsModule,
-        MatTableModule,
-        MatSortModule,
         NgClass,
         MatProgressBarModule,
         CurrencyPipe,
         DatePipe,
     ],
 })
-export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('recentTransactionsTable', { read: MatSort })
-    recentTransactionsTableMatSort: MatSort;
-
+export class FinanceComponent implements OnInit, OnDestroy {
     data: any;
     accountBalanceOptions: ApexOptions;
-    recentTransactionsDataSource: MatTableDataSource<any> =
-        new MatTableDataSource();
-    recentTransactionsTableColumns: string[] = [
-        'transactionId',
-        'date',
-        'name',
-        'amount',
-        'status',
-    ];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -73,25 +55,9 @@ export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy {
         this._financeService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data) => {
-                // Store the data
                 this.data = data;
-
-                // Store the table data
-                this.recentTransactionsDataSource.data =
-                    data.recentTransactions;
-
-                // Prepare the chart data
                 this._prepareChartData();
             });
-    }
-
-    /**
-     * After view init
-     */
-    ngAfterViewInit(): void {
-        // Make the data source sortable
-        this.recentTransactionsDataSource.sort =
-            this.recentTransactionsTableMatSort;
     }
 
     /**
@@ -101,20 +67,6 @@ export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
     }
 
     // -----------------------------------------------------------------------------------------------------

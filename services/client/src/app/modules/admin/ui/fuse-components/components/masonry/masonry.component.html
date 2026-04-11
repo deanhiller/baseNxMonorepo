@@ -145,7 +145,11 @@
                                     [columnsTemplate]="columnsTemplate"
                                 >
                                 </fuse-masonry>
-                                <ng-template #columnsTemplate let-columns>
+                                <ng-template
+                                    #columnsTemplate
+                                    let-columns
+                                    [templateClassType]="MasonryDemoColumnsCtor"
+                                >
                                     @for (column of columns; track column) {
                                         <!-- Column -->
                                         <div
@@ -226,7 +230,11 @@
                                     [columnsTemplate]="columnsTemplate2"
                                 >
                                 </fuse-masonry>
-                                <ng-template #columnsTemplate2 let-columns>
+                                <ng-template
+                                    #columnsTemplate2
+                                    let-columns
+                                    [templateClassType]="MasonryDemoColumnsCtor"
+                                >
                                     @for (column of columns; track column) {
                                         <!-- Column -->
                                         <div

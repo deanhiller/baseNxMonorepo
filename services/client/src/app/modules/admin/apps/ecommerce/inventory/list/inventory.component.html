@@ -253,7 +253,11 @@
                 }
             }
 
-            <ng-template #rowDetailsTemplate let-product>
+            <ng-template
+                #rowDetailsTemplate
+                let-product
+                [templateClassType]="InventoryProductCtor"
+            >
                 <div class="overflow-hidden shadow-lg">
                     <div class="flex border-b">
                         <!-- Selected product form -->

@@ -179,7 +179,11 @@
 }
 
 <!-- Contact result template -->
-<ng-template #contactResult let-result>
+<ng-template
+    #contactResult
+    let-result
+    [templateClassType]="ContactSearchResultCtor"
+>
     <div class="flex items-center">
         <div
             class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary-100 dark:bg-primary-800"
@@ -201,7 +205,11 @@
 </ng-template>
 
 <!-- Page result template -->
-<ng-template #pageResult let-result>
+<ng-template
+    #pageResult
+    let-result
+    [templateClassType]="PageSearchResultCtor"
+>
     <div class="flex flex-col">
         <div class="truncate leading-normal" [innerHTML]="result.title"></div>
         <div class="text-secondary truncate text-sm leading-normal">
@@ -211,7 +219,11 @@
 </ng-template>
 
 <!-- Task result template -->
-<ng-template #taskResult let-result>
+<ng-template
+    #taskResult
+    let-result
+    [templateClassType]="TaskSearchResultCtor"
+>
     <div class="flex items-center">
         @if (result.completed) {
             <mat-icon

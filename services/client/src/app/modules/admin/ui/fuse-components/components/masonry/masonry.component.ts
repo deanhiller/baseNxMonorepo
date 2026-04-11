@@ -4,9 +4,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FuseHighlightComponent } from '@fuse/components/highlight';
 import { FuseMasonryComponent } from '@fuse/components/masonry';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FuseComponentsComponent } from 'app/modules/admin/ui/fuse-components/fuse-components.component';
 import { Subject, takeUntil } from 'rxjs';
+
+/* Runtime shape of a single column emitted by FuseMasonryComponent's columnsTemplate
+ * in this demo; the demo passes `[items]="[1, 2, 3, ...]"`. */
+type MasonryDemoColumns = Array<{ items: number[] }>;
 
 @Component({
     selector: 'masonry',
@@ -18,11 +23,16 @@ import { Subject, takeUntil } from 'rxjs';
         FuseHighlightComponent,
         MatTabsModule,
         FuseMasonryComponent,
+        TypedTemplateOutletDirective,
     ],
 })
 export class MasonryComponent implements OnInit {
     columns: number = 4;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    // webpieces-disable no-any-unknown -- FuseMasonryComponent declares columnsTemplate as TemplateRef<any>; cast narrows let-columns to the demo's runtime shape
+    protected readonly MasonryDemoColumnsCtor =
+        Object as unknown as new () => MasonryDemoColumns;
 
     /**
      * Constructor

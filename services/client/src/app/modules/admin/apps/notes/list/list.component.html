@@ -162,7 +162,11 @@
                             [columnsTemplate]="columnsTemplate"
                         >
                             <!-- Columns template -->
-                            <ng-template #columnsTemplate let-columns>
+                            <ng-template
+                                #columnsTemplate
+                                let-columns
+                                [templateClassType]="NotesMasonryColumnsCtor"
+                            >
                                 <!-- Columns -->
                                 @for (
                                     column of columns;

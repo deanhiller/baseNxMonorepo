@@ -23,7 +23,7 @@
 </mat-menu>
 
 <!-- Flag image template -->
-<ng-template let-lang #flagImage>
+<ng-template let-lang #flagImage [templateClassType]="LangCtor">
     <span class="relative w-6 overflow-hidden rounded-sm shadow">
         <span
             class="absolute inset-0 ring-1 ring-inset ring-black ring-opacity-10"

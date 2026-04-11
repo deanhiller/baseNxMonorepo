@@ -78,7 +78,7 @@
 </mat-menu>
 
 <!-- Item template -->
-<ng-template let-item #itemTemplate>
+<ng-template let-item #itemTemplate [templateClassType]="FuseNavigationItemCtor">
     <div
         class="fuse-horizontal-navigation-item-wrapper"
         [class.fuse-horizontal-navigation-item-has-subtitle]="!!item.subtitle"

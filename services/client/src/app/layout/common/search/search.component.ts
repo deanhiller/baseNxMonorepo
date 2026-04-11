@@ -34,7 +34,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations/public-api';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
 import { Subject, debounceTime, filter, map, takeUntil } from 'rxjs';
+
+/* Minimal shapes for the three kinds of results the Fuse mock-search API returns,
+ * inferred from template usage. Used to type [templateClassType] inputs. */
+interface ContactSearchResult {
+    avatar: string | null;
+    name: string;
+}
+interface PageSearchResult {
+    title: string;
+    link: string;
+}
+interface TaskSearchResult {
+    title: string;
+    completed: boolean;
+}
 
 @Component({
     selector: 'search',
@@ -55,6 +71,7 @@ import { Subject, debounceTime, filter, map, takeUntil } from 'rxjs';
         MatFormFieldModule,
         MatInputModule,
         NgClass,
+        TypedTemplateOutletDirective,
     ],
     providers: [
         {
@@ -77,6 +94,16 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     searchControl: UntypedFormControl = new UntypedFormControl();
     private _matAutocomplete: MatAutocomplete;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    // webpieces-disable no-any-unknown -- interfaces have no runtime constructor; cast narrows let-result in each ng-template for template type-checking
+    protected readonly ContactSearchResultCtor =
+        Object as unknown as new () => ContactSearchResult;
+    // webpieces-disable no-any-unknown -- same pattern
+    protected readonly PageSearchResultCtor =
+        Object as unknown as new () => PageSearchResult;
+    // webpieces-disable no-any-unknown -- same pattern
+    protected readonly TaskSearchResultCtor =
+        Object as unknown as new () => TaskSearchResult;
 
     /**
      * Constructor

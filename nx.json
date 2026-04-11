@@ -33,13 +33,13 @@
                     "limit": 80,
                     "mode": "NEW_AND_MODIFIED_METHODS",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1777075200
+                    "ignoreModifiedUntilEpoch": 1775907209
                 },
                 "fileMaxLimit": {
                     "limit": 902,
                     "mode": "MODIFIED_FILES",
                     "disableAllowed": false,
-                    "ignoreModifiedUntilEpoch": 1777075200
+                    "ignoreModifiedUntilEpoch": 1775907209
                 },
                 "requireReturnType": {
                     "mode": "NEW_AND_MODIFIED_METHODS",

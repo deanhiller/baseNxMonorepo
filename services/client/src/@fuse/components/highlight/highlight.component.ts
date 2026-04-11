@@ -17,6 +17,16 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FuseHighlightService } from '@fuse/components/highlight/highlight.service';
+import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
+
+/* Shape passed as $implicit to the ng-template that renders highlighted code.
+ * Previously the template used two named context fields (let-highlightedCode="highlightedCode"
+ * let-lang="lang"), which couldn't be typed with TypedTemplateOutletDirective — it only narrows
+ * $implicit. Wrapping both fields in a single $implicit object lets the directive type them. */
+interface HighlightContext {
+    highlightedCode: string;
+    lang: string;
+}
 
 @Component({
     selector: 'textarea[fuse-highlight]',
@@ -26,7 +36,7 @@ import { FuseHighlightService } from '@fuse/components/highlight/highlight.servi
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'fuseHighlight',
     standalone: true,
-    imports: [NgClass],
+    imports: [NgClass, TypedTemplateOutletDirective],
 })
 export class FuseHighlightComponent implements OnChanges, AfterViewInit {
     private _domSanitizer = inject(DomSanitizer);
@@ -40,6 +50,10 @@ export class FuseHighlightComponent implements OnChanges, AfterViewInit {
 
     highlightedCode: string;
     private _viewRef: EmbeddedViewRef<any>;
+
+    // webpieces-disable no-any-unknown -- HighlightContext is an interface; cast provides a runtime Constructor so template type-checking narrows let-ctx
+    protected readonly HighlightContextCtor =
+        Object as unknown as new () => HighlightContext;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -120,12 +134,14 @@ export class FuseHighlightComponent implements OnChanges, AfterViewInit {
             return;
         }
 
-        // Render and insert the template
+        // Render and insert the template — wrap in $implicit so TypedTemplateOutletDirective can type let-ctx
         this._viewRef = this._viewContainerRef.createEmbeddedView(
             this.templateRef,
             {
-                highlightedCode: this.highlightedCode,
-                lang: this.lang,
+                $implicit: {
+                    highlightedCode: this.highlightedCode,
+                    lang: this.lang,
+                },
             }
         );
 

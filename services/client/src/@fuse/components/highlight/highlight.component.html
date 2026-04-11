@@ -1,9 +1,8 @@
 <ng-content></ng-content>
 
 <!-- prettier-ignore -->
-<!-- eslint-disable-next-line @webpieces/require-typed-template -- uses two named context fields (let-highlightedCode="highlightedCode" let-lang="lang"), which is structurally incompatible with TypedTemplateOutletDirective's single $implicit: T pattern. Fixable only by refactoring callers to pass a single wrapper object. -->
-<ng-template let-highlightedCode="highlightedCode" let-lang="lang">
+<ng-template let-ctx [templateClassType]="HighlightContextCtor">
 <div class="fuse-highlight fuse-highlight-code-container">
-<pre [ngClass]="'language-' + lang"><code [ngClass]="'language-' + lang" [innerHTML]="highlightedCode"></code></pre>
+<pre [ngClass]="'language-' + ctx.lang"><code [ngClass]="'language-' + ctx.lang" [innerHTML]="ctx.highlightedCode"></code></pre>
 </div>
 </ng-template>

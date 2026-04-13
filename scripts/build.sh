@@ -36,6 +36,15 @@ NM_PLATFORM="${NM_DIR}_${PLATFORM}"
 echo "📦 Platform: $PLATFORM"
 echo "📂 Project:  $PROJECT_DIR"
 
+# Cross-platform SHA-256 hash of pnpm-lock.yaml
+compute_lockfile_hash() {
+    if command -v sha256sum &>/dev/null; then
+        sha256sum pnpm-lock.yaml | awk '{print $1}'
+    else
+        shasum -a 256 pnpm-lock.yaml | awk '{print $1}'
+    fi
+}
+
 ensure_gitignore() {
     # Make sure node_modules_* dirs are ignored by git and Nx
     for ignore_file in .gitignore .nxignore; do
@@ -69,7 +78,7 @@ swap_node_modules() {
             [ -d "$old_nm" ] && rm -rf "$old_nm"
             mv "$NM_DIR" "$old_nm"
         else
-            # Unknown platform — assume it's from the host (mac)
+            # Unknown platform
             echo "📦 Saving current node_modules as ${NM_DIR}_unknown/"
             [ -d "${NM_DIR}_unknown" ] && rm -rf "${NM_DIR}_unknown"
             mv "$NM_DIR" "${NM_DIR}_unknown"
@@ -83,21 +92,36 @@ swap_node_modules() {
         echo "✅ Swapped to $PLATFORM node_modules"
     else
         echo "🔨 No cached node_modules for $PLATFORM — running pnpm install..."
-        pnpm install
-        # Install platform-specific native binaries that npm skips as optionalDeps
-        # when the lockfile was created on a different platform
-        if [ "$PLATFORM" = "linux" ] || [ "$PLATFORM" = "linux_x64" ]; then
-            # Check if Nx is used and linux binary is missing
-            if [ -d "node_modules/nx" ] && [ ! -d "node_modules/@nx/nx-linux-arm64-gnu" ] && [ "$PLATFORM" = "linux" ]; then
-                local nx_ver
-                nx_ver=$(node -pe "require('./node_modules/nx/package.json').version")
-                echo "🔧 Installing Nx linux-arm64 native binary v${nx_ver}..."
-                pnpm add "@nx/nx-linux-arm64-gnu@${nx_ver}" 2>/dev/null || true
-            fi
-        fi
+        pnpm install --no-frozen-lockfile --config.confirmModulesPurge=false
         echo "$PLATFORM" > "$NM_DIR/.platform"
+        compute_lockfile_hash > "$NM_DIR/.lockfile-hash"
         echo "✅ Fresh install for $PLATFORM complete"
     fi
+}
+
+# Auto-install if lockfile changed since last install on this platform.
+# The .lockfile-hash file lives inside node_modules so it travels with
+# the platform-specific cache during swaps.
+check_and_install() {
+    local current_hash stored_hash
+    current_hash="$(compute_lockfile_hash)"
+
+    if [ -f "$NM_DIR/.lockfile-hash" ]; then
+        stored_hash="$(cat "$NM_DIR/.lockfile-hash")"
+    else
+        stored_hash=""
+    fi
+
+    if [ "$current_hash" = "$stored_hash" ]; then
+        echo "✅ Lockfile hash matches — node_modules is up to date"
+        return 0
+    fi
+
+    echo "🔨 Lockfile changed since last install — running pnpm install..."
+    pnpm install --no-frozen-lockfile --config.confirmModulesPurge=false
+    # Recompute after install (pnpm can normalize the lockfile)
+    compute_lockfile_hash > "$NM_DIR/.lockfile-hash"
+    echo "✅ Install complete, hash recorded"
 }
 
 do_build() {
@@ -126,7 +150,7 @@ do_lint() {
 
 do_clean() {
     echo "🧹 Removing all node_modules..."
-    rm -rf node_modules node_modules_* 
+    rm -rf node_modules node_modules_*
     echo "✅ Clean"
 }
 
@@ -139,6 +163,7 @@ ACTION="${1:-default}"
 case "$ACTION" in
     swap)
         swap_node_modules
+        check_and_install
         ;;
     build)
         do_build
@@ -151,6 +176,7 @@ case "$ACTION" in
         ;;
     default)
         swap_node_modules
+        check_and_install
         do_lint
         ;;
     *)

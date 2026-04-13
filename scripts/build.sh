@@ -82,8 +82,8 @@ swap_node_modules() {
         mv "$NM_PLATFORM" "$NM_DIR"
         echo "✅ Swapped to $PLATFORM node_modules"
     else
-        echo "🔨 No cached node_modules for $PLATFORM — running npm install..."
-        npm install
+        echo "🔨 No cached node_modules for $PLATFORM — running pnpm install..."
+        pnpm install
         # Install platform-specific native binaries that npm skips as optionalDeps
         # when the lockfile was created on a different platform
         if [ "$PLATFORM" = "linux" ] || [ "$PLATFORM" = "linux_x64" ]; then
@@ -92,7 +92,7 @@ swap_node_modules() {
                 local nx_ver
                 nx_ver=$(node -pe "require('./node_modules/nx/package.json').version")
                 echo "🔧 Installing Nx linux-arm64 native binary v${nx_ver}..."
-                npm install --no-save "@nx/nx-linux-arm64-gnu@${nx_ver}" 2>/dev/null || true
+                pnpm add "@nx/nx-linux-arm64-gnu@${nx_ver}" 2>/dev/null || true
             fi
         fi
         echo "$PLATFORM" > "$NM_DIR/.platform"
@@ -104,9 +104,9 @@ do_build() {
     echo ""
     echo "🔨 Running build..."
     if [ -f "nx.json" ]; then
-        NX_DAEMON=false npx nx run-many --target=build --all
+        NX_DAEMON=false pnpm nx run-many --target=build --all
     elif grep -q '"build"' package.json 2>/dev/null; then
-        npm run build
+        pnpm run build
     else
         echo "⚠️  No build target found (no nx.json, no 'build' script)"
     fi
@@ -116,9 +116,9 @@ do_lint() {
     echo ""
     echo "🔍 Running lint..."
     if [ -f "nx.json" ]; then
-        NX_DAEMON=false npx nx run-many --target=lint --all
+        NX_DAEMON=false pnpm nx run-many --target=lint --all
     elif grep -q '"lint"' package.json 2>/dev/null; then
-        npm run lint
+        pnpm run lint
     else
         echo "⚠️  No lint target found"
     fi

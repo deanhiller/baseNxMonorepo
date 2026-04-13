@@ -2,7 +2,7 @@
   "name": "monorepo",
   "private": true,
   "scripts": {
-    "webpieces:ci": "npx nx affected --target=ci"
+    "webpieces:ci": "pnpm nx affected --target=ci"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.14",
@@ -38,7 +38,7 @@
     "@typescript-eslint/eslint-plugin": "8.48.0",
     "@typescript-eslint/parser": "8.48.0",
     "@typescript-eslint/utils": "8.48.0",
-    "@webpieces/dev-config": "0.2.103",
+    "@webpieces/dev-config": "0.2.102",
     "eslint": "8.57.1",
     "globals": "16.3.0",
     "jest": "29.7.0",
@@ -61,10 +61,17 @@
     "inversify": "7.10.4",
     "reflect-metadata": "0.2.2"
   },
-  "packageManager": "npm@10.8.1",
-  "nx": {},
-  "workspaces": [
-    "libraries/*",
-    "services/*"
-  ]
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "nx",
+      "unrs-resolver"
+    ]
+  },
+  "nx": {}
 }

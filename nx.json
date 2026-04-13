@@ -27,6 +27,11 @@
                 "{workspaceRoot}/eslint.webpieces.config.mjs"
             ]
         },
+        "validate-ts-in-src": {
+            "options": {
+                "allowedRootFiles": ["jest.setup.ts", "jest.config.ts"]
+            }
+        },
         "validate-code": {
             "options": {
                 "methodMaxLimit": {

@@ -5,8 +5,8 @@
     "dependencies": {
         "@myorg/apis": "0.0.1",
         "@ngneat/transloco": "6.0.4",
-        "@webpieces/core-util": "0.2.93",
-        "@webpieces/http-client": "0.2.93",
+        "@webpieces/core-util": "0.2.103",
+        "@webpieces/http-client": "0.2.103",
         "apexcharts": "3.53.0",
         "crypto-js": "4.2.0",
         "highlight.js": "11.9.0",

@@ -165,19 +165,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
                 this._changeDetectorRef.markForCheck();
             });
 
-        // Listen for shortcuts
-        fromEvent(this._document, 'keydown')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                filter<KeyboardEvent>(
-                    (event) =>
-                        (event.ctrlKey === true || event.metaKey) && // Ctrl or Cmd
-                        event.key === '/' // '/'
-                )
-            )
-            .subscribe(() => {
-                this.createContact();
-            });
+        this._listenForKeyboardShortcuts();
     }
 
     /**
@@ -187,6 +175,21 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+    }
+
+    private _listenForKeyboardShortcuts(): void {
+        fromEvent<KeyboardEvent>(this._document, 'keydown')
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                filter(
+                    (event) =>
+                        (event.ctrlKey === true || event.metaKey) && // Ctrl or Cmd
+                        event.key === '/' // '/'
+                )
+            )
+            .subscribe(() => {
+                this.createContact();
+            });
     }
 
     // -----------------------------------------------------------------------------------------------------

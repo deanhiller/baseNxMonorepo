@@ -1,8 +1,6 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
         "target": "es2022",
         "lib": ["ES2022", "DOM"],
         "moduleResolution": "bundler",

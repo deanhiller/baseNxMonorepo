@@ -286,7 +286,7 @@ export class InventoryService {
             take(1),
             switchMap((products) =>
                 this._httpClient
-                    .delete('api/apps/ecommerce/inventory/product', {
+                    .delete<boolean>('api/apps/ecommerce/inventory/product', {
                         params: { id },
                     })
                     .pipe(
@@ -395,7 +395,7 @@ export class InventoryService {
             take(1),
             switchMap((tags) =>
                 this._httpClient
-                    .delete('api/apps/ecommerce/inventory/tag', {
+                    .delete<boolean>('api/apps/ecommerce/inventory/tag', {
                         params: { id },
                     })
                     .pipe(

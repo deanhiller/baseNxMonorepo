@@ -19,6 +19,9 @@
         "useUnknownInCatchVariables": true,
         "noImplicitOverride": true,
         "alwaysStrict": true,
+        "strictFunctionTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
         "paths": {
             "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],

@@ -27,6 +27,11 @@ interface FlatDirNode {
     last: boolean;
 }
 
+interface DirTree {
+    dataSource: MatTreeFlatDataSource<DirNode, FlatDirNode>;
+    treeControl: FlatTreeControl<FlatDirNode>;
+}
+
 @Component({
     selector: 'directory-structure',
     templateUrl: './directory-structure.html',
@@ -234,7 +239,7 @@ export class DirectoryStructureComponent implements OnInit {
     /**
      * Create a new tree
      */
-    createTree(data): { dataSource: any; treeControl: any } {
+    createTree(data): DirTree {
         // Create tree control and data source
         const treeControl = new FlatTreeControl<FlatDirNode>(
             (node) => node.level,
@@ -243,10 +248,11 @@ export class DirectoryStructureComponent implements OnInit {
         const dataSource = new MatTreeFlatDataSource(
             treeControl,
             new MatTreeFlattener(
-                (node: DirNode, level: number) => ({
+                (node: DirNode, level: number): FlatDirNode => ({
                     expandable: !!node.children && node.children.length > 0,
                     name: node.name,
                     level: level,
+                    last: false,
                 }),
                 (node) => node.level,
                 (node) => node.expandable,

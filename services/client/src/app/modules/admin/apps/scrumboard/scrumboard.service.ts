@@ -157,7 +157,7 @@ export class ScrumboardService {
             take(1),
             switchMap((boards) =>
                 this._httpClient
-                    .delete('api/apps/scrumboard/board', { params: { id } })
+                    .delete<boolean>('api/apps/scrumboard/board', { params: { id } })
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted board
@@ -461,7 +461,7 @@ export class ScrumboardService {
             take(1),
             switchMap((board) =>
                 this._httpClient
-                    .delete('api/apps/scrumboard/board/card', {
+                    .delete<boolean>('api/apps/scrumboard/board/card', {
                         params: { id },
                     })
                     .pipe(
@@ -564,7 +564,7 @@ export class ScrumboardService {
             take(1),
             switchMap((board) =>
                 this._httpClient
-                    .delete('api/apps/scrumboard/board/label', {
+                    .delete<boolean>('api/apps/scrumboard/board/label', {
                         params: { id },
                     })
                     .pipe(

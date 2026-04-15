@@ -209,7 +209,7 @@ export class ContactsService {
             take(1),
             switchMap((contacts) =>
                 this._httpClient
-                    .delete('api/apps/contacts/contact', { params: { id } })
+                    .delete<boolean>('api/apps/contacts/contact', { params: { id } })
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted contact
@@ -325,7 +325,7 @@ export class ContactsService {
             take(1),
             switchMap((tags) =>
                 this._httpClient
-                    .delete('api/apps/contacts/tag', { params: { id } })
+                    .delete<boolean>('api/apps/contacts/tag', { params: { id } })
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted tag

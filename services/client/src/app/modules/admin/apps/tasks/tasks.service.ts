@@ -133,7 +133,7 @@ export class TasksService {
             take(1),
             switchMap((tags) =>
                 this._httpClient
-                    .delete('api/apps/tasks/tag', { params: { id } })
+                    .delete<boolean>('api/apps/tasks/tag', { params: { id } })
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted tag
@@ -321,7 +321,7 @@ export class TasksService {
             take(1),
             switchMap((tasks) =>
                 this._httpClient
-                    .delete('api/apps/tasks/task', { params: { id } })
+                    .delete<boolean>('api/apps/tasks/task', { params: { id } })
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted task

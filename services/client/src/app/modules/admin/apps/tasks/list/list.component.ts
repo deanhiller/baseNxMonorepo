@@ -122,31 +122,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
 
-                // Update the count on the navigation
-                setTimeout(() => {
-                    // Get the component -> navigation data -> item
-                    const mainNavigationComponent =
-                        this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
-                            'mainNavigation'
-                        );
-
-                    // If the main navigation component exists...
-                    if (mainNavigationComponent) {
-                        const mainNavigation =
-                            mainNavigationComponent.navigation;
-                        const menuItem = this._fuseNavigationService.getItem(
-                            'apps.tasks',
-                            mainNavigation
-                        );
-
-                        // Update the subtitle of the item
-                        menuItem.subtitle =
-                            this.tasksCount.incomplete + ' remaining tasks';
-
-                        // Refresh the navigation
-                        mainNavigationComponent.refresh();
-                    }
-                });
+                setTimeout(() => this._updateNavigationSubtitle());
             });
 
         // Get the task
@@ -171,11 +147,32 @@ export class TasksListComponent implements OnInit, OnDestroy {
                 this._changeDetectorRef.markForCheck();
             });
 
-        // Listen for shortcuts
-        fromEvent(this._document, 'keydown')
+        this._listenForKeyboardShortcuts();
+    }
+
+    private _updateNavigationSubtitle(): void {
+        const mainNavigationComponent =
+            this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
+                'mainNavigation'
+            );
+        if (!mainNavigationComponent) {
+            return;
+        }
+        const mainNavigation = mainNavigationComponent.navigation;
+        const menuItem = this._fuseNavigationService.getItem(
+            'apps.tasks',
+            mainNavigation
+        );
+        menuItem.subtitle =
+            this.tasksCount.incomplete + ' remaining tasks';
+        mainNavigationComponent.refresh();
+    }
+
+    private _listenForKeyboardShortcuts(): void {
+        fromEvent<KeyboardEvent>(this._document, 'keydown')
             .pipe(
                 takeUntil(this._unsubscribeAll),
-                filter<KeyboardEvent>(
+                filter(
                     (event) =>
                         (event.ctrlKey === true || event.metaKey) && // Ctrl or Cmd
                         (event.key === '/' || event.key === '.') // '/' or '.' key

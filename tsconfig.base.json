@@ -13,6 +13,12 @@
         "lib": ["es2022", "dom"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictBindCallApply": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "noImplicitOverride": true,
+        "alwaysStrict": true,
         "baseUrl": ".",
         "paths": {
             "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],

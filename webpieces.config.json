@@ -1,0 +1,79 @@
+{
+    "rules": {
+        "max-method-lines": {
+            "enabled": true,
+            "limit": 80,
+            "mode": "NEW_AND_MODIFIED_METHODS",
+            "disableAllowed": false,
+            "ignoreModifiedUntilEpoch": 1775907209
+        },
+        "max-file-lines": {
+            "enabled": true,
+            "limit": 902,
+            "mode": "MODIFIED_FILES",
+            "disableAllowed": false,
+            "ignoreModifiedUntilEpoch": 1775907209
+        },
+        "require-return-type": {
+            "enabled": true,
+            "mode": "NEW_AND_MODIFIED_METHODS",
+            "disableAllowed": false,
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "no-inline-type-literals": {
+            "enabled": true,
+            "mode": "NEW_AND_MODIFIED_METHODS",
+            "disableAllowed": false,
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "no-any-unknown": {
+            "enabled": true,
+            "mode": "MODIFIED_CODE",
+            "disableAllowed": true,
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "no-destructure": {
+            "enabled": true,
+            "mode": "MODIFIED_CODE",
+            "disableAllowed": false,
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "no-unmanaged-exceptions": {
+            "enabled": true
+        },
+        "validate-dtos": {
+            "enabled": true,
+            "mode": "OFF",
+            "disableAllowed": false,
+            "prismaSchemaPath": "libraries/prisma-schema/prisma/schema.prisma",
+            "dtoSourcePaths": ["libraries/apis/src"],
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "prisma-converter": {
+            "enabled": true,
+            "mode": "OFF",
+            "disableAllowed": true,
+            "schemaPath": "libraries/prisma-schema/prisma/schema.prisma",
+            "convertersPaths": ["services/server/src/converters"],
+            "enforcePaths": ["services/server/src/"],
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "no-direct-api-in-resolver": {
+            "enabled": true,
+            "mode": "OFF",
+            "disableAllowed": true,
+            "enforcePaths": ["services/client/src/"],
+            "ignoreModifiedUntilEpoch": 1774950510
+        },
+        "file-location": {
+            "enabled": true,
+            "allowedRootFiles": ["jest.setup.ts"],
+            "excludePaths": ["scripts", "tmp", "architecture"]
+        },
+        "validate-ts-in-src": {
+            "enabled": true,
+            "allowedRootFiles": ["jest.setup.ts", "jest.config.ts"]
+        }
+    },
+    "rulesDir": []
+}

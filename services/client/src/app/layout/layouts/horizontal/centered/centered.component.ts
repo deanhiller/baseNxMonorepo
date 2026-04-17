@@ -42,8 +42,8 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class CenteredLayoutComponent implements OnInit, OnDestroy {
-    navigation: Navigation;
-    isScreenSmall: boolean;
+    navigation!: Navigation; // set in ngOnInit via subscribe
+    isScreenSmall!: boolean; // set in ngOnInit via media watcher
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

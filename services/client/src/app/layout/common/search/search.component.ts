@@ -90,9 +90,10 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     @Output() search: EventEmitter<any> = new EventEmitter<any>();
 
     opened: boolean = false;
-    resultSets: any[];
+    // webpieces-disable no-any-unknown -- result set entries are heterogeneous demo data rendered by template
+    resultSets: any[] | null = null;
     searchControl: UntypedFormControl = new UntypedFormControl();
-    private _matAutocomplete: MatAutocomplete;
+    private _matAutocomplete!: MatAutocomplete; // set by Angular via setter after view init
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // webpieces-disable no-any-unknown -- interfaces have no runtime constructor; cast narrows let-result in each ng-template for template type-checking

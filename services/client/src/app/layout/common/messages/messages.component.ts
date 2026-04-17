@@ -38,12 +38,13 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class MessagesComponent implements OnInit, OnDestroy {
-    @ViewChild('messagesOrigin') private _messagesOrigin: MatButton;
-    @ViewChild('messagesPanel') private _messagesPanel: TemplateRef<any>;
+    @ViewChild('messagesOrigin') private _messagesOrigin!: MatButton; // set by Angular after view init
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    @ViewChild('messagesPanel') private _messagesPanel!: TemplateRef<any>; // set by Angular after view init
 
-    messages: Message[];
+    messages: Message[] = [];
     unreadCount: number = 0;
-    private _overlayRef: OverlayRef;
+    private _overlayRef!: OverlayRef; // created lazily in _createOverlay()
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

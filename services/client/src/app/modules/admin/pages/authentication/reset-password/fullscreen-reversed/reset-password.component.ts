@@ -39,7 +39,7 @@ export class ResetPasswordFullscreenReversedComponent implements OnInit {
         type: 'success',
         message: '',
     };
-    resetPasswordForm: UntypedFormGroup;
+    resetPasswordForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**

@@ -20,16 +20,14 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ContactsService {
     // Private
-    private _contact: BehaviorSubject<Contact | null> = new BehaviorSubject(
-        null
-    );
-    private _contacts: BehaviorSubject<Contact[] | null> = new BehaviorSubject(
-        null
-    );
-    private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(
-        null
-    );
-    private _tags: BehaviorSubject<Tag[] | null> = new BehaviorSubject(null);
+    private _contact: BehaviorSubject<Contact | null> =
+        new BehaviorSubject<Contact | null>(null);
+    private _contacts: BehaviorSubject<Contact[] | null> =
+        new BehaviorSubject<Contact[] | null>(null);
+    private _countries: BehaviorSubject<Country[] | null> =
+        new BehaviorSubject<Country[] | null>(null);
+    private _tags: BehaviorSubject<Tag[] | null> =
+        new BehaviorSubject<Tag[] | null>(null);
 
     /**
      * Constructor
@@ -43,28 +41,28 @@ export class ContactsService {
     /**
      * Getter for contact
      */
-    get contact$(): Observable<Contact> {
+    get contact$(): Observable<Contact | null> {
         return this._contact.asObservable();
     }
 
     /**
      * Getter for contacts
      */
-    get contacts$(): Observable<Contact[]> {
+    get contacts$(): Observable<Contact[] | null> {
         return this._contacts.asObservable();
     }
 
     /**
      * Getter for countries
      */
-    get countries$(): Observable<Country[]> {
+    get countries$(): Observable<Country[] | null> {
         return this._countries.asObservable();
     }
 
     /**
      * Getter for tags
      */
-    get tags$(): Observable<Tag[]> {
+    get tags$(): Observable<Tag[] | null> {
         return this._tags.asObservable();
     }
 
@@ -108,7 +106,8 @@ export class ContactsService {
             take(1),
             map((contacts) => {
                 // Find the contact
-                const contact = contacts.find((item) => item.id === id) || null;
+                const contact =
+                    (contacts ?? []).find((item) => item.id === id) || null;
 
                 // Update the contact
                 this._contact.next(contact);
@@ -140,7 +139,10 @@ export class ContactsService {
                     .pipe(
                         map((newContact) => {
                             // Update the contacts with the new contact
-                            this._contacts.next([newContact, ...contacts]);
+                            this._contacts.next([
+                                newContact,
+                                ...(contacts ?? []),
+                            ]);
 
                             // Return the new contact
                             return newContact;
@@ -168,15 +170,18 @@ export class ContactsService {
                     .pipe(
                         map((updatedContact) => {
                             // Find the index of the updated contact
-                            const index = contacts.findIndex(
+                            const list = contacts ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the contact
-                            contacts[index] = updatedContact;
+                            if (index > -1) {
+                                list[index] = updatedContact;
+                            }
 
                             // Update the contacts
-                            this._contacts.next(contacts);
+                            this._contacts.next(list);
 
                             // Return the updated contact
                             return updatedContact;
@@ -184,8 +189,11 @@ export class ContactsService {
                         switchMap((updatedContact) =>
                             this.contact$.pipe(
                                 take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
+                                filter(
+                                    (item): item is Contact =>
+                                        !!item && item.id === id
+                                ),
+                                map(() => {
                                     // Update the contact if it's selected
                                     this._contact.next(updatedContact);
 
@@ -213,15 +221,18 @@ export class ContactsService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted contact
-                            const index = contacts.findIndex(
+                            const list = contacts ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the contact
-                            contacts.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the contacts
-                            this._contacts.next(contacts);
+                            this._contacts.next(list);
 
                             // Return the deleted status
                             return isDeleted;
@@ -269,7 +280,7 @@ export class ContactsService {
                     .pipe(
                         map((newTag) => {
                             // Update the tags with the new tag
-                            this._tags.next([...tags, newTag]);
+                            this._tags.next([...(tags ?? []), newTag]);
 
                             // Return new tag from observable
                             return newTag;
@@ -297,15 +308,18 @@ export class ContactsService {
                     .pipe(
                         map((updatedTag) => {
                             // Find the index of the updated tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the tag
-                            tags[index] = updatedTag;
+                            if (index > -1) {
+                                list[index] = updatedTag;
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the updated tag
                             return updatedTag;
@@ -329,15 +343,18 @@ export class ContactsService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the tag
-                            tags.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the deleted status
                             return isDeleted;
@@ -348,14 +365,15 @@ export class ContactsService {
                                 take(1),
                                 map((contacts) => {
                                     // Iterate through the contacts
-                                    contacts.forEach((contact) => {
-                                        const tagIndex = contact.tags.findIndex(
-                                            (tag) => tag === id
-                                        );
+                                    (contacts ?? []).forEach((contact) => {
+                                        const tagIndex =
+                                            contact.tags?.findIndex(
+                                                (tag) => tag === id
+                                            ) ?? -1;
 
                                         // If the contact has the tag, remove it
                                         if (tagIndex > -1) {
-                                            contact.tags.splice(tagIndex, 1);
+                                            contact.tags?.splice(tagIndex, 1);
                                         }
                                     });
 
@@ -396,15 +414,18 @@ export class ContactsService {
                     .pipe(
                         map((updatedContact) => {
                             // Find the index of the updated contact
-                            const index = contacts.findIndex(
+                            const list = contacts ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the contact
-                            contacts[index] = updatedContact;
+                            if (index > -1) {
+                                list[index] = updatedContact;
+                            }
 
                             // Update the contacts
-                            this._contacts.next(contacts);
+                            this._contacts.next(list);
 
                             // Return the updated contact
                             return updatedContact;
@@ -412,8 +433,11 @@ export class ContactsService {
                         switchMap((updatedContact) =>
                             this.contact$.pipe(
                                 take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
+                                filter(
+                                    (item): item is Contact =>
+                                        !!item && item.id === id
+                                ),
+                                map(() => {
                                     // Update the contact if it's selected
                                     this._contact.next(updatedContact);
 

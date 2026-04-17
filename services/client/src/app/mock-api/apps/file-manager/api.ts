@@ -53,11 +53,14 @@ export class FileManagerMockApi {
 
                 // Figure out the path and attach it to the response
                 // Prepare the empty paths array
-                const pathItems = cloneDeep(this._items);
-                const path = [];
+                // webpieces-disable no-any-unknown -- items are heterogeneous demo records loaded from JSON
+                const pathItems: any[] = cloneDeep(this._items);
+                // webpieces-disable no-any-unknown -- path entries match pathItems shape (demo records)
+                const path: any[] = [];
 
                 // Prepare the current folder
-                let currentFolder = null;
+                // webpieces-disable no-any-unknown -- demo record, any[] above
+                let currentFolder: any = null;
 
                 // Get the current folder and add it as the first entry
                 if (folderId) {
@@ -70,8 +73,9 @@ export class FileManagerMockApi {
                 // Start traversing and storing the folders as a path array
                 // until we hit null on the folder id
                 while (currentFolder?.folderId) {
+                    const parentId = currentFolder.folderId;
                     currentFolder = pathItems.find(
-                        (item) => item.id === currentFolder.folderId
+                        (item) => item.id === parentId
                     );
                     if (currentFolder) {
                         path.unshift(currentFolder);

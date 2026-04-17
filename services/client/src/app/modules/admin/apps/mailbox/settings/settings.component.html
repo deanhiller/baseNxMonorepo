@@ -38,8 +38,8 @@
                         <mat-icon
                             [ngClass]="
                                 labelColorDefs[
-                                    labelsForm.get('newLabel.color').value
-                                ].text
+                                    labelsForm.get('newLabel.color')?.value
+                                ]?.text
                             "
                             [svgIcon]="'heroicons_outline:tag'"
                         ></mat-icon>
@@ -72,8 +72,8 @@
                     mat-icon-button
                     matSuffix
                     [disabled]="
-                        !labelsForm.get('newLabel').valid ||
-                        !labelsForm.get('newLabel').dirty
+                        !labelsForm.get('newLabel')?.valid ||
+                        !labelsForm.get('newLabel')?.dirty
                     "
                     (click)="addLabel()"
                 >
@@ -91,7 +91,7 @@
             [formArrayName]="'labels'"
         >
             <!-- Label -->
-            @for (label of labelsForm.get('labels')['controls']; track label) {
+            @for (label of $any(labelsForm.get('labels')).controls; track label) {
                 <mat-form-field class="w-full">
                     <input matInput [formControl]="label.get('title')" />
                     <mat-select

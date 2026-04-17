@@ -15,11 +15,16 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-    private _chat: BehaviorSubject<Chat> = new BehaviorSubject(null);
-    private _chats: BehaviorSubject<Chat[]> = new BehaviorSubject(null);
-    private _contact: BehaviorSubject<Contact> = new BehaviorSubject(null);
-    private _contacts: BehaviorSubject<Contact[]> = new BehaviorSubject(null);
-    private _profile: BehaviorSubject<Profile> = new BehaviorSubject(null);
+    private _chat: BehaviorSubject<Chat | null> =
+        new BehaviorSubject<Chat | null>(null);
+    private _chats: BehaviorSubject<Chat[] | null> =
+        new BehaviorSubject<Chat[] | null>(null);
+    private _contact: BehaviorSubject<Contact | null> =
+        new BehaviorSubject<Contact | null>(null);
+    private _contacts: BehaviorSubject<Contact[] | null> =
+        new BehaviorSubject<Contact[] | null>(null);
+    private _profile: BehaviorSubject<Profile | null> =
+        new BehaviorSubject<Profile | null>(null);
 
     /**
      * Constructor
@@ -33,35 +38,35 @@ export class ChatService {
     /**
      * Getter for chat
      */
-    get chat$(): Observable<Chat> {
+    get chat$(): Observable<Chat | null> {
         return this._chat.asObservable();
     }
 
     /**
      * Getter for chats
      */
-    get chats$(): Observable<Chat[]> {
+    get chats$(): Observable<Chat[] | null> {
         return this._chats.asObservable();
     }
 
     /**
      * Getter for contact
      */
-    get contact$(): Observable<Contact> {
+    get contact$(): Observable<Contact | null> {
         return this._contact.asObservable();
     }
 
     /**
      * Getter for contacts
      */
-    get contacts$(): Observable<Contact[]> {
+    get contacts$(): Observable<Contact[] | null> {
         return this._contacts.asObservable();
     }
 
     /**
      * Getter for profile
      */
-    get profile$(): Observable<Profile> {
+    get profile$(): Observable<Profile | null> {
         return this._profile.asObservable();
     }
 
@@ -163,15 +168,18 @@ export class ChatService {
                     .pipe(
                         map((updatedChat) => {
                             // Find the index of the updated chat
-                            const index = chats.findIndex(
+                            const list = chats ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the chat
-                            chats[index] = updatedChat;
+                            if (index > -1) {
+                                list[index] = updatedChat;
+                            }
 
                             // Update the chats
-                            this._chats.next(chats);
+                            this._chats.next(list);
 
                             // Return the updated contact
                             return updatedChat;
@@ -179,8 +187,11 @@ export class ChatService {
                         switchMap((updatedChat) =>
                             this.chat$.pipe(
                                 take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
+                                filter(
+                                    (item): item is Chat =>
+                                        !!item && item.id === id
+                                ),
+                                map(() => {
                                     // Update the chat if it's selected
                                     this._chat.next(updatedChat);
 

@@ -37,10 +37,11 @@ import { HelpCenterService } from 'app/modules/admin/apps/help-center/help-cente
     ],
 })
 export class HelpCenterSupportComponent implements OnInit {
-    @ViewChild('supportNgForm') supportNgForm: NgForm;
+    @ViewChild('supportNgForm') supportNgForm!: NgForm; // set by Angular after view init
 
+    // webpieces-disable no-any-unknown -- alert is heterogeneous (type + message) demo object
     alert: any;
-    supportForm: UntypedFormGroup;
+    supportForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

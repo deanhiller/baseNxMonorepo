@@ -8,7 +8,7 @@ import {
 import { ScrumboardBoardComponent } from 'app/modules/admin/apps/scrumboard/board/board.component';
 import { ScrumboardBoardsComponent } from 'app/modules/admin/apps/scrumboard/boards/boards.component';
 import { ScrumboardCardComponent } from 'app/modules/admin/apps/scrumboard/card/card.component';
-import { Board } from 'app/modules/admin/apps/scrumboard/scrumboard.models';
+import { Board, Card } from 'app/modules/admin/apps/scrumboard/scrumboard.models';
 import { ScrumboardService } from 'app/modules/admin/apps/scrumboard/scrumboard.service';
 import { Observable, catchError, throwError } from 'rxjs';
 
@@ -25,7 +25,8 @@ const boardResolver = (
     const scrumboardService = inject(ScrumboardService);
     const router = inject(Router);
 
-    return scrumboardService.getBoard(route.paramMap.get('boardId')).pipe(
+    // 'boardId' is part of the route definition and always present here
+    return scrumboardService.getBoard(route.paramMap.get('boardId')!).pipe(
         // Error here means the requested board is not available
         catchError((error) => {
 
@@ -50,11 +51,12 @@ const boardResolver = (
 const cardResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+): Observable<Card> => {
     const scrumboardService = inject(ScrumboardService);
     const router = inject(Router);
 
-    return scrumboardService.getCard(route.paramMap.get('cardId')).pipe(
+    // 'cardId' is part of the route definition and always present here
+    return scrumboardService.getCard(route.paramMap.get('cardId')!).pipe(
         // Error here means the requested card is not available
         catchError((error) => {
 

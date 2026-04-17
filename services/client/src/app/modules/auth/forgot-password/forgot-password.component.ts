@@ -35,13 +35,13 @@ import { finalize } from 'rxjs';
     ],
 })
 export class AuthForgotPasswordComponent implements OnInit {
-    @ViewChild('forgotPasswordNgForm') forgotPasswordNgForm: NgForm;
+    @ViewChild('forgotPasswordNgForm') forgotPasswordNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
     };
-    forgotPasswordForm: UntypedFormGroup;
+    forgotPasswordForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**
@@ -87,7 +87,7 @@ export class AuthForgotPasswordComponent implements OnInit {
 
         // Forgot password
         this._authService
-            .forgotPassword(this.forgotPasswordForm.get('email').value)
+            .forgotPassword(this.forgotPasswordForm.get('email')!.value) // 'email' is declared in ngOnInit
             .pipe(
                 finalize(() => {
                     // Re-enable the form

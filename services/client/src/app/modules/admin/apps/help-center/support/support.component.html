@@ -51,7 +51,7 @@
                             [required]="true"
                         />
                         <mat-label>Name</mat-label>
-                        @if (supportForm.get('name').hasError('required')) {
+                        @if (supportForm.get('name')?.hasError('required')) {
                             <mat-error> Required </mat-error>
                         }
                     </mat-form-field>
@@ -64,10 +64,10 @@
                             [required]="true"
                         />
                         <mat-label>Email</mat-label>
-                        @if (supportForm.get('email').hasError('required')) {
+                        @if (supportForm.get('email')?.hasError('required')) {
                             <mat-error> Required </mat-error>
                         }
-                        @if (supportForm.get('email').hasError('email')) {
+                        @if (supportForm.get('email')?.hasError('email')) {
                             <mat-error> Enter a valid email address </mat-error>
                         }
                     </mat-form-field>
@@ -79,7 +79,7 @@
                             [required]="true"
                         />
                         <mat-label>Subject</mat-label>
-                        @if (supportForm.get('subject').hasError('required')) {
+                        @if (supportForm.get('subject')?.hasError('required')) {
                             <mat-error> Required </mat-error>
                         }
                     </mat-form-field>
@@ -93,7 +93,7 @@
                             cdkTextareaAutosize
                         ></textarea>
                         <mat-label>Message</mat-label>
-                        @if (supportForm.get('message').hasError('required')) {
+                        @if (supportForm.get('message')?.hasError('required')) {
                             <mat-error> Required </mat-error>
                         }
                     </mat-form-field>

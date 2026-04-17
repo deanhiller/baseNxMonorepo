@@ -29,9 +29,9 @@ export class ScrumboardService {
      */
     constructor(private _httpClient: HttpClient) {
         // Set the private defaults
-        this._board = new BehaviorSubject(null);
-        this._boards = new BehaviorSubject(null);
-        this._card = new BehaviorSubject(null);
+        this._board = new BehaviorSubject<Board | null>(null);
+        this._boards = new BehaviorSubject<Board[] | null>(null);
+        this._card = new BehaviorSubject<Card | null>(null);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -41,21 +41,21 @@ export class ScrumboardService {
     /**
      * Getter for board
      */
-    get board$(): Observable<Board> {
+    get board$(): Observable<Board | null> {
         return this._board.asObservable();
     }
 
     /**
      * Getter for boards
      */
-    get boards$(): Observable<Board[]> {
+    get boards$(): Observable<Board[] | null> {
         return this._boards.asObservable();
     }
 
     /**
      * Getter for card
      */
-    get card$(): Observable<Card> {
+    get card$(): Observable<Card | null> {
         return this._card.asObservable();
     }
 
@@ -101,7 +101,7 @@ export class ScrumboardService {
                     .pipe(
                         map((newBoard) => {
                             // Update the boards with the new board
-                            this._boards.next([...boards, newBoard]);
+                            this._boards.next([...(boards ?? []), newBoard]);
 
                             // Return new board from observable
                             return newBoard;
@@ -129,15 +129,18 @@ export class ScrumboardService {
                     .pipe(
                         map((updatedBoard) => {
                             // Find the index of the updated board
-                            const index = boards.findIndex(
+                            const list = boards ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the board
-                            boards[index] = updatedBoard;
+                            if (index > -1) {
+                                list[index] = updatedBoard;
+                            }
 
                             // Update the boards
-                            this._boards.next(boards);
+                            this._boards.next(list);
 
                             // Return the updated board
                             return updatedBoard;
@@ -161,15 +164,18 @@ export class ScrumboardService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted board
-                            const index = boards.findIndex(
+                            const list = boards ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the board
-                            boards.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the boards
-                            this._boards.next(boards);
+                            this._boards.next(list);
 
                             // Update the board
                             this._board.next(null);
@@ -198,6 +204,9 @@ export class ScrumboardService {
                 tap((newList) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Update the board lists with the new list
                     board.lists = [...board.lists, newList];
@@ -224,6 +233,9 @@ export class ScrumboardService {
                 tap((updatedList) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Find the index of the updated list
                     const index = board.lists.findIndex(
@@ -231,7 +243,9 @@ export class ScrumboardService {
                     );
 
                     // Update the list
-                    board.lists[index] = updatedList;
+                    if (index > -1) {
+                        board.lists[index] = updatedList;
+                    }
 
                     // Sort the board lists
                     board.lists.sort((a, b) => a.position - b.position);
@@ -255,6 +269,9 @@ export class ScrumboardService {
                 tap((updatedLists) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Go through the updated lists
                     updatedLists.forEach((updatedList) => {
@@ -264,7 +281,9 @@ export class ScrumboardService {
                         );
 
                         // Update the list
-                        board.lists[index] = updatedList;
+                        if (index > -1) {
+                            board.lists[index] = updatedList;
+                        }
                     });
 
                     // Sort the board lists
@@ -290,6 +309,9 @@ export class ScrumboardService {
                 tap((isDeleted) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Find the index of the deleted list
                     const index = board.lists.findIndex(
@@ -297,7 +319,9 @@ export class ScrumboardService {
                     );
 
                     // Delete the list
-                    board.lists.splice(index, 1);
+                    if (index > -1) {
+                        board.lists.splice(index, 1);
+                    }
 
                     // Sort the board lists
                     board.lists.sort((a, b) => a.position - b.position);
@@ -316,9 +340,12 @@ export class ScrumboardService {
             take(1),
             map((board) => {
                 // Find the card
-                const card = board.lists
-                    .find((list) => list.cards.some((item) => item.id === id))
-                    .cards.find((item) => item.id === id);
+                const card =
+                    board?.lists
+                        .find((list) =>
+                            list.cards.some((item) => item.id === id)
+                        )
+                        ?.cards.find((item) => item.id === id) ?? null;
 
                 // Update the card
                 this._card.next(card);
@@ -351,6 +378,9 @@ export class ScrumboardService {
                 tap((newCard) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Find the list and push the new card in it
                     board.lists.forEach((listItem, index, list) => {
@@ -385,6 +415,9 @@ export class ScrumboardService {
                     })
                     .pipe(
                         map((updatedCard) => {
+                            if (!board) {
+                                return updatedCard;
+                            }
                             // Find the card and update it
                             board.lists.forEach((listItem) => {
                                 listItem.cards.forEach(
@@ -423,6 +456,9 @@ export class ScrumboardService {
                 tap((updatedCards) => {
                     // Get the board value
                     const board = this._board.value;
+                    if (!board) {
+                        return;
+                    }
 
                     // Go through the updated cards
                     updatedCards.forEach((updatedCard) => {
@@ -430,11 +466,17 @@ export class ScrumboardService {
                         const listIndex = board.lists.findIndex(
                             (list) => list.id === updatedCard.listId
                         );
+                        if (listIndex < 0) {
+                            return;
+                        }
 
                         // Find the index of the updated card
                         const cardIndex = board.lists[
                             listIndex
                         ].cards.findIndex((item) => item.id === updatedCard.id);
+                        if (cardIndex < 0) {
+                            return;
+                        }
 
                         // Update the card
                         board.lists[listIndex].cards[cardIndex] = updatedCard;
@@ -466,6 +508,9 @@ export class ScrumboardService {
                     })
                     .pipe(
                         map((isDeleted: boolean) => {
+                            if (!board) {
+                                return isDeleted;
+                            }
                             // Find the card and delete it
                             board.lists.forEach((listItem) => {
                                 listItem.cards.forEach(
@@ -504,6 +549,9 @@ export class ScrumboardService {
                     .post<Label>('api/apps/scrumboard/board/label', { label })
                     .pipe(
                         map((newLabel) => {
+                            if (!board) {
+                                return newLabel;
+                            }
                             // Update the board labels with the new label
                             board.labels = [...board.labels, newLabel];
 
@@ -535,13 +583,18 @@ export class ScrumboardService {
                     })
                     .pipe(
                         map((updatedLabel) => {
+                            if (!board) {
+                                return updatedLabel;
+                            }
                             // Find the index of the updated label
                             const index = board.labels.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the label
-                            board.labels[index] = updatedLabel;
+                            if (index > -1) {
+                                board.labels[index] = updatedLabel;
+                            }
 
                             // Update the board
                             this._board.next(board);
@@ -569,13 +622,18 @@ export class ScrumboardService {
                     })
                     .pipe(
                         map((isDeleted: boolean) => {
+                            if (!board) {
+                                return isDeleted;
+                            }
                             // Find the index of the deleted label
                             const index = board.labels.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the label
-                            board.labels.splice(index, 1);
+                            if (index > -1) {
+                                board.labels.splice(index, 1);
+                            }
 
                             // If the label is deleted...
                             if (isDeleted) {

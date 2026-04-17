@@ -188,7 +188,7 @@ export interface PageLayoutsOverviewData {
     ],
 })
 export class LayoutOverviewComponent implements OnInit {
-    overview: PageLayoutsOverviewData;
+    overview!: PageLayoutsOverviewData; // set in ngOnInit via route data
 
     /**
      * Constructor

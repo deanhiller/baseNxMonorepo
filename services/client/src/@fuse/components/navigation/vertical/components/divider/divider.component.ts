@@ -26,10 +26,10 @@ export class FuseVerticalNavigationDividerItemComponent
     private _changeDetectorRef = inject(ChangeDetectorRef);
     private _fuseNavigationService = inject(FuseNavigationService);
 
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
+    @Input() item!: FuseNavigationItem;
+    @Input() name!: string;
 
-    private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
+    private _fuseVerticalNavigationComponent!: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // -----------------------------------------------------------------------------------------------------

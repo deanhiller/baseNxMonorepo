@@ -18,8 +18,8 @@ import { Chat } from 'app/modules/admin/apps/chat/chat.types';
     imports: [MatButtonModule, MatIconModule],
 })
 export class ContactInfoComponent {
-    @Input() chat: Chat;
-    @Input() drawer: MatDrawer;
+    @Input() chat!: Chat; // required input
+    @Input() drawer!: MatDrawer; // required input
 
     /**
      * Constructor

@@ -24,20 +24,19 @@ import {
 export class InventoryService {
     // Private
     private _brands: BehaviorSubject<InventoryBrand[] | null> =
-        new BehaviorSubject(null);
+        new BehaviorSubject<InventoryBrand[] | null>(null);
     private _categories: BehaviorSubject<InventoryCategory[] | null> =
-        new BehaviorSubject(null);
+        new BehaviorSubject<InventoryCategory[] | null>(null);
     private _pagination: BehaviorSubject<InventoryPagination | null> =
-        new BehaviorSubject(null);
+        new BehaviorSubject<InventoryPagination | null>(null);
     private _product: BehaviorSubject<InventoryProduct | null> =
-        new BehaviorSubject(null);
+        new BehaviorSubject<InventoryProduct | null>(null);
     private _products: BehaviorSubject<InventoryProduct[] | null> =
-        new BehaviorSubject(null);
-    private _tags: BehaviorSubject<InventoryTag[] | null> = new BehaviorSubject(
-        null
-    );
+        new BehaviorSubject<InventoryProduct[] | null>(null);
+    private _tags: BehaviorSubject<InventoryTag[] | null> =
+        new BehaviorSubject<InventoryTag[] | null>(null);
     private _vendors: BehaviorSubject<InventoryVendor[] | null> =
-        new BehaviorSubject(null);
+        new BehaviorSubject<InventoryVendor[] | null>(null);
 
     /**
      * Constructor
@@ -51,49 +50,49 @@ export class InventoryService {
     /**
      * Getter for brands
      */
-    get brands$(): Observable<InventoryBrand[]> {
+    get brands$(): Observable<InventoryBrand[] | null> {
         return this._brands.asObservable();
     }
 
     /**
      * Getter for categories
      */
-    get categories$(): Observable<InventoryCategory[]> {
+    get categories$(): Observable<InventoryCategory[] | null> {
         return this._categories.asObservable();
     }
 
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<InventoryPagination> {
+    get pagination$(): Observable<InventoryPagination | null> {
         return this._pagination.asObservable();
     }
 
     /**
      * Getter for product
      */
-    get product$(): Observable<InventoryProduct> {
+    get product$(): Observable<InventoryProduct | null> {
         return this._product.asObservable();
     }
 
     /**
      * Getter for products
      */
-    get products$(): Observable<InventoryProduct[]> {
+    get products$(): Observable<InventoryProduct[] | null> {
         return this._products.asObservable();
     }
 
     /**
      * Getter for tags
      */
-    get tags$(): Observable<InventoryTag[]> {
+    get tags$(): Observable<InventoryTag[] | null> {
         return this._tags.asObservable();
     }
 
     /**
      * Getter for vendors
      */
-    get vendors$(): Observable<InventoryVendor[]> {
+    get vendors$(): Observable<InventoryVendor[] | null> {
         return this._vendors.asObservable();
     }
 
@@ -176,7 +175,8 @@ export class InventoryService {
             take(1),
             map((products) => {
                 // Find the product
-                const product = products.find((item) => item.id === id) || null;
+                const product =
+                    (products ?? []).find((item) => item.id === id) || null;
 
                 // Update the product
                 this._product.next(product);
@@ -211,7 +211,10 @@ export class InventoryService {
                     .pipe(
                         map((newProduct) => {
                             // Update the products with the new product
-                            this._products.next([newProduct, ...products]);
+                            this._products.next([
+                                newProduct,
+                                ...(products ?? []),
+                            ]);
 
                             // Return the new product
                             return newProduct;
@@ -245,15 +248,18 @@ export class InventoryService {
                     .pipe(
                         map((updatedProduct) => {
                             // Find the index of the updated product
-                            const index = products.findIndex(
+                            const list = products ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the product
-                            products[index] = updatedProduct;
+                            if (index > -1) {
+                                list[index] = updatedProduct;
+                            }
 
                             // Update the products
-                            this._products.next(products);
+                            this._products.next(list);
 
                             // Return the updated product
                             return updatedProduct;
@@ -261,8 +267,11 @@ export class InventoryService {
                         switchMap((updatedProduct) =>
                             this.product$.pipe(
                                 take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
+                                filter(
+                                    (item): item is InventoryProduct =>
+                                        !!item && item.id === id
+                                ),
+                                map(() => {
                                     // Update the product if it's selected
                                     this._product.next(updatedProduct);
 
@@ -292,15 +301,18 @@ export class InventoryService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted product
-                            const index = products.findIndex(
+                            const list = products ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the product
-                            products.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the products
-                            this._products.next(products);
+                            this._products.next(list);
 
                             // Return the deleted status
                             return isDeleted;
@@ -339,7 +351,7 @@ export class InventoryService {
                     .pipe(
                         map((newTag) => {
                             // Update the tags with the new tag
-                            this._tags.next([...tags, newTag]);
+                            this._tags.next([...(tags ?? []), newTag]);
 
                             // Return new tag from observable
                             return newTag;
@@ -367,15 +379,18 @@ export class InventoryService {
                     .pipe(
                         map((updatedTag) => {
                             // Find the index of the updated tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the tag
-                            tags[index] = updatedTag;
+                            if (index > -1) {
+                                list[index] = updatedTag;
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the updated tag
                             return updatedTag;
@@ -401,15 +416,18 @@ export class InventoryService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the tag
-                            tags.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the deleted status
                             return isDeleted;
@@ -420,14 +438,15 @@ export class InventoryService {
                                 take(1),
                                 map((products) => {
                                     // Iterate through the contacts
-                                    products.forEach((product) => {
-                                        const tagIndex = product.tags.findIndex(
-                                            (tag) => tag === id
-                                        );
+                                    (products ?? []).forEach((product) => {
+                                        const tagIndex =
+                                            product.tags?.findIndex(
+                                                (tag) => tag === id
+                                            ) ?? -1;
 
                                         // If the contact has the tag, remove it
                                         if (tagIndex > -1) {
-                                            product.tags.splice(tagIndex, 1);
+                                            product.tags?.splice(tagIndex, 1);
                                         }
                                     });
 

@@ -45,11 +45,11 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    config: FuseConfig;
-    layout: string;
-    scheme: 'dark' | 'light';
-    theme: string;
-    themes: Themes;
+    config!: FuseConfig; // set in ngOnInit via subscribe
+    layout!: string; // set via config update cycle
+    scheme!: 'dark' | 'light'; // set via config update cycle
+    theme!: string; // set via config update cycle
+    themes!: Themes; // set via config update cycle
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

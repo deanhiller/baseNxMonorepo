@@ -52,14 +52,14 @@ export class FuseVerticalNavigationAsideItemComponent
     private _router = inject(Router);
     private _fuseNavigationService = inject(FuseNavigationService);
 
-    @Input() activeItemId: string;
-    @Input() autoCollapse: boolean;
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
-    @Input() skipChildren: boolean;
+    @Input() activeItemId!: string;
+    @Input() autoCollapse!: boolean;
+    @Input() item!: FuseNavigationItem;
+    @Input() name!: string;
+    @Input() skipChildren!: boolean;
 
     active: boolean = false;
-    private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
+    private _fuseVerticalNavigationComponent!: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // -----------------------------------------------------------------------------------------------------

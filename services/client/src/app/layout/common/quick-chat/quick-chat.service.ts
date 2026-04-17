@@ -13,8 +13,11 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class QuickChatService {
-    private _chat: BehaviorSubject<Chat> = new BehaviorSubject(null);
-    private _chats: BehaviorSubject<Chat[]> = new BehaviorSubject<Chat[]>(null);
+    private _chat: BehaviorSubject<Chat | null> =
+        new BehaviorSubject<Chat | null>(null);
+    private _chats: BehaviorSubject<Chat[] | null> = new BehaviorSubject<
+        Chat[] | null
+    >(null);
 
     /**
      * Constructor
@@ -28,14 +31,14 @@ export class QuickChatService {
     /**
      * Getter for chat
      */
-    get chat$(): Observable<Chat> {
+    get chat$(): Observable<Chat | null> {
         return this._chat.asObservable();
     }
 
     /**
      * Getter for chat
      */
-    get chats$(): Observable<Chat[]> {
+    get chats$(): Observable<Chat[] | null> {
         return this._chats.asObservable();
     }
 

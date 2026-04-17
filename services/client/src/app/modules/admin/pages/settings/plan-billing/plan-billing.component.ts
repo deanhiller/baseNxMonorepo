@@ -42,8 +42,9 @@ import { FuseAlertComponent } from '@fuse/components/alert';
     ],
 })
 export class SettingsPlanBillingComponent implements OnInit {
-    planBillingForm: UntypedFormGroup;
-    plans: any[];
+    planBillingForm!: UntypedFormGroup; // set in ngOnInit
+    // webpieces-disable no-any-unknown -- plans are heterogeneous demo records
+    plans: any[] = [];
 
     /**
      * Constructor

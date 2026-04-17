@@ -7,9 +7,10 @@ import {
 } from '@angular/router';
 import { AcademyComponent } from 'app/modules/admin/apps/academy/academy.component';
 import { AcademyService } from 'app/modules/admin/apps/academy/academy.service';
+import { Course } from 'app/modules/admin/apps/academy/academy.types';
 import { AcademyDetailsComponent } from 'app/modules/admin/apps/academy/details/details.component';
 import { AcademyListComponent } from 'app/modules/admin/apps/academy/list/list.component';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 /**
  * Course resolver
@@ -20,11 +21,12 @@ import { catchError, throwError } from 'rxjs';
 const courseResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+): Observable<Course> => {
     const academyService = inject(AcademyService);
     const router = inject(Router);
 
-    return academyService.getCourseById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return academyService.getCourseById(route.paramMap.get('id')!).pipe(
         // Error here means the requested course is not available
         catchError((error) => {
 

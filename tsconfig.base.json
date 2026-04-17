@@ -22,6 +22,8 @@
         "strictFunctionTypes": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
         "baseUrl": ".",
         "paths": {
             "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],

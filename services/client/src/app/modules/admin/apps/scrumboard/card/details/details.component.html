@@ -85,7 +85,7 @@
                         <mat-datepicker-actions>
                             <button
                                 mat-button
-                                (click)="cardForm.get('dueDate').setValue(null)"
+                                (click)="cardForm.get('dueDate')?.setValue(null)"
                                 matDatepickerCancel
                             >
                                 Clear

@@ -147,9 +147,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
         // 2. Filter out the ones that doesn't have cross reference so we only left with the ones that use the 'url(#id)' syntax
         // 3. Insert the 'currentURL' at the front of the 'fill' attribute value
         Array.from(element.querySelectorAll('*[fill]'))
-            .filter((el) => el.getAttribute('fill').indexOf('url(') !== -1)
+            .filter(
+                (el) => (el.getAttribute('fill') ?? '').indexOf('url(') !== -1
+            )
             .forEach((el) => {
-                const attrVal = el.getAttribute('fill');
+                const attrVal = el.getAttribute('fill') ?? '';
                 el.setAttribute(
                     'fill',
                     `url(${currentURL}${attrVal.slice(attrVal.indexOf('#'))}`

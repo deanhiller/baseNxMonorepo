@@ -73,7 +73,8 @@ export class SearchMockApi {
                 );
 
                 // Prepare the results array
-                const results = [];
+                // webpieces-disable no-any-unknown -- results entries are heterogeneous search result groups
+                const results: any[] = [];
 
                 // If there are contacts results...
                 if (contactsResults.length > 0) {

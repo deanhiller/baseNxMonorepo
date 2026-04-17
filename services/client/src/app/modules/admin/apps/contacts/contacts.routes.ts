@@ -7,9 +7,10 @@ import {
 } from '@angular/router';
 import { ContactsComponent } from 'app/modules/admin/apps/contacts/contacts.component';
 import { ContactsService } from 'app/modules/admin/apps/contacts/contacts.service';
+import { Contact } from 'app/modules/admin/apps/contacts/contacts.types';
 import { ContactsDetailsComponent } from 'app/modules/admin/apps/contacts/details/details.component';
 import { ContactsListComponent } from 'app/modules/admin/apps/contacts/list/list.component';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 /**
  * Contact resolver
@@ -20,11 +21,12 @@ import { catchError, throwError } from 'rxjs';
 const contactResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+): Observable<Contact> => {
     const contactsService = inject(ContactsService);
     const router = inject(Router);
 
-    return contactsService.getContactById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return contactsService.getContactById(route.paramMap.get('id')!).pipe(
         // Error here means the requested contact is not available
         catchError((error) => {
 

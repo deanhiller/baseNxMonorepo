@@ -52,13 +52,14 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class ShortcutsComponent implements OnInit, OnDestroy {
-    @ViewChild('shortcutsOrigin') private _shortcutsOrigin: MatButton;
-    @ViewChild('shortcutsPanel') private _shortcutsPanel: TemplateRef<any>;
+    @ViewChild('shortcutsOrigin') private _shortcutsOrigin!: MatButton; // set by Angular after view init
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    @ViewChild('shortcutsPanel') private _shortcutsPanel!: TemplateRef<any>; // set by Angular after view init
 
     mode: 'view' | 'modify' | 'add' | 'edit' = 'view';
-    shortcutForm: UntypedFormGroup;
-    shortcuts: Shortcut[];
-    private _overlayRef: OverlayRef;
+    shortcutForm!: UntypedFormGroup; // set in ngOnInit
+    shortcuts: Shortcut[] = [];
+    private _overlayRef!: OverlayRef; // created lazily in _createOverlay()
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

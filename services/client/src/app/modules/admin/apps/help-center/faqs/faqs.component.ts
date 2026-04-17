@@ -15,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [MatButtonModule, RouterLink, MatIconModule, MatExpansionModule],
 })
 export class HelpCenterFaqsComponent implements OnInit, OnDestroy {
-    faqCategories: FaqCategory[];
+    faqCategories: FaqCategory[] = [];
     private _unsubscribeAll: Subject<any> = new Subject();
 
     /**

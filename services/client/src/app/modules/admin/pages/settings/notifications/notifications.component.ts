@@ -27,7 +27,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ],
 })
 export class SettingsNotificationsComponent implements OnInit {
-    notificationsForm: UntypedFormGroup;
+    notificationsForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

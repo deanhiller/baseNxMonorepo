@@ -58,12 +58,12 @@ import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
     ],
 })
 export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
-    @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
-    board: Board;
-    card: Card;
-    cardForm: UntypedFormGroup;
-    labels: Label[];
-    filteredLabels: Label[];
+    @ViewChild('labelInput') labelInput!: ElementRef<HTMLInputElement>;
+    board!: Board;
+    card!: Card;
+    cardForm!: UntypedFormGroup;
+    labels: Label[] = [];
+    filteredLabels: Label[] = [];
 
     // Private
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -90,6 +90,9 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
         this._scrumboardService.board$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((board) => {
+                if (!board) {
+                    return;
+                }
                 // Board data
                 this.board = board;
 
@@ -101,6 +104,9 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
         this._scrumboardService.card$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((card) => {
+                if (!card) {
+                    return;
+                }
                 this.card = card;
             });
 
@@ -236,8 +242,8 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
         // Add the label
         this.card.labels.unshift(label);
 
-        // Update the card form data
-        this.cardForm.get('labels').patchValue(this.card.labels);
+        // Update the card form data — 'labels' control declared in ngOnInit
+        this.cardForm.get('labels')!.patchValue(this.card.labels);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -257,8 +263,8 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
             1
         );
 
-        // Update the card form data
-        this.cardForm.get('labels').patchValue(this.card.labels);
+        // Update the card form data — 'labels' control declared in ngOnInit
+        this.cardForm.get('labels')!.patchValue(this.card.labels);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();

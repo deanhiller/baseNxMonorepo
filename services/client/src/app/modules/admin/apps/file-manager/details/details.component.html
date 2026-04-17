@@ -38,7 +38,7 @@
             [class.bg-gray-600]="item.type === 'TXT'"
             [class.bg-amber-600]="item.type === 'JPG'"
         >
-            {{ item.type.toUpperCase() }}
+            {{ item.type?.toUpperCase() }}
         </div>
     </div>
 

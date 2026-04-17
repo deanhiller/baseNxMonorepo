@@ -73,17 +73,18 @@ import { Subject, debounceTime, filter, takeUntil, tap } from 'rxjs';
     ],
 })
 export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('tagsPanelOrigin') private _tagsPanelOrigin: ElementRef;
-    @ViewChild('tagsPanel') private _tagsPanel: TemplateRef<any>;
-    @ViewChild('titleField') private _titleField: ElementRef;
+    @ViewChild('tagsPanelOrigin') private _tagsPanelOrigin!: ElementRef;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    @ViewChild('tagsPanel') private _tagsPanel!: TemplateRef<unknown>;
+    @ViewChild('titleField') private _titleField!: ElementRef;
 
-    tags: Tag[];
+    tags: Tag[] = [];
     tagsEditMode: boolean = false;
-    filteredTags: Tag[];
-    task: Task;
-    taskForm: UntypedFormGroup;
-    tasks: Task[];
-    private _tagsPanelOverlayRef: OverlayRef;
+    filteredTags: Tag[] = [];
+    task!: Task;
+    taskForm!: UntypedFormGroup;
+    tasks: Task[] = [];
+    private _tagsPanelOverlayRef!: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -129,9 +130,9 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         // Get the tags
         this._tasksService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: Tag[]) => {
-                this.tags = tags;
-                this.filteredTags = tags;
+            .subscribe((tags) => {
+                this.tags = tags ?? [];
+                this.filteredTags = tags ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -140,8 +141,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         // Get the tasks
         this._tasksService.tasks$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tasks: Task[]) => {
-                this.tasks = tasks;
+            .subscribe((tasks) => {
+                this.tasks = tasks ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -150,7 +151,10 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         // Get the task
         this._tasksService.task$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((task: Task) => {
+            .subscribe((task) => {
+                if (!task) {
+                    return;
+                }
                 // Open the drawer in case it is closed
                 this._tasksListComponent.matDrawer.open();
 
@@ -239,8 +243,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      * Toggle the completed status
      */
     toggleCompleted(): void {
-        // Get the form control for 'completed'
-        const completedFormControl = this.taskForm.get('completed');
+        // 'completed' form control is declared in ngOnInit
+        const completedFormControl = this.taskForm.get('completed')!;
 
         // Toggle the completed status
         completedFormControl.setValue(!completedFormControl.value);
@@ -276,7 +280,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
             // Focus to the search input once the overlay has been attached
             this._tagsPanelOverlayRef.overlayElement
                 .querySelector('input')
-                .focus();
+                ?.focus();
         });
 
         // Create a portal from the template
@@ -331,7 +335,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Filter the tags
         this.filteredTags = this.tags.filter((tag) =>
-            tag.title.toLowerCase().includes(value)
+            (tag.title ?? '').toLowerCase().includes(value)
         );
     }
 
@@ -360,7 +364,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // If there is a tag...
         const tag = this.filteredTags[0];
-        const isTagApplied = this.task.tags.find((id) => id === tag.id);
+        const isTagApplied = this.task.tags?.find((id) => id === tag.id);
 
         // If the found tag is already applied to the task...
         if (isTagApplied) {
@@ -400,8 +404,9 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         tag.title = event.target.value;
 
         // Update the tag on the server
+        // Tag.id is always set for tags loaded from the server
         this._tasksService
-            .updateTag(tag.id, tag)
+            .updateTag(tag.id!, tag)
             .pipe(debounceTime(300))
             .subscribe();
 
@@ -416,7 +421,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     deleteTag(tag: Tag): void {
         // Delete the tag from the server
-        this._tasksService.deleteTag(tag.id).subscribe();
+        // Tag.id is always set for tags loaded from the server
+        this._tasksService.deleteTag(tag.id!).subscribe();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -428,11 +434,16 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param tag
      */
     addTagToTask(tag: Tag): void {
+        if (!tag.id) {
+            return;
+        }
+        // Ensure tags array exists
+        this.task.tags = this.task.tags ?? [];
         // Add the tag
         this.task.tags.unshift(tag.id);
 
-        // Update the task form
-        this.taskForm.get('tags').patchValue(this.task.tags);
+        // Update the task form — 'tags' control declared in ngOnInit
+        this.taskForm.get('tags')!.patchValue(this.task.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -444,14 +455,17 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param tag
      */
     deleteTagFromTask(tag: Tag): void {
+        if (!this.task.tags) {
+            return;
+        }
         // Remove the tag
         this.task.tags.splice(
             this.task.tags.findIndex((item) => item === tag.id),
             1
         );
 
-        // Update the task form
-        this.taskForm.get('tags').patchValue(this.task.tags);
+        // Update the task form — 'tags' control declared in ngOnInit
+        this.taskForm.get('tags')!.patchValue(this.task.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -463,7 +477,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param tag
      */
     toggleTaskTag(tag: Tag): void {
-        if (this.task.tags.includes(tag.id)) {
+        if (tag.id && (this.task.tags ?? []).includes(tag.id)) {
             this.deleteTagFromTask(tag);
         } else {
             this.addTagToTask(tag);
@@ -479,7 +493,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         return !!!(
             inputValue === '' ||
             this.tags.findIndex(
-                (tag) => tag.title.toLowerCase() === inputValue.toLowerCase()
+                (tag) =>
+                    (tag.title ?? '').toLowerCase() === inputValue.toLowerCase()
             ) > -1
         );
     }
@@ -490,8 +505,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param priority
      */
     setTaskPriority(priority): void {
-        // Set the value
-        this.taskForm.get('priority').setValue(priority);
+        // 'priority' form control is declared in ngOnInit
+        this.taskForm.get('priority')!.setValue(priority);
     }
 
     /**
@@ -499,7 +514,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     isOverdue(): boolean {
         return (
-            DateTime.fromISO(this.task.dueDate).startOf('day') <
+            DateTime.fromISO(this.task.dueDate ?? '').startOf('day') <
             DateTime.now().startOf('day')
         );
     }

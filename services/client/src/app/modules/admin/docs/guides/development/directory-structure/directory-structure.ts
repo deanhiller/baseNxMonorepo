@@ -233,7 +233,7 @@ export class DirectoryStructureComponent implements OnInit {
      * @param node
      */
     hasChild(_: number, node: DirNode): boolean {
-        return node.expandable;
+        return node.expandable ?? false;
     }
 
     /**

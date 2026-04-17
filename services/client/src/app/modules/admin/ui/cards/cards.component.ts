@@ -61,7 +61,7 @@ import { FuseCardComponent } from '@fuse/components/card';
 })
 export class CardsComponent implements AfterViewInit {
     @ViewChildren(FuseCardComponent, { read: ElementRef })
-    private _fuseCards: QueryList<ElementRef>;
+    private _fuseCards!: QueryList<ElementRef>; // set by Angular after view init
 
     filters: string[] = [
         'all',

@@ -43,8 +43,8 @@ import { debounceTime, take } from 'rxjs';
 export class MailboxSettingsComponent implements OnInit {
     labelColors: any = labelColors;
     labelColorDefs: any = labelColorDefs;
-    labels: MailLabel[];
-    labelsForm: UntypedFormGroup;
+    labels: MailLabel[] = [];
+    labelsForm!: UntypedFormGroup;
 
     /**
      * Constructor
@@ -75,12 +75,12 @@ export class MailboxSettingsComponent implements OnInit {
         // Labels
         this._mailboxService.labels$
             .pipe(take(1))
-            .subscribe((labels: MailLabel[]) => {
+            .subscribe((labels) => {
                 // Get the labels
-                this.labels = labels;
+                this.labels = labels ?? [];
 
                 // Iterate through the labels
-                labels.forEach((label) => {
+                (labels ?? []).forEach((label) => {
                     // Create a label form group
                     const labelFormGroup = this._formBuilder.group({
                         id: [label.id],
@@ -96,9 +96,9 @@ export class MailboxSettingsComponent implements OnInit {
                 });
             });
 
-        // Update labels when there is a value change
+        // Update labels when there is a value change — 'labels' control declared above
         this.labelsForm
-            .get('labels')
+            .get('labels')!
             .valueChanges.pipe(debounceTime(500))
             .subscribe(() => {
                 this.updateLabels();
@@ -113,9 +113,9 @@ export class MailboxSettingsComponent implements OnInit {
      * Add a label
      */
     addLabel(): void {
-        // Add label to the server
+        // Add label to the server — 'newLabel' and 'newLabel.title' are declared in ngOnInit
         this._mailboxService
-            .addLabel(this.labelsForm.get('newLabel').value)
+            .addLabel(this.labelsForm.get('newLabel')!.value)
             .subscribe((addedLabel) => {
                 // Push the new label to the labels form array
                 (this.labelsForm.get('labels') as UntypedFormArray).push(
@@ -128,11 +128,11 @@ export class MailboxSettingsComponent implements OnInit {
                 );
 
                 // Reset the new label form
-                this.labelsForm.get('newLabel').markAsPristine();
-                this.labelsForm.get('newLabel').markAsUntouched();
-                this.labelsForm.get('newLabel.title').reset();
-                this.labelsForm.get('newLabel.title').clearValidators();
-                this.labelsForm.get('newLabel.title').updateValueAndValidity();
+                this.labelsForm.get('newLabel')!.markAsPristine();
+                this.labelsForm.get('newLabel')!.markAsUntouched();
+                this.labelsForm.get('newLabel.title')!.reset();
+                this.labelsForm.get('newLabel.title')!.clearValidators();
+                this.labelsForm.get('newLabel.title')!.updateValueAndValidity();
             });
     }
 
@@ -174,8 +174,8 @@ export class MailboxSettingsComponent implements OnInit {
             }
         );
 
-        // Reset the labels form array
-        this.labelsForm.get('labels').markAsPristine();
-        this.labelsForm.get('labels').markAsUntouched();
+        // Reset the labels form array — 'labels' control declared in ngOnInit
+        this.labelsForm.get('labels')!.markAsPristine();
+        this.labelsForm.get('labels')!.markAsUntouched();
     }
 }

@@ -27,7 +27,7 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
     private _fuseLoadingService = inject(FuseLoadingService);
 
     @Input() autoMode: boolean = true;
-    mode: 'determinate' | 'indeterminate';
+    mode!: 'determinate' | 'indeterminate';
     progress: number = 0;
     show: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -65,7 +65,7 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
         this._fuseLoadingService.progress$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((value) => {
-                this.progress = value;
+                this.progress = value ?? 0;
             });
 
         this._fuseLoadingService.show$

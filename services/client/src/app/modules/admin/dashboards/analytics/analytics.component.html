@@ -109,7 +109,7 @@
                         [fill]="chartVisitors.fill"
                         [grid]="chartVisitors.grid"
                         [series]="
-                            chartVisitors.series[visitorsYearSelector.value]
+                            $any(chartVisitors.series)[visitorsYearSelector.value]
                         "
                         [stroke]="chartVisitors.stroke"
                         [tooltip]="chartVisitors.tooltip"

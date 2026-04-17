@@ -59,12 +59,12 @@ import { Subject, filter, fromEvent, takeUntil } from 'rxjs';
     ],
 })
 export class TasksListComponent implements OnInit, OnDestroy {
-    @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
+    @ViewChild('matDrawer', { static: true }) matDrawer!: MatDrawer;
 
-    drawerMode: 'side' | 'over';
-    selectedTask: Task;
-    tags: Tag[];
-    tasks: Task[];
+    drawerMode: 'side' | 'over' = 'side';
+    selectedTask: Task | null = null;
+    tags: Tag[] = [];
+    tasks: Task[] = [];
     tasksCount: any = {
         completed: 0,
         incomplete: 0,
@@ -96,8 +96,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
         // Get the tags
         this._tasksService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: Tag[]) => {
-                this.tags = tags;
+            .subscribe((tags) => {
+                this.tags = tags ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -106,8 +106,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
         // Get the tasks
         this._tasksService.tasks$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tasks: Task[]) => {
-                this.tasks = tasks;
+            .subscribe((tasks) => {
+                this.tasks = tasks ?? [];
 
                 // Update the counts
                 this.tasksCount.total = this.tasks.filter(
@@ -128,7 +128,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
         // Get the task
         this._tasksService.task$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((task: Task) => {
+            .subscribe((task) => {
                 this.selectedTask = task;
 
                 // Mark for check
@@ -159,10 +159,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
             return;
         }
         const mainNavigation = mainNavigationComponent.navigation;
+        // 'apps.tasks' nav item is declared in the main navigation config
         const menuItem = this._fuseNavigationService.getItem(
             'apps.tasks',
             mainNavigation
-        );
+        )!;
         menuItem.subtitle =
             this.tasksCount.incomplete + ' remaining tasks';
         mainNavigationComponent.refresh();

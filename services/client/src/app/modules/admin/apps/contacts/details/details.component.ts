@@ -72,19 +72,20 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     ],
 })
 export class ContactsDetailsComponent implements OnInit, OnDestroy {
-    @ViewChild('avatarFileInput') private _avatarFileInput: ElementRef;
-    @ViewChild('tagsPanel') private _tagsPanel: TemplateRef<any>;
-    @ViewChild('tagsPanelOrigin') private _tagsPanelOrigin: ElementRef;
+    @ViewChild('avatarFileInput') private _avatarFileInput!: ElementRef;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    @ViewChild('tagsPanel') private _tagsPanel!: TemplateRef<unknown>;
+    @ViewChild('tagsPanelOrigin') private _tagsPanelOrigin!: ElementRef;
 
     editMode: boolean = false;
-    tags: Tag[];
+    tags: Tag[] = [];
     tagsEditMode: boolean = false;
-    filteredTags: Tag[];
-    contact: Contact;
-    contactForm: UntypedFormGroup;
-    contacts: Contact[];
-    countries: Country[];
-    private _tagsPanelOverlayRef: OverlayRef;
+    filteredTags: Tag[] = [];
+    contact!: Contact;
+    contactForm!: UntypedFormGroup;
+    contacts: Contact[] = [];
+    countries: Country[] = [];
+    private _tagsPanelOverlayRef!: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -132,8 +133,8 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         // Get the contacts
         this._contactsService.contacts$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contacts: Contact[]) => {
-                this.contacts = contacts;
+            .subscribe((contacts) => {
+                this.contacts = contacts ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -142,7 +143,10 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         // Get the contact
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contact: Contact) => {
+            .subscribe((contact) => {
+                if (!contact) {
+                    return;
+                }
                 // Open the drawer in case it is closed
                 this._contactsListComponent.matDrawer.open();
 
@@ -159,11 +163,11 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
                 this.contactForm.patchValue(contact);
 
                 // Setup the emails form array
-                const emailFormGroups = [];
+                const emailFormGroups: UntypedFormGroup[] = [];
 
-                if (contact.emails.length > 0) {
+                if ((contact.emails?.length ?? 0) > 0) {
                     // Iterate through them
-                    contact.emails.forEach((email) => {
+                    contact.emails!.forEach((email) => {
                         // Create an email form group
                         emailFormGroups.push(
                             this._formBuilder.group({
@@ -190,11 +194,11 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
                 });
 
                 // Setup the phone numbers form array
-                const phoneNumbersFormGroups = [];
+                const phoneNumbersFormGroups: UntypedFormGroup[] = [];
 
-                if (contact.phoneNumbers.length > 0) {
+                if ((contact.phoneNumbers?.length ?? 0) > 0) {
                     // Iterate through them
-                    contact.phoneNumbers.forEach((phoneNumber) => {
+                    contact.phoneNumbers!.forEach((phoneNumber) => {
                         // Create an email form group
                         phoneNumbersFormGroups.push(
                             this._formBuilder.group({
@@ -232,8 +236,8 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         // Get the country telephone codes
         this._contactsService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((codes: Country[]) => {
-                this.countries = codes;
+            .subscribe((codes) => {
+                this.countries = codes ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -242,9 +246,9 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         // Get the tags
         this._contactsService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: Tag[]) => {
-                this.tags = tags;
-                this.filteredTags = tags;
+            .subscribe((tags) => {
+                this.tags = tags ?? [];
+                this.filteredTags = tags ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -409,8 +413,8 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      * Remove the avatar
      */
     removeAvatar(): void {
-        // Get the form control for 'avatar'
-        const avatarFormControl = this.contactForm.get('avatar');
+        // 'avatar' form control is declared in ngOnInit
+        const avatarFormControl = this.contactForm.get('avatar')!;
 
         // Set the avatar as null
         avatarFormControl.setValue(null);
@@ -458,7 +462,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
             // Focus to the search input once the overlay has been attached
             this._tagsPanelOverlayRef.overlayElement
                 .querySelector('input')
-                .focus();
+                ?.focus();
         });
 
         // Create a portal from the template
@@ -519,7 +523,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
 
         // Filter the tags
         this.filteredTags = this.tags.filter((tag) =>
-            tag.title.toLowerCase().includes(value)
+            (tag.title ?? '').toLowerCase().includes(value)
         );
     }
 
@@ -588,8 +592,9 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         tag.title = event.target.value;
 
         // Update the tag on the server
+        // Tag.id is always set for tags loaded from the server
         this._contactsService
-            .updateTag(tag.id, tag)
+            .updateTag(tag.id!, tag)
             .pipe(debounceTime(300))
             .subscribe();
 
@@ -604,7 +609,8 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      */
     deleteTag(tag: Tag): void {
         // Delete the tag from the server
-        this._contactsService.deleteTag(tag.id).subscribe();
+        // Tag.id is always set for tags loaded from the server
+        this._contactsService.deleteTag(tag.id!).subscribe();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -616,11 +622,16 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      * @param tag
      */
     addTagToContact(tag: Tag): void {
+        if (!tag.id) {
+            return;
+        }
+        // Ensure tags array exists
+        this.contact.tags = this.contact.tags ?? [];
         // Add the tag
         this.contact.tags.unshift(tag.id);
 
         // Update the contact form
-        this.contactForm.get('tags').patchValue(this.contact.tags);
+        this.contactForm.get('tags')!.patchValue(this.contact.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -632,6 +643,9 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      * @param tag
      */
     removeTagFromContact(tag: Tag): void {
+        if (!this.contact.tags) {
+            return;
+        }
         // Remove the tag
         this.contact.tags.splice(
             this.contact.tags.findIndex((item) => item === tag.id),
@@ -639,7 +653,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         );
 
         // Update the contact form
-        this.contactForm.get('tags').patchValue(this.contact.tags);
+        this.contactForm.get('tags')!.patchValue(this.contact.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -651,7 +665,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      * @param tag
      */
     toggleContactTag(tag: Tag): void {
-        if (this.contact.tags.includes(tag.id)) {
+        if (tag.id && (this.contact.tags ?? []).includes(tag.id)) {
             this.removeTagFromContact(tag);
         } else {
             this.addTagToContact(tag);
@@ -667,7 +681,8 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         return !!!(
             inputValue === '' ||
             this.tags.findIndex(
-                (tag) => tag.title.toLowerCase() === inputValue.toLowerCase()
+                (tag) =>
+                    (tag.title ?? '').toLowerCase() === inputValue.toLowerCase()
             ) > -1
         );
     }
@@ -752,7 +767,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      *
      * @param iso
      */
-    getCountryByIso(iso: string): Country {
+    getCountryByIso(iso: string): Country | undefined {
         return this.countries.find((country) => country.iso === iso);
     }
 

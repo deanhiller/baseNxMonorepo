@@ -38,13 +38,14 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-    @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
+    @ViewChild('notificationsOrigin') private _notificationsOrigin!: MatButton; // set by Angular after view init
     @ViewChild('notificationsPanel')
-    private _notificationsPanel: TemplateRef<any>;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    private _notificationsPanel!: TemplateRef<any>; // set by Angular after view init
 
-    notifications: Notification[];
+    notifications: Notification[] = [];
     unreadCount: number = 0;
-    private _overlayRef: OverlayRef;
+    private _overlayRef!: OverlayRef; // created lazily in _createOverlay()
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

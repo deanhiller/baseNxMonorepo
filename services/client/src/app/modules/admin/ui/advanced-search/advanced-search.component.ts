@@ -51,7 +51,7 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
         isArchived: false,
         isStarred: false,
     };
-    queryParams: Params;
+    queryParams!: Params; // set in ngOnInit via queryParams subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

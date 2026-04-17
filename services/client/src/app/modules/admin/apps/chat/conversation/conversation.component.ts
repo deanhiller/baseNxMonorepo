@@ -47,8 +47,8 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class ConversationComponent implements OnInit, OnDestroy {
-    @ViewChild('messageInput') messageInput: ElementRef;
-    chat: Chat;
+    @ViewChild('messageInput') messageInput!: ElementRef; // set by Angular after view init
+    chat!: Chat; // set in ngOnInit via subscribe
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -104,8 +104,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
         // Chat
         this._chatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) => {
-                this.chat = chat;
+            .subscribe((chat) => {
+                if (chat) {
+                    this.chat = chat;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -172,7 +174,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
         this.chat.muted = !this.chat.muted;
 
         // Update the chat on the server
-        this._chatService.updateChat(this.chat.id, this.chat).subscribe();
+        if (this.chat.id) {
+            this._chatService.updateChat(this.chat.id, this.chat).subscribe();
+        }
     }
 
     /**

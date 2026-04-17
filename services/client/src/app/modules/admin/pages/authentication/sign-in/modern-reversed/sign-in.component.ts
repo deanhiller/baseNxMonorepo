@@ -41,7 +41,7 @@ export class SignInModernReversedComponent implements OnInit {
         type: 'success',
         message: '',
     };
-    signInForm: UntypedFormGroup;
+    signInForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**

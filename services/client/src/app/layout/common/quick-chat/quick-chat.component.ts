@@ -44,14 +44,15 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('messageInput') messageInput: ElementRef;
-    chat: Chat;
-    chats: Chat[];
+    @ViewChild('messageInput') messageInput!: ElementRef; // set by Angular after view init
+    chat!: Chat; // set in ngOnInit via subscribe
+    chats: Chat[] = [];
     opened: boolean = false;
-    selectedChat: Chat;
-    private _mutationObserver: MutationObserver;
+    selectedChat!: Chat; // set in ngOnInit via subscribe
+    private _mutationObserver!: MutationObserver; // created in ngAfterViewInit
     private _scrollStrategy!: ScrollStrategy;
-    private _overlay: HTMLElement;
+    private _overlay: HTMLElement | null = null;
+    // webpieces-disable no-any-unknown -- Subject value is unused; used only for takeUntil signaling
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -112,22 +113,26 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
         // Chat
         this._quickChatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) => {
-                this.chat = chat;
+            .subscribe((chat) => {
+                if (chat) {
+                    this.chat = chat;
+                }
             });
 
         // Chats
         this._quickChatService.chats$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chats: Chat[]) => {
-                this.chats = chats;
+            .subscribe((chats) => {
+                this.chats = chats ?? [];
             });
 
         // Selected chat
         this._quickChatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) => {
-                this.selectedChat = chat;
+            .subscribe((chat) => {
+                if (chat) {
+                    this.selectedChat = chat;
+                }
             });
     }
 
@@ -298,7 +303,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         // If the backdrop still exists...
-        if (this._overlay) {
+        if (this._overlay && this._overlay.parentNode) {
             // Remove the backdrop
             this._overlay.parentNode.removeChild(this._overlay);
             this._overlay = null;

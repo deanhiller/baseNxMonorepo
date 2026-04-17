@@ -10,7 +10,7 @@ import { ChatService } from 'app/modules/admin/apps/chat/chat.service';
 import { ChatsComponent } from 'app/modules/admin/apps/chat/chats/chats.component';
 import { ConversationComponent } from 'app/modules/admin/apps/chat/conversation/conversation.component';
 import { EmptyConversationComponent } from 'app/modules/admin/apps/chat/empty-conversation/empty-conversation.component';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 /**
  * Conversation resolver
@@ -21,11 +21,13 @@ import { catchError, throwError } from 'rxjs';
 const conversationResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+    // webpieces-disable no-any-unknown -- getChatById returns Observable<any> in the service; keep that contract
+): Observable<any> => {
     const chatService = inject(ChatService);
     const router = inject(Router);
 
-    return chatService.getChatById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return chatService.getChatById(route.paramMap.get('id')!).pipe(
         // Error here means the requested chat is not available
         catchError((error) => {
 

@@ -18,8 +18,10 @@ import {
 @Injectable({ providedIn: 'root' })
 export class FileManagerService {
     // Private
-    private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
-    private _items: BehaviorSubject<Items | null> = new BehaviorSubject(null);
+    private _item: BehaviorSubject<Item | null> =
+        new BehaviorSubject<Item | null>(null);
+    private _items: BehaviorSubject<Items | null> =
+        new BehaviorSubject<Items | null>(null);
 
     /**
      * Constructor
@@ -33,14 +35,14 @@ export class FileManagerService {
     /**
      * Getter for items
      */
-    get items$(): Observable<Items> {
+    get items$(): Observable<Items | null> {
         return this._items.asObservable();
     }
 
     /**
      * Getter for item
      */
-    get item$(): Observable<Item> {
+    get item$(): Observable<Item | null> {
         return this._item.asObservable();
     }
 
@@ -51,11 +53,13 @@ export class FileManagerService {
     /**
      * Get items
      */
-    getItems(folderId: string | null = null): Observable<Item[]> {
+    getItems(folderId: string | null = null): Observable<Items> {
         return this._httpClient
-            .get<Items>('api/apps/file-manager', { params: { folderId } })
+            .get<Items>('api/apps/file-manager', {
+                params: { folderId: folderId ?? '' },
+            })
             .pipe(
-                tap((response: any) => {
+                tap((response) => {
                     this._items.next(response);
                 })
             );
@@ -70,9 +74,10 @@ export class FileManagerService {
             map((items) => {
                 // Find within the folders and files
                 const item =
-                    [...items.folders, ...items.files].find(
-                        (value) => value.id === id
-                    ) || null;
+                    [
+                        ...(items?.folders ?? []),
+                        ...(items?.files ?? []),
+                    ].find((value) => value.id === id) || null;
 
                 // Update the item
                 this._item.next(item);

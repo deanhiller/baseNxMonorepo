@@ -39,7 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: User;
+    user!: User; // set in ngOnInit via subscribe
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 

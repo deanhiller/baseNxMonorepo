@@ -26,9 +26,9 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [MatButtonModule, MatIconModule, FuseVerticalNavigationComponent],
 })
 export class MailboxSidebarComponent implements OnInit, OnDestroy {
-    filters: MailFilter[];
-    folders: MailFolder[];
-    labels: MailLabel[];
+    filters: MailFilter[] = [];
+    folders: MailFolder[] = [];
+    labels: MailLabel[] = [];
     menuData: FuseNavigationItem[] = [];
     private _filtersMenuData: FuseNavigationItem[] = [];
     private _foldersMenuData: FuseNavigationItem[] = [];
@@ -56,8 +56,8 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
         // Filters
         this._mailboxService.filters$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((filters: MailFilter[]) => {
-                this.filters = filters;
+            .subscribe((filters) => {
+                this.filters = filters ?? [];
 
                 // Generate menu links
                 this._generateFiltersMenuLinks();
@@ -66,21 +66,21 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
         // Folders
         this._mailboxService.folders$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((folders: MailFolder[]) => {
-                this.folders = folders;
+            .subscribe((folders) => {
+                this.folders = folders ?? [];
 
                 // Generate menu links
                 this._generateFoldersMenuLinks();
 
                 // Update navigation badge
-                this._updateNavigationBadge(folders);
+                this._updateNavigationBadge(this.folders);
             });
 
         // Labels
         this._mailboxService.labels$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((labels: MailLabel[]) => {
-                this.labels = labels;
+            .subscribe((labels) => {
+                this.labels = labels ?? [];
 
                 // Generate menu links
                 this._generateLabelsMenuLinks();
@@ -277,13 +277,14 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
         // If the main navigation component exists...
         if (mainNavigationComponent) {
             const mainNavigation = mainNavigationComponent.navigation;
+            // 'apps.mailbox' nav item + 'inbox' folder are defined in app config
             const menuItem = this._fuseNavigationService.getItem(
                 'apps.mailbox',
                 mainNavigation
-            );
+            )!;
 
             // Update the badge title of the item
-            menuItem.badge.title = inboxFolder.count + '';
+            menuItem.badge!.title = inboxFolder!.count + '';
 
             // Refresh the navigation
             mainNavigationComponent.refresh();

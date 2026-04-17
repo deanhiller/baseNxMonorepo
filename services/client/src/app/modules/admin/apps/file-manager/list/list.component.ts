@@ -41,10 +41,10 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class FileManagerListComponent implements OnInit, OnDestroy {
-    @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
-    drawerMode: 'side' | 'over';
-    selectedItem: Item;
-    items: Items;
+    @ViewChild('matDrawer', { static: true }) matDrawer!: MatDrawer; // set by Angular after view init
+    drawerMode!: 'side' | 'over'; // set in ngOnInit via media watcher
+    selectedItem!: Item; // set in ngOnInit via subscribe
+    items!: Items; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -69,8 +69,10 @@ export class FileManagerListComponent implements OnInit, OnDestroy {
         // Get the items
         this._fileManagerService.items$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((items: Items) => {
-                this.items = items;
+            .subscribe((items) => {
+                if (items) {
+                    this.items = items;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -79,8 +81,10 @@ export class FileManagerListComponent implements OnInit, OnDestroy {
         // Get the item
         this._fileManagerService.item$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((item: Item) => {
-                this.selectedItem = item;
+            .subscribe((item) => {
+                if (item) {
+                    this.selectedItem = item;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();

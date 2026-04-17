@@ -22,7 +22,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [MatButtonModule, MatIconModule],
 })
 export class NewChatComponent implements OnInit, OnDestroy {
-    @Input() drawer: MatDrawer;
+    @Input() drawer!: MatDrawer; // required input
     contacts: Contact[] = [];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -42,8 +42,8 @@ export class NewChatComponent implements OnInit, OnDestroy {
         // Contacts
         this._chatService.contacts$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contacts: Contact[]) => {
-                this.contacts = contacts;
+            .subscribe((contacts) => {
+                this.contacts = contacts ?? [];
             });
     }
 

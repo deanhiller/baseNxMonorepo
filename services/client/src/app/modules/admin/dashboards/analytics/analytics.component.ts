@@ -34,15 +34,15 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class AnalyticsComponent implements OnInit, OnDestroy {
-    chartVisitors: ApexOptions;
-    chartConversions: ApexOptions;
-    chartImpressions: ApexOptions;
-    chartVisits: ApexOptions;
-    chartVisitorsVsPageViews: ApexOptions;
-    chartNewVsReturning: ApexOptions;
-    chartGender: ApexOptions;
-    chartAge: ApexOptions;
-    chartLanguage: ApexOptions;
+    chartVisitors!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartConversions!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartImpressions!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartVisits!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartVisitorsVsPageViews!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartNewVsReturning!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartGender!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartAge!: ApexOptions; // set in ngOnInit via _prepareChartData()
+    chartLanguage!: ApexOptions; // set in ngOnInit via _prepareChartData()
     data: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -134,9 +134,11 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
         // 2. Filter out the ones that doesn't have cross reference so we only left with the ones that use the 'url(#id)' syntax
         // 3. Insert the 'currentURL' at the front of the 'fill' attribute value
         Array.from(element.querySelectorAll('*[fill]'))
-            .filter((el) => el.getAttribute('fill').indexOf('url(') !== -1)
+            .filter(
+                (el) => (el.getAttribute('fill') ?? '').indexOf('url(') !== -1
+            )
             .forEach((el) => {
-                const attrVal = el.getAttribute('fill');
+                const attrVal = el.getAttribute('fill') ?? '';
                 el.setAttribute(
                     'fill',
                     `url(${currentURL}${attrVal.slice(attrVal.indexOf('#'))}`

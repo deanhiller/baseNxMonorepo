@@ -32,13 +32,13 @@ import { AuthService } from 'app/core/auth/auth.service';
     ],
 })
 export class ComingSoonFullscreenReversedComponent implements OnInit {
-    @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
+    @ViewChild('comingSoonNgForm') comingSoonNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
     };
-    comingSoonForm: UntypedFormGroup;
+    comingSoonForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**

@@ -37,12 +37,12 @@ import { MatIconModule } from '@angular/material/icon';
     ],
 })
 export class ScrumboardBoardAddCardComponent implements OnInit {
-    @ViewChild('titleInput') titleInput: ElementRef;
-    @ViewChild('titleAutosize') titleAutosize: CdkTextareaAutosize;
+    @ViewChild('titleInput') titleInput!: ElementRef;
+    @ViewChild('titleAutosize') titleAutosize!: CdkTextareaAutosize;
     @Input() buttonTitle: string = 'Add a card';
     @Output() readonly saved: EventEmitter<string> = new EventEmitter<string>();
 
-    form: UntypedFormGroup;
+    form!: UntypedFormGroup;
     formVisible: boolean = false;
 
     /**
@@ -75,8 +75,8 @@ export class ScrumboardBoardAddCardComponent implements OnInit {
      * Save
      */
     save(): void {
-        // Get the new list title
-        const title = this.form.get('title').value;
+        // Get the new list title — 'title' control declared in ngOnInit
+        const title = this.form.get('title')!.value;
 
         // Return, if the title is empty
         if (!title || title.trim() === '') {
@@ -88,7 +88,7 @@ export class ScrumboardBoardAddCardComponent implements OnInit {
 
         // Clear the new list title and hide the form
         this.formVisible = false;
-        this.form.get('title').setValue('');
+        this.form.get('title')!.setValue('');
 
         // Reset the size of the textarea
         setTimeout(() => {

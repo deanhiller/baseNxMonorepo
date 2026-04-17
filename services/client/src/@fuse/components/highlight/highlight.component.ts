@@ -44,12 +44,14 @@ export class FuseHighlightComponent implements OnChanges, AfterViewInit {
     private _fuseHighlightService = inject(FuseHighlightService);
     private _viewContainerRef = inject(ViewContainerRef);
 
-    @Input() code: string;
-    @Input() lang: string;
-    @ViewChild(TemplateRef) templateRef: TemplateRef<any>;
+    @Input() code!: string;
+    @Input() lang!: string;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; template is provided by user
+    @ViewChild(TemplateRef) templateRef!: TemplateRef<unknown>;
 
-    highlightedCode: string;
-    private _viewRef: EmbeddedViewRef<any>;
+    highlightedCode: string = '';
+    // webpieces-disable no-any-unknown -- EmbeddedViewRef mirrors TemplateRef's context generic
+    private _viewRef: EmbeddedViewRef<unknown> | null = null;
 
     // webpieces-disable no-any-unknown -- HighlightContext is an interface; cast provides a runtime Constructor so template type-checking narrows let-ctx
     protected readonly HighlightContextCtor =
@@ -124,15 +126,16 @@ export class FuseHighlightComponent implements OnChanges, AfterViewInit {
         }
 
         // Highlight and sanitize the code just in case
-        this.highlightedCode = this._domSanitizer.sanitize(
+        const sanitized = this._domSanitizer.sanitize(
             SecurityContext.HTML,
             this._fuseHighlightService.highlight(this.code, this.lang)
         );
 
         // Return if the highlighted code is null
-        if (this.highlightedCode === null) {
+        if (sanitized === null) {
             return;
         }
+        this.highlightedCode = sanitized;
 
         // Render and insert the template — wrap in $implicit so TypedTemplateOutletDirective can type let-ctx
         this._viewRef = this._viewContainerRef.createEmbeddedView(

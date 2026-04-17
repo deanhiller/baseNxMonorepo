@@ -13,16 +13,16 @@
             <div
                 class="mt-2 text-4xl font-extrabold leading-tight tracking-tight sm:text-7xl"
             >
-                {{ guideCategory.guides[0].title }}
+                {{ guideCategory.guides?.[0].title }}
             </div>
             <div class="text-secondary mt-1 tracking-tight sm:text-2xl">
-                {{ guideCategory.guides[0].subtitle }}
+                {{ guideCategory.guides?.[0].subtitle }}
             </div>
 
             <!-- Guide -->
             <div
                 class="prose prose-sm mt-8 max-w-none sm:mt-12"
-                [innerHTML]="guideCategory.guides[0].content"
+                [innerHTML]="guideCategory.guides?.[0].content"
             ></div>
 
             <div

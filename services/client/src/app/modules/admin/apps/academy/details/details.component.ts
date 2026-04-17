@@ -42,9 +42,9 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class AcademyDetailsComponent implements OnInit, OnDestroy {
-    @ViewChild('courseSteps', { static: true }) courseSteps: MatTabGroup;
-    categories: Category[];
-    course: Course;
+    @ViewChild('courseSteps', { static: true }) courseSteps!: MatTabGroup; // set by Angular after view init
+    categories: Category[] = [];
+    course!: Course; // set in ngOnInit via subscribe
     currentStep: number = 0;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -72,9 +72,9 @@ export class AcademyDetailsComponent implements OnInit, OnDestroy {
         // Get the categories
         this._academyService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: Category[]) => {
+            .subscribe((categories) => {
                 // Get the categories
-                this.categories = categories;
+                this.categories = categories ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -83,12 +83,14 @@ export class AcademyDetailsComponent implements OnInit, OnDestroy {
         // Get the course
         this._academyService.course$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((course: Course) => {
-                // Get the course
-                this.course = course;
+            .subscribe((course) => {
+                if (course) {
+                    // Get the course
+                    this.course = course;
 
-                // Go to step
-                this.goToStep(course.progress.currentStep);
+                    // Go to step
+                    this.goToStep(course.progress?.currentStep ?? 0);
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -162,7 +164,7 @@ export class AcademyDetailsComponent implements OnInit, OnDestroy {
      */
     goToNextStep(): void {
         // Return if we already on the last step
-        if (this.currentStep === this.course.totalSteps - 1) {
+        if (this.currentStep === (this.course.totalSteps ?? 0) - 1) {
             return;
         }
 

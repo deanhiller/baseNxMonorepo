@@ -51,9 +51,9 @@ import { BehaviorSubject, Subject, combineLatest, takeUntil } from 'rxjs';
     ],
 })
 export class AcademyListComponent implements OnInit, OnDestroy {
-    categories: Category[];
-    courses: Course[];
-    filteredCourses: Course[];
+    categories: Category[] = [];
+    courses: Course[] = [];
+    filteredCourses: Course[] = [];
     filters: {
         categorySlug$: BehaviorSubject<string>;
         query$: BehaviorSubject<string>;
@@ -87,8 +87,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
         // Get the categories
         this._academyService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: Category[]) => {
-                this.categories = categories;
+            .subscribe((categories) => {
+                this.categories = categories ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -97,8 +97,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
         // Get the courses
         this._academyService.courses$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((courses: Course[]) => {
-                this.courses = this.filteredCourses = courses;
+            .subscribe((courses) => {
+                this.courses = this.filteredCourses = courses ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -122,24 +122,19 @@ export class AcademyListComponent implements OnInit, OnDestroy {
 
             // Filter by search query
             if (query !== '') {
+                const q = query.toLowerCase();
                 this.filteredCourses = this.filteredCourses.filter(
                     (course) =>
-                        course.title
-                            .toLowerCase()
-                            .includes(query.toLowerCase()) ||
-                        course.description
-                            .toLowerCase()
-                            .includes(query.toLowerCase()) ||
-                        course.category
-                            .toLowerCase()
-                            .includes(query.toLowerCase())
+                        (course.title ?? '').toLowerCase().includes(q) ||
+                        (course.description ?? '').toLowerCase().includes(q) ||
+                        (course.category ?? '').toLowerCase().includes(q)
                 );
             }
 
             // Filter by completed
             if (hideCompleted) {
                 this.filteredCourses = this.filteredCourses.filter(
-                    (course) => course.progress.completed === 0
+                    (course) => course.progress?.completed === 0
                 );
             }
         });

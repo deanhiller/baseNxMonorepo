@@ -29,8 +29,10 @@ import { MatSelectModule } from '@angular/material/select';
     ],
 })
 export class SettingsTeamComponent implements OnInit {
-    members: any[];
-    roles: any[];
+    // webpieces-disable no-any-unknown -- team members are heterogeneous demo records
+    members: any[] = [];
+    // webpieces-disable no-any-unknown -- roles are heterogeneous demo records
+    roles: any[] = [];
 
     /**
      * Constructor

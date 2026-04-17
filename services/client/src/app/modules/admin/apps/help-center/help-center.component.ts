@@ -22,7 +22,7 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class HelpCenterComponent implements OnInit, OnDestroy {
-    faqCategory: FaqCategory;
+    faqCategory!: FaqCategory; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject();
 
     /**

@@ -38,7 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
     ],
 })
 export class SettingsAccountComponent implements OnInit {
-    accountForm: UntypedFormGroup;
+    accountForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

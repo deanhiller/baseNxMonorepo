@@ -56,13 +56,14 @@ type NotesMasonryColumns = Array<{ items: Note[] }>;
     ],
 })
 export class NotesListComponent implements OnInit, OnDestroy {
-    labels$: Observable<Label[]>;
-    notes$: Observable<Note[]>;
+    labels$!: Observable<Label[] | null>;
+    notes$!: Observable<Note[]>;
 
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     filter$: BehaviorSubject<string> = new BehaviorSubject('notes');
-    searchQuery$: BehaviorSubject<string> = new BehaviorSubject(null);
+    searchQuery$: BehaviorSubject<string | null> =
+        new BehaviorSubject<string | null>(null);
     masonryColumns: number = 4;
 
     // webpieces-disable no-any-unknown -- FuseMasonryComponent declares columnsTemplate as TemplateRef<any>; cast narrows let-columns to the real runtime shape for template type-checking
@@ -124,11 +125,11 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
                 // Filter by query
                 if (searchQuery) {
-                    searchQuery = searchQuery.trim().toLowerCase();
+                    const q = searchQuery.trim().toLowerCase();
                     filteredNotes = filteredNotes.filter(
                         (note) =>
-                            note.title.toLowerCase().includes(searchQuery) ||
-                            note.content.toLowerCase().includes(searchQuery)
+                            (note.title ?? '').toLowerCase().includes(q) ||
+                            (note.content ?? '').toLowerCase().includes(q)
                     );
                 }
 
@@ -148,7 +149,9 @@ export class NotesListComponent implements OnInit, OnDestroy {
                     const labelId = filter.split(':')[1];
                     filteredNotes = filteredNotes.filter(
                         (note) =>
-                            !!note.labels.find((item) => item.id === labelId)
+                            !!(note.labels ?? []).find(
+                                (item) => item.id === labelId
+                            )
                     );
                 }
 

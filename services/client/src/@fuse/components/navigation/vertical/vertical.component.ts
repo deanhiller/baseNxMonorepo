@@ -99,7 +99,7 @@ export class FuseVerticalNavigationComponent
     @Input() inner: boolean = false;
     @Input() mode: FuseVerticalNavigationMode = 'side';
     @Input() name: string = this._fuseUtilsService.randomId();
-    @Input() navigation: FuseNavigationItem[];
+    @Input() navigation!: FuseNavigationItem[];
     @Input() opened: boolean = true;
     @Input() position: FuseVerticalNavigationPosition = 'left';
     @Input() transparentOverlay: boolean = false;
@@ -113,7 +113,7 @@ export class FuseVerticalNavigationComponent
     @Output()
     readonly positionChanged: EventEmitter<FuseVerticalNavigationPosition> =
         new EventEmitter<FuseVerticalNavigationPosition>();
-    @ViewChild('navigationContent') private _navigationContentEl: ElementRef;
+    @ViewChild('navigationContent') private _navigationContentEl!: ElementRef;
 
     activeAsideItemId: string | null = null;
     onCollapsableItemCollapsed: ReplaySubject<FuseNavigationItem> =
@@ -122,17 +122,17 @@ export class FuseVerticalNavigationComponent
         new ReplaySubject<FuseNavigationItem>(1);
     onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _animationsEnabled: boolean = false;
-    private _asideOverlay: HTMLElement;
-    private readonly _handleAsideOverlayClick: any;
-    private readonly _handleOverlayClick: any;
+    private _asideOverlay: HTMLElement | null = null;
+    private readonly _handleAsideOverlayClick: () => void;
+    private readonly _handleOverlayClick: () => void;
     private _hovered: boolean = false;
-    private _mutationObserver: MutationObserver;
-    private _overlay: HTMLElement;
-    private _player: AnimationPlayer;
+    private _mutationObserver!: MutationObserver;
+    private _overlay: HTMLElement | null = null;
+    private _player!: AnimationPlayer;
     private _scrollStrategy: ScrollStrategy =
         this._scrollStrategyOptions.block();
     private _fuseScrollbarDirectives!: QueryList<FuseScrollbarDirective>;
-    private _fuseScrollbarDirectivesSubscription: Subscription;
+    private _fuseScrollbarDirectivesSubscription: Subscription | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -636,14 +636,15 @@ export class FuseVerticalNavigationComponent
         }
 
         // Create the overlay element
-        this._overlay = this._renderer2.createElement('div');
+        const overlay: HTMLElement = this._renderer2.createElement('div');
+        this._overlay = overlay;
 
         // Add a class to the overlay element
-        this._overlay.classList.add('fuse-vertical-navigation-overlay');
+        overlay.classList.add('fuse-vertical-navigation-overlay');
 
         // Add a class depending on the transparentOverlay option
         if (this.transparentOverlay) {
-            this._overlay.classList.add(
+            overlay.classList.add(
                 'fuse-vertical-navigation-overlay-transparent'
             );
         }
@@ -651,7 +652,7 @@ export class FuseVerticalNavigationComponent
         // Append the overlay to the parent of the navigation
         this._renderer2.appendChild(
             this._elementRef.nativeElement.parentElement,
-            this._overlay
+            overlay
         );
 
         // Enable block scroll strategy
@@ -665,13 +666,13 @@ export class FuseVerticalNavigationComponent
                     style({ opacity: 1 })
                 ),
             ])
-            .create(this._overlay);
+            .create(overlay);
 
         // Play the animation
         this._player.play();
 
         // Add an event listener to the overlay
-        this._overlay.addEventListener('click', this._handleOverlayClick);
+        overlay.addEventListener('click', this._handleOverlayClick);
     }
 
     /**
@@ -708,7 +709,7 @@ export class FuseVerticalNavigationComponent
                 );
 
                 // Remove the overlay
-                this._overlay.parentNode.removeChild(this._overlay);
+                this._overlay.parentNode?.removeChild(this._overlay);
                 this._overlay = null;
             }
 
@@ -729,17 +730,16 @@ export class FuseVerticalNavigationComponent
         }
 
         // Create the aside overlay element
-        this._asideOverlay = this._renderer2.createElement('div');
+        const asideOverlay: HTMLElement = this._renderer2.createElement('div');
+        this._asideOverlay = asideOverlay;
 
         // Add a class to the aside overlay element
-        this._asideOverlay.classList.add(
-            'fuse-vertical-navigation-aside-overlay'
-        );
+        asideOverlay.classList.add('fuse-vertical-navigation-aside-overlay');
 
         // Append the aside overlay to the parent of the navigation
         this._renderer2.appendChild(
             this._elementRef.nativeElement.parentElement,
-            this._asideOverlay
+            asideOverlay
         );
 
         // Create the enter animation and attach it to the player
@@ -750,16 +750,13 @@ export class FuseVerticalNavigationComponent
                     style({ opacity: 1 })
                 ),
             ])
-            .create(this._asideOverlay);
+            .create(asideOverlay);
 
         // Play the animation
         this._player.play();
 
         // Add an event listener to the aside overlay
-        this._asideOverlay.addEventListener(
-            'click',
-            this._handleAsideOverlayClick
-        );
+        asideOverlay.addEventListener('click', this._handleAsideOverlayClick);
     }
 
     /**
@@ -796,7 +793,7 @@ export class FuseVerticalNavigationComponent
                 );
 
                 // Remove the aside overlay
-                this._asideOverlay.parentNode.removeChild(this._asideOverlay);
+                this._asideOverlay.parentNode?.removeChild(this._asideOverlay);
                 this._asideOverlay = null;
             }
         });

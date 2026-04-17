@@ -16,9 +16,12 @@ import {
 @Injectable({ providedIn: 'root' })
 export class TasksService {
     // Private
-    private _tags: BehaviorSubject<Tag[] | null> = new BehaviorSubject(null);
-    private _task: BehaviorSubject<Task | null> = new BehaviorSubject(null);
-    private _tasks: BehaviorSubject<Task[] | null> = new BehaviorSubject(null);
+    private _tags: BehaviorSubject<Tag[] | null> =
+        new BehaviorSubject<Tag[] | null>(null);
+    private _task: BehaviorSubject<Task | null> =
+        new BehaviorSubject<Task | null>(null);
+    private _tasks: BehaviorSubject<Task[] | null> =
+        new BehaviorSubject<Task[] | null>(null);
 
     /**
      * Constructor
@@ -32,21 +35,21 @@ export class TasksService {
     /**
      * Getter for tags
      */
-    get tags$(): Observable<Tag[]> {
+    get tags$(): Observable<Tag[] | null> {
         return this._tags.asObservable();
     }
 
     /**
      * Getter for task
      */
-    get task$(): Observable<Task> {
+    get task$(): Observable<Task | null> {
         return this._task.asObservable();
     }
 
     /**
      * Getter for tasks
      */
-    get tasks$(): Observable<Task[]> {
+    get tasks$(): Observable<Task[] | null> {
         return this._tasks.asObservable();
     }
 
@@ -77,7 +80,7 @@ export class TasksService {
                 this._httpClient.post<Tag>('api/apps/tasks/tag', { tag }).pipe(
                     map((newTag) => {
                         // Update the tags with the new tag
-                        this._tags.next([...tags, newTag]);
+                        this._tags.next([...(tags ?? []), newTag]);
 
                         // Return new tag from observable
                         return newTag;
@@ -105,15 +108,18 @@ export class TasksService {
                     .pipe(
                         map((updatedTag) => {
                             // Find the index of the updated tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the tag
-                            tags[index] = updatedTag;
+                            if (index > -1) {
+                                list[index] = updatedTag;
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the updated tag
                             return updatedTag;
@@ -137,15 +143,18 @@ export class TasksService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted tag
-                            const index = tags.findIndex(
+                            const list = tags ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the tag
-                            tags.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the tags
-                            this._tags.next(tags);
+                            this._tags.next(list);
 
                             // Return the deleted status
                             return isDeleted;
@@ -156,14 +165,15 @@ export class TasksService {
                                 take(1),
                                 map((tasks) => {
                                     // Iterate through the tasks
-                                    tasks.forEach((task) => {
-                                        const tagIndex = task.tags.findIndex(
-                                            (tag) => tag === id
-                                        );
+                                    (tasks ?? []).forEach((task) => {
+                                        const tagIndex =
+                                            task.tags?.findIndex(
+                                                (tag) => tag === id
+                                            ) ?? -1;
 
                                         // If the task has a tag, remove it
                                         if (tagIndex > -1) {
-                                            task.tags.splice(tagIndex, 1);
+                                            task.tags?.splice(tagIndex, 1);
                                         }
                                     });
 
@@ -218,7 +228,8 @@ export class TasksService {
             take(1),
             map((tasks) => {
                 // Find the task
-                const task = tasks.find((item) => item.id === id) || null;
+                const task =
+                    (tasks ?? []).find((item) => item.id === id) || null;
 
                 // Update the task
                 this._task.next(task);
@@ -252,7 +263,7 @@ export class TasksService {
                     .pipe(
                         map((newTask) => {
                             // Update the tasks with the new task
-                            this._tasks.next([newTask, ...tasks]);
+                            this._tasks.next([newTask, ...(tasks ?? [])]);
 
                             // Return the new task
                             return newTask;
@@ -280,15 +291,18 @@ export class TasksService {
                     .pipe(
                         map((updatedTask) => {
                             // Find the index of the updated task
-                            const index = tasks.findIndex(
+                            const list = tasks ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the task
-                            tasks[index] = updatedTask;
+                            if (index > -1) {
+                                list[index] = updatedTask;
+                            }
 
                             // Update the tasks
-                            this._tasks.next(tasks);
+                            this._tasks.next(list);
 
                             // Return the updated task
                             return updatedTask;
@@ -296,8 +310,11 @@ export class TasksService {
                         switchMap((updatedTask) =>
                             this.task$.pipe(
                                 take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
+                                filter(
+                                    (item): item is Task =>
+                                        !!item && item.id === id
+                                ),
+                                map(() => {
                                     // Update the task if it's selected
                                     this._task.next(updatedTask);
 
@@ -325,15 +342,18 @@ export class TasksService {
                     .pipe(
                         map((isDeleted: boolean) => {
                             // Find the index of the deleted task
-                            const index = tasks.findIndex(
+                            const list = tasks ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the task
-                            tasks.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the tasks
-                            this._tasks.next(tasks);
+                            this._tasks.next(list);
 
                             // Return the deleted status
                             return isDeleted;

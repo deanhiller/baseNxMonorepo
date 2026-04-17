@@ -38,7 +38,7 @@ import { SettingsTeamComponent } from './team/team.component';
     ],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    @ViewChild('drawer') drawer: MatDrawer;
+    @ViewChild('drawer') drawer!: MatDrawer; // set by Angular after view init
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     panels: any[] = [];

@@ -44,8 +44,8 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class ModernLayoutComponent implements OnInit, OnDestroy {
-    isScreenSmall: boolean;
-    navigation: Navigation;
+    isScreenSmall!: boolean; // set in ngOnInit via media watcher
+    navigation!: Navigation; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

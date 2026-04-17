@@ -76,13 +76,15 @@ export class NavigationComponent {
 
         // Return if the navigation component does not exist
         if (!navComponent) {
-            return null;
+            return;
         }
 
         // Get the navigation item, update the badge and refresh the component
         const navigation = navComponent.navigation;
         const item = this._fuseNavigationService.getItem(itemId, navigation);
-        item.badge.title = title;
+        if (item && item.badge) {
+            item.badge.title = title;
+        }
         navComponent.refresh();
     }
 
@@ -101,13 +103,15 @@ export class NavigationComponent {
 
         // Return if the navigation component does not exist
         if (!navComponent) {
-            return null;
+            return;
         }
 
         // Get the navigation item, update the badge and refresh the component
         const navigation = navComponent.navigation;
         const item = this._fuseNavigationService.getItem(itemId, navigation);
-        item.disabled = !item.disabled;
+        if (item) {
+            item.disabled = !item.disabled;
+        }
         navComponent.refresh();
     }
 
@@ -125,7 +129,7 @@ export class NavigationComponent {
 
         // Return if the navigation component does not exist
         if (!navComponent) {
-            return null;
+            return;
         }
 
         // A navigation data to replace with

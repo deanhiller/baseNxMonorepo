@@ -35,7 +35,7 @@ import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
     ],
 })
 export class UnlockSessionSplitScreenReversedComponent implements OnInit {
-    @ViewChild('unlockSessionNgForm') unlockSessionNgForm: NgForm;
+    @ViewChild('unlockSessionNgForm') unlockSessionNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -43,7 +43,7 @@ export class UnlockSessionSplitScreenReversedComponent implements OnInit {
     };
     name: string = 'Brian Hughes';
     showAlert: boolean = false;
-    unlockSessionForm: UntypedFormGroup;
+    unlockSessionForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

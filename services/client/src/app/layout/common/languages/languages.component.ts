@@ -32,8 +32,9 @@ import { take } from 'rxjs';
     ],
 })
 export class LanguagesComponent implements OnInit, OnDestroy {
-    availableLangs: AvailableLangs;
-    activeLang: string;
+    availableLangs!: AvailableLangs; // set in ngOnInit
+    activeLang!: string; // set in ngOnInit via langChanges$ subscription
+    // webpieces-disable no-any-unknown -- flagCodes is a dynamic lookup map for country flag codes
     flagCodes: any;
     protected readonly LangCtor = String;
 
@@ -128,7 +129,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
 
         // Return if the navigation component does not exist
         if (!navComponent) {
-            return null;
+            return;
         }
 
         // Get the flat navigation data

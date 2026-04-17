@@ -35,7 +35,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class FinanceComponent implements OnInit, OnDestroy {
     data: any;
-    accountBalanceOptions: ApexOptions;
+    accountBalanceOptions!: ApexOptions; // set in ngOnInit via _prepareChartData()
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

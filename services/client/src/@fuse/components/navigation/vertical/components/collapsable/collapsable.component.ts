@@ -52,13 +52,13 @@ export class FuseVerticalNavigationCollapsableItemComponent
     private _router = inject(Router);
     private _fuseNavigationService = inject(FuseNavigationService);
 
-    @Input() autoCollapse: boolean;
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
+    @Input() autoCollapse!: boolean;
+    @Input() item!: FuseNavigationItem;
+    @Input() name!: string;
 
     isCollapsed: boolean = true;
     isExpanded: boolean = false;
-    private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
+    private _fuseVerticalNavigationComponent!: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // -----------------------------------------------------------------------------------------------------

@@ -44,8 +44,8 @@ export class FuseHorizontalNavigationBasicItemComponent
     private _fuseNavigationService = inject(FuseNavigationService);
     private _fuseUtilsService = inject(FuseUtilsService);
 
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
+    @Input() item!: FuseNavigationItem;
+    @Input() name!: string;
 
     // Set the equivalent of {exact: false} as default for active match options.
     // We are not assigning the item.isActiveMatchOptions directly to the
@@ -54,7 +54,7 @@ export class FuseHorizontalNavigationBasicItemComponent
     isActiveMatchOptions: IsActiveMatchOptions =
         this._fuseUtilsService.subsetMatchOptions;
 
-    private _fuseHorizontalNavigationComponent: FuseHorizontalNavigationComponent;
+    private _fuseHorizontalNavigationComponent!: FuseHorizontalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // -----------------------------------------------------------------------------------------------------

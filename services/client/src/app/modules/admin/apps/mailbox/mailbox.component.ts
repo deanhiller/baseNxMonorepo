@@ -19,7 +19,7 @@ import { MailboxSidebarComponent } from './sidebar/sidebar.component';
     imports: [MatSidenavModule, MailboxSidebarComponent, RouterOutlet],
 })
 export class MailboxComponent implements OnInit, OnDestroy {
-    @ViewChild('drawer') drawer: MatDrawer;
+    @ViewChild('drawer') drawer!: MatDrawer;
 
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;

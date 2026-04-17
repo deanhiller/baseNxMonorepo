@@ -16,11 +16,12 @@ import {
 @Injectable({ providedIn: 'root' })
 export class NotesService {
     // Private
-    private _labels: BehaviorSubject<Label[] | null> = new BehaviorSubject(
-        null
-    );
-    private _note: BehaviorSubject<Note | null> = new BehaviorSubject(null);
-    private _notes: BehaviorSubject<Note[] | null> = new BehaviorSubject(null);
+    private _labels: BehaviorSubject<Label[] | null> =
+        new BehaviorSubject<Label[] | null>(null);
+    private _note: BehaviorSubject<Note | null> =
+        new BehaviorSubject<Note | null>(null);
+    private _notes: BehaviorSubject<Note[] | null> =
+        new BehaviorSubject<Note[] | null>(null);
 
     /**
      * Constructor
@@ -34,21 +35,21 @@ export class NotesService {
     /**
      * Getter for labels
      */
-    get labels$(): Observable<Label[]> {
+    get labels$(): Observable<Label[] | null> {
         return this._labels.asObservable();
     }
 
     /**
      * Getter for notes
      */
-    get notes$(): Observable<Note[]> {
+    get notes$(): Observable<Note[] | null> {
         return this._notes.asObservable();
     }
 
     /**
      * Getter for note
      */
-    get note$(): Observable<Note> {
+    get note$(): Observable<Note | null> {
         return this._note.asObservable();
     }
 
@@ -140,7 +141,8 @@ export class NotesService {
             take(1),
             map((notes) => {
                 // Find within the folders and files
-                const note = notes.find((value) => value.id === id) || null;
+                const note =
+                    (notes ?? []).find((value) => value.id === id) || null;
 
                 // Update the note
                 this._note.next(note);
@@ -175,7 +177,7 @@ export class NotesService {
             .pipe(
                 switchMap(() =>
                     this.getNotes().pipe(
-                        switchMap(() => this.getNoteById(note.id))
+                        switchMap(() => this.getNoteById(note.id!))
                     )
                 )
             );
@@ -193,7 +195,7 @@ export class NotesService {
                 switchMap((response) =>
                     this.getNotes().pipe(
                         switchMap(() =>
-                            this.getNoteById(response.id).pipe(
+                            this.getNoteById(response.id!).pipe(
                                 map(() => response)
                             )
                         )
@@ -209,6 +211,7 @@ export class NotesService {
      */
     updateNote(note: Note): Observable<Note> {
         // Clone the note to prevent accidental reference based updates
+        // webpieces-disable no-any-unknown -- updatedNote has labels replaced with ids for wire format; loose typing is intentional here
         const updatedNote = cloneDeep(note) as any;
 
         // Before sending the note to the server, handle the labels
@@ -233,7 +236,7 @@ export class NotesService {
      */
     deleteNote(note: Note): Observable<boolean> {
         return this._httpClient
-            .delete<boolean>('api/apps/notes', { params: { id: note.id } })
+            .delete<boolean>('api/apps/notes', { params: { id: note.id! } })
             .pipe(
                 map((isDeleted: boolean) => {
                     // Update the notes

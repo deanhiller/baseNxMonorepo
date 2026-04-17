@@ -43,7 +43,8 @@ export class HelpCenterMockApi {
                 const slug = request.params.get('slug');
 
                 // Prepare the results
-                const results = [];
+                // webpieces-disable no-any-unknown -- results entries are heterogeneous demo records
+                const results: any[] = [];
 
                 // Get FAQs
                 const faqs = cloneDeep(this._faqs);
@@ -94,7 +95,8 @@ export class HelpCenterMockApi {
                 const limit = request.params.get('limit');
 
                 // Prepare the results
-                const results = [];
+                // webpieces-disable no-any-unknown -- results entries are heterogeneous demo records
+                const results: any[] = [];
 
                 // Get all Guides
                 const guides = cloneDeep(this._guides);

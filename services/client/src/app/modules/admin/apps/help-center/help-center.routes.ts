@@ -49,8 +49,9 @@ export default [
                                 route: ActivatedRouteSnapshot,
                                 state: RouterStateSnapshot
                             ) =>
+                                // 'categorySlug' is part of the route definition and always present here
                                 inject(HelpCenterService).getGuidesByCategory(
-                                    route.paramMap.get('categorySlug')
+                                    route.paramMap.get('categorySlug')!
                                 ),
                         },
                     },
@@ -62,9 +63,12 @@ export default [
                                 route: ActivatedRouteSnapshot,
                                 state: RouterStateSnapshot
                             ) =>
+                                // 'categorySlug' and 'guideSlug' are part of the route definition; route.parent exists because this is a child route
                                 inject(HelpCenterService).getGuide(
-                                    route.parent.paramMap.get('categorySlug'),
-                                    route.paramMap.get('guideSlug')
+                                    route.parent!.paramMap.get(
+                                        'categorySlug'
+                                    )!,
+                                    route.paramMap.get('guideSlug')!
                                 ),
                         },
                     },

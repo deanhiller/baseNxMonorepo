@@ -24,7 +24,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [CdkScrollable, RouterLink, MatIconModule],
 })
 export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
-    boards: Board[];
+    boards: Board[] = [];
 
     // Private
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -48,8 +48,8 @@ export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
         // Get the boards
         this._scrumboardService.boards$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((boards: Board[]) => {
-                this.boards = boards;
+            .subscribe((boards) => {
+                this.boards = boards ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -75,7 +75,7 @@ export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
      * @param date
      */
     formatDateAsRelative(date: string): string {
-        return DateTime.fromISO(date).toRelative();
+        return DateTime.fromISO(date).toRelative() ?? '';
     }
 
     /**

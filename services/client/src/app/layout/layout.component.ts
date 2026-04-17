@@ -48,10 +48,10 @@ import { ThinLayoutComponent } from './layouts/vertical/thin/thin.component';
     ],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-    config: FuseConfig;
-    layout: string;
-    scheme: 'dark' | 'light';
-    theme: string;
+    config!: FuseConfig; // set in ngOnInit via subscribe
+    layout!: string; // set in ngOnInit via _updateLayout()
+    scheme!: 'dark' | 'light'; // set in ngOnInit via _updateScheme()
+    theme!: string; // set in ngOnInit via _updateTheme()
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

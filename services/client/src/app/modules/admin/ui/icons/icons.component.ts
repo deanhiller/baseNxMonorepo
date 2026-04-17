@@ -36,12 +36,12 @@ import {
     ],
 })
 export class IconsComponent implements OnInit, OnDestroy {
-    icons$: Observable<Icon>;
-    filteredIcons$: Observable<Icon>;
+    icons$!: Observable<Icon>; // set in ngOnInit
+    filteredIcons$!: Observable<Icon>; // set in ngOnInit
     filterValue$: BehaviorSubject<string> = new BehaviorSubject('');
 
     iconSize: string = 'icon-size-8';
-    selectedIcon: string[];
+    selectedIcon: string[] = [];
     private _unsubscribeAll: Subject<any> = new Subject();
 
     /**

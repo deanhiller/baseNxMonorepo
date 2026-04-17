@@ -43,7 +43,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
     ],
 })
 export class ConfirmationDialogComponent implements OnInit {
-    configForm: UntypedFormGroup;
+    configForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

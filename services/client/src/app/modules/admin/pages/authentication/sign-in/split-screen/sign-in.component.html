@@ -44,10 +44,10 @@
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
                     <input id="email" matInput [formControlName]="'email'" />
-                    @if (signInForm.get('email').hasError('required')) {
+                    @if (signInForm.get('email')?.hasError('required')) {
                         <mat-error> Email address is required </mat-error>
                     }
-                    @if (signInForm.get('email').hasError('email')) {
+                    @if (signInForm.get('email')?.hasError('email')) {
                         <mat-error>
                             Please enter a valid email address
                         </mat-error>

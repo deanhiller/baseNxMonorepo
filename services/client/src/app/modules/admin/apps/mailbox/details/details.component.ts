@@ -61,15 +61,17 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class MailboxDetailsComponent implements OnInit, OnDestroy {
     @ViewChild('infoDetailsPanelOrigin')
-    private _infoDetailsPanelOrigin: MatButton;
-    @ViewChild('infoDetailsPanel') private _infoDetailsPanel: TemplateRef<any>;
+    private _infoDetailsPanelOrigin!: MatButton;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; matches Angular's own typing
+    @ViewChild('infoDetailsPanel') private _infoDetailsPanel!: TemplateRef<unknown>;
 
-    folders: MailFolder[];
+    folders: MailFolder[] = [];
+    // webpieces-disable no-any-unknown -- labelColors mirrors labelColorDefs keyed by color name; values have { text, bg, combined } strings
     labelColors: any;
-    labels: MailLabel[];
-    mail: Mail;
+    labels: MailLabel[] = [];
+    mail!: Mail;
     replyFormActive: boolean = false;
-    private _overlayRef: OverlayRef;
+    private _overlayRef!: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -98,21 +100,24 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
         // Folders
         this._mailboxService.folders$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((folders: MailFolder[]) => {
-                this.folders = folders;
+            .subscribe((folders) => {
+                this.folders = folders ?? [];
             });
 
         // Labels
         this._mailboxService.labels$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((labels: MailLabel[]) => {
-                this.labels = labels;
+            .subscribe((labels) => {
+                this.labels = labels ?? [];
             });
 
         // Mail
         this._mailboxService.mail$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((mail: Mail) => {
+            .subscribe((mail) => {
+                if (!mail) {
+                    return;
+                }
                 this.mail = mail;
             });
 
@@ -153,6 +158,9 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
     moveToFolder(folderSlug: string): void {
         // Find the folder details
         const folder = this.folders.find((item) => item.slug === folderSlug);
+        if (!folder || !this.mail.id) {
+            return;
+        }
 
         // Return if the current folder of the mail
         // is already equals to the given folder
@@ -180,7 +188,13 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
      * @param label
      */
     toggleLabel(label: MailLabel): void {
+        if (!label.id || !this.mail.id) {
+            return;
+        }
         let deleted = false;
+
+        // Ensure labels array exists
+        this.mail.labels = this.mail.labels ?? [];
 
         // Update the mail object
         if (this.mail.labels.includes(label.id)) {
@@ -219,6 +233,9 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
      * Toggle important
      */
     toggleImportant(): void {
+        if (!this.mail.id) {
+            return;
+        }
         // Update the mail object
         this.mail.important = !this.mail.important;
 
@@ -247,6 +264,9 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
      * Toggle star
      */
     toggleStar(): void {
+        if (!this.mail.id) {
+            return;
+        }
         // Update the mail object
         this.mail.starred = !this.mail.starred;
 
@@ -277,6 +297,9 @@ export class MailboxDetailsComponent implements OnInit, OnDestroy {
      * @param unread
      */
     toggleUnread(unread: boolean): void {
+        if (!this.mail.id) {
+            return;
+        }
         // Update the mail object
         this.mail.unread = unread;
 

@@ -50,7 +50,7 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class CryptoComponent implements OnInit, OnDestroy {
-    @ViewChild('btcChartComponent') btcChartComponent: ChartComponent;
+    @ViewChild('btcChartComponent') btcChartComponent!: ChartComponent; // set by Angular after view init
     appConfig: any;
     btcOptions: ApexOptions = {};
     data: any;

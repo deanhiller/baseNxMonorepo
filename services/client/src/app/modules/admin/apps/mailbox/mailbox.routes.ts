@@ -14,19 +14,27 @@ import { MailboxComponent } from 'app/modules/admin/apps/mailbox/mailbox.compone
 import { MailboxService } from 'app/modules/admin/apps/mailbox/mailbox.service';
 import { MailboxSettingsComponent } from 'app/modules/admin/apps/mailbox/settings/settings.component';
 import { isEqual } from 'lodash-es';
-import { catchError, finalize, forkJoin, throwError } from 'rxjs';
+import { Observable, catchError, finalize, forkJoin, throwError } from 'rxjs';
+
+interface PosParamsMap {
+    [key: string]: UrlSegment;
+}
+
+interface MailboxParamsMap {
+    [key: string]: string | null;
+}
 
 /**
  * Mailbox custom route matcher
  *
  * @param url
  */
-const mailboxRouteMatcher: (url: UrlSegment[]) => UrlMatchResult = (
+const mailboxRouteMatcher: (url: UrlSegment[]) => UrlMatchResult | null = (
     url: UrlSegment[]
-) => {
+): UrlMatchResult | null => {
     // Prepare consumed url and positional parameters
     let consumed = url;
-    const posParams = {};
+    const posParams: PosParamsMap = {};
 
     // Settings
     if (url[0].path === 'settings') {
@@ -69,7 +77,10 @@ const mailboxRouteMatcher: (url: UrlSegment[]) => UrlMatchResult = (
 const mailboxRunGuardsAndResolvers: (
     from: ActivatedRouteSnapshot,
     to: ActivatedRouteSnapshot
-) => boolean = (from: ActivatedRouteSnapshot, to: ActivatedRouteSnapshot) => {
+) => boolean = (
+    from: ActivatedRouteSnapshot,
+    to: ActivatedRouteSnapshot
+): boolean => {
     // If we are navigating from mail to mails, meaning there is an id in
     // from's deepest first child and there isn't one in the to's, we will
     // trigger the resolver
@@ -95,8 +106,8 @@ const mailboxRunGuardsAndResolvers: (
     }
 
     // If the from and to params are equal, don't trigger the resolver
-    const fromParams = {};
-    const toParams = {};
+    const fromParams: MailboxParamsMap = {};
+    const toParams: MailboxParamsMap = {};
 
     from.paramMap.keys.forEach((key) => {
         fromParams[key] = from.paramMap.get(key);
@@ -123,14 +134,15 @@ const mailboxRunGuardsAndResolvers: (
 const mailsResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+    // webpieces-disable no-any-unknown -- forkJoin combines heterogeneous observables from filter/folder/label sources
+): Observable<unknown[]> | boolean => {
     const mailboxService = inject(MailboxService);
     const router = inject(Router);
 
     // Don't allow page param to go below 1
     if (
         route.paramMap.get('page') &&
-        parseInt(route.paramMap.get('page'), 10) <= 0
+        parseInt(route.paramMap.get('page')!, 10) <= 0
     ) {
         // Get the parent url
         const url = state.url.split('/').slice(0, -1).join('/') + '/1';
@@ -143,14 +155,15 @@ const mailsResolver = (
     }
 
     // Create and build the sources array
-    const sources = [];
+    // webpieces-disable no-any-unknown -- sources are heterogeneous observables (filters/folders/labels/mails) combined via forkJoin
+    const sources: Observable<unknown>[] = [];
 
-    // If folder is set on the parameters...
+    // If folder is set on the parameters — value is non-null inside this branch
     if (route.paramMap.get('folder')) {
         sources.push(
             mailboxService.getMailsByFolder(
-                route.paramMap.get('folder'),
-                route.paramMap.get('page')
+                route.paramMap.get('folder')!,
+                route.paramMap.get('page')!
             )
         );
     }
@@ -159,8 +172,8 @@ const mailsResolver = (
     if (route.paramMap.get('filter')) {
         sources.push(
             mailboxService.getMailsByFilter(
-                route.paramMap.get('filter'),
-                route.paramMap.get('page')
+                route.paramMap.get('filter')!,
+                route.paramMap.get('page')!
             )
         );
     }
@@ -169,8 +182,8 @@ const mailsResolver = (
     if (route.paramMap.get('label')) {
         sources.push(
             mailboxService.getMailsByLabel(
-                route.paramMap.get('label'),
-                route.paramMap.get('page')
+                route.paramMap.get('label')!,
+                route.paramMap.get('page')!
             )
         );
     }
@@ -224,11 +237,13 @@ const mailsResolver = (
 const mailResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+    // webpieces-disable no-any-unknown -- getMailById returns Observable<any> in the service; keep that contract
+): Observable<any> => {
     const mailboxService = inject(MailboxService);
     const router = inject(Router);
 
-    return mailboxService.getMailById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return mailboxService.getMailById(route.paramMap.get('id')!).pipe(
         // Error here means the requested mail is either
         // not available on the requested page or not
         // available at all

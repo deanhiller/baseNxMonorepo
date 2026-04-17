@@ -33,7 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ],
 })
 export class SettingsSecurityComponent implements OnInit {
-    securityForm: UntypedFormGroup;
+    securityForm!: UntypedFormGroup; // set in ngOnInit
 
     /**
      * Constructor

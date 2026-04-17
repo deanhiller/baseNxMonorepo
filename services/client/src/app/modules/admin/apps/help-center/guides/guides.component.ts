@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [MatButtonModule, RouterLink, MatIconModule],
 })
 export class HelpCenterGuidesComponent implements OnInit, OnDestroy {
-    guideCategories: GuideCategory[];
+    guideCategories: GuideCategory[] = [];
     private _unsubscribeAll: Subject<any> = new Subject();
 
     /**

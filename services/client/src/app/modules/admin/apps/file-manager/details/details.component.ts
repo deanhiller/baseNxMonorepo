@@ -24,7 +24,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [MatButtonModule, RouterLink, MatIconModule],
 })
 export class FileManagerDetailsComponent implements OnInit, OnDestroy {
-    item: Item;
+    item!: Item; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -50,12 +50,14 @@ export class FileManagerDetailsComponent implements OnInit, OnDestroy {
         // Get the item
         this._fileManagerService.item$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((item: Item) => {
+            .subscribe((item) => {
                 // Open the drawer in case it is closed
                 this._fileManagerListComponent.matDrawer.open();
 
                 // Get the item
-                this.item = item;
+                if (item) {
+                    this.item = item;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();

@@ -155,7 +155,8 @@ export class ScrumboardMockApi {
                 const lists = cloneDeep(request.body.lists);
 
                 // Prepare the updated lists
-                const updatedLists = [];
+                // webpieces-disable no-any-unknown -- scrumboard demo list records are heterogeneous
+                const updatedLists: any[] = [];
 
                 // Go through the lists
                 lists.forEach((item) => {
@@ -222,7 +223,8 @@ export class ScrumboardMockApi {
                 const card = cloneDeep(request.body.card);
 
                 // Prepare the updated card
-                let updatedCard = null;
+                // webpieces-disable no-any-unknown -- scrumboard demo card is heterogeneous
+                let updatedCard: any = null;
 
                 // Go through the labels and leave only ids of them
                 card.labels = card.labels.map((itemLabel) => itemLabel.id);
@@ -239,9 +241,14 @@ export class ScrumboardMockApi {
                 });
 
                 // Attach the labels of the card
-                updatedCard.labels = updatedCard.labels.map((cardLabelId) =>
-                    this._labels.find((label) => label.id === cardLabelId)
-                );
+                if (updatedCard) {
+                    updatedCard.labels = updatedCard.labels.map(
+                        (cardLabelId) =>
+                            this._labels.find(
+                                (label) => label.id === cardLabelId
+                            )
+                    );
+                }
 
                 return [200, updatedCard];
             });
@@ -256,7 +263,8 @@ export class ScrumboardMockApi {
                 const cards = cloneDeep(request.body.cards);
 
                 // Prepare the updated cards
-                const updatedCards = [];
+                // webpieces-disable no-any-unknown -- scrumboard demo card records are heterogeneous
+                const updatedCards: any[] = [];
 
                 // Go through the cards
                 cards.forEach((item) => {

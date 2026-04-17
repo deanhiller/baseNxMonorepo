@@ -29,7 +29,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     ],
 })
 export class MailboxComposeComponent implements OnInit {
-    composeForm: UntypedFormGroup;
+    composeForm!: UntypedFormGroup;
     copyFields: { cc: boolean; bcc: boolean } = {
         cc: false,
         bcc: false,

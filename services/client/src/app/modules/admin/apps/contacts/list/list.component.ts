@@ -62,16 +62,16 @@ import {
     ],
 })
 export class ContactsListComponent implements OnInit, OnDestroy {
-    @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
+    @ViewChild('matDrawer', { static: true }) matDrawer!: MatDrawer;
 
-    contacts$: Observable<Contact[]>;
+    contacts$!: Observable<Contact[] | null>;
 
     contactsCount: number = 0;
     contactsTableColumns: string[] = ['name', 'email', 'phoneNumber', 'job'];
-    countries: Country[];
-    drawerMode: 'side' | 'over';
+    countries: Country[] = [];
+    drawerMode: 'side' | 'over' = 'side';
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-    selectedContact: Contact;
+    selectedContact: Contact | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -98,9 +98,9 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         this.contacts$ = this._contactsService.contacts$;
         this._contactsService.contacts$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contacts: Contact[]) => {
+            .subscribe((contacts) => {
                 // Update the counts
-                this.contactsCount = contacts.length;
+                this.contactsCount = contacts?.length ?? 0;
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -109,7 +109,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         // Get the contact
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contact: Contact) => {
+            .subscribe((contact) => {
                 // Update the selected contact
                 this.selectedContact = contact;
 
@@ -120,9 +120,9 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         // Get the countries
         this._contactsService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((countries: Country[]) => {
+            .subscribe((countries) => {
                 // Update the countries
-                this.countries = countries;
+                this.countries = countries ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();

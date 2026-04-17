@@ -36,7 +36,7 @@ export class ForgotPasswordModernReversedComponent implements OnInit {
         type: 'success',
         message: '',
     };
-    forgotPasswordForm: UntypedFormGroup;
+    forgotPasswordForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**

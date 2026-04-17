@@ -35,13 +35,14 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class MailboxListComponent implements OnInit, OnDestroy {
-    @ViewChild('mailList') mailList: ElementRef;
+    @ViewChild('mailList') mailList!: ElementRef;
 
-    category: MailCategory;
-    mails: Mail[];
+    category: MailCategory | null = null;
+    mails: Mail[] = [];
     mailsLoading: boolean = false;
+    // webpieces-disable no-any-unknown -- pagination shape varies by endpoint (cursor vs page) and is consumed untyped by templates
     pagination: any;
-    selectedMail: Mail;
+    selectedMail: Mail | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -63,15 +64,15 @@ export class MailboxListComponent implements OnInit, OnDestroy {
         // Category
         this._mailboxService.category$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((category: MailCategory) => {
+            .subscribe((category) => {
                 this.category = category;
             });
 
         // Mails
         this._mailboxService.mails$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((mails: Mail[]) => {
-                this.mails = mails;
+            .subscribe((mails) => {
+                this.mails = mails ?? [];
             });
 
         // Mails loading
@@ -97,7 +98,7 @@ export class MailboxListComponent implements OnInit, OnDestroy {
         // Selected mail
         this._mailboxService.mail$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((mail: Mail) => {
+            .subscribe((mail) => {
                 this.selectedMail = mail;
             });
     }
@@ -122,7 +123,7 @@ export class MailboxListComponent implements OnInit, OnDestroy {
      */
     onMailSelected(mail: Mail): void {
         // If the mail is unread...
-        if (mail.unread) {
+        if (mail.unread && mail.id) {
             // Update the mail object
             mail.unread = false;
 

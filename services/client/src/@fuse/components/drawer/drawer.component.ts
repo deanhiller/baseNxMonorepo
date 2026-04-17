@@ -67,8 +67,8 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
     private _animationsEnabled: boolean = false;
     private readonly _handleOverlayClick = (): void => this.close();
     private _hovered: boolean = false;
-    private _overlay: HTMLElement;
-    private _player: AnimationPlayer;
+    private _overlay: HTMLElement | null = null;
+    private _player!: AnimationPlayer;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -312,25 +312,26 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
      */
     private _showOverlay(): void {
         // Create the backdrop element
-        this._overlay = this._renderer2.createElement('div');
+        const overlay: HTMLElement = this._renderer2.createElement('div');
+        this._overlay = overlay;
 
         // Add a class to the backdrop element
-        this._overlay.classList.add('fuse-drawer-overlay');
+        overlay.classList.add('fuse-drawer-overlay');
 
         // Add a class depending on the fixed option
         if (this.fixed) {
-            this._overlay.classList.add('fuse-drawer-overlay-fixed');
+            overlay.classList.add('fuse-drawer-overlay-fixed');
         }
 
         // Add a class depending on the transparentOverlay option
         if (this.transparentOverlay) {
-            this._overlay.classList.add('fuse-drawer-overlay-transparent');
+            overlay.classList.add('fuse-drawer-overlay-transparent');
         }
 
         // Append the backdrop to the parent of the drawer
         this._renderer2.appendChild(
             this._elementRef.nativeElement.parentElement,
-            this._overlay
+            overlay
         );
 
         // Create enter animation and attach it to the player
@@ -342,13 +343,13 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
                     style({ opacity: 1 })
                 ),
             ])
-            .create(this._overlay);
+            .create(overlay);
 
         // Play the animation
         this._player.play();
 
         // Add an event listener to the overlay
-        this._overlay.addEventListener('click', this._handleOverlayClick);
+        overlay.addEventListener('click', this._handleOverlayClick);
     }
 
     /**
@@ -385,7 +386,7 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
                 );
 
                 // Remove the overlay
-                this._overlay.parentNode.removeChild(this._overlay);
+                this._overlay.parentNode?.removeChild(this._overlay);
                 this._overlay = null;
             }
         });

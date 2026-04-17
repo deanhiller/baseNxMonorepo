@@ -50,15 +50,15 @@ export class FuseHorizontalNavigationBranchItemComponent
     private _fuseNavigationService = inject(FuseNavigationService);
 
     @Input() child: boolean = false;
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
-    @ViewChild('matMenu', { static: true }) matMenu: MatMenu;
+    @Input() item!: FuseNavigationItem;
+    @Input() name!: string;
+    @ViewChild('matMenu', { static: true }) matMenu!: MatMenu;
 
     // webpieces-disable no-any-unknown -- FuseNavigationItem is an interface; Object is a valid runtime Constructor and the cast narrows let-item to FuseNavigationItem for template type-checking
     protected readonly FuseNavigationItemCtor =
         Object as unknown as new () => FuseNavigationItem;
 
-    private _fuseHorizontalNavigationComponent: FuseHorizontalNavigationComponent;
+    private _fuseHorizontalNavigationComponent!: FuseHorizontalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     // -----------------------------------------------------------------------------------------------------

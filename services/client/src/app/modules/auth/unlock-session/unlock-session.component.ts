@@ -37,16 +37,16 @@ import { UserService } from 'app/core/user/user.service';
     ],
 })
 export class AuthUnlockSessionComponent implements OnInit {
-    @ViewChild('unlockSessionNgForm') unlockSessionNgForm: NgForm;
+    @ViewChild('unlockSessionNgForm') unlockSessionNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
     };
-    name: string;
+    name!: string; // set in ngOnInit via user$
     showAlert: boolean = false;
-    unlockSessionForm: UntypedFormGroup;
-    private _email: string;
+    unlockSessionForm!: UntypedFormGroup; // set in ngOnInit
+    private _email!: string; // set in ngOnInit via user$
 
     /**
      * Constructor
@@ -107,7 +107,7 @@ export class AuthUnlockSessionComponent implements OnInit {
         this._authService
             .unlockSession({
                 email: this._email ?? '',
-                password: this.unlockSessionForm.get('password').value,
+                password: this.unlockSessionForm.get('password')!.value, // 'password' is declared in ngOnInit
             })
             .subscribe(
                 () => {

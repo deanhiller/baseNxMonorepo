@@ -32,9 +32,9 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class OtherComponentsComponent implements OnInit, OnDestroy {
-    @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
-    drawerMode: 'side' | 'over';
-    drawerOpened: boolean;
+    @ViewChild('matDrawer', { static: true }) matDrawer!: MatDrawer; // set by Angular after view init
+    drawerMode!: 'side' | 'over'; // set in ngOnInit via media watcher
+    drawerOpened!: boolean; // set in ngOnInit via media watcher
     menuData: FuseNavigationItem[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 

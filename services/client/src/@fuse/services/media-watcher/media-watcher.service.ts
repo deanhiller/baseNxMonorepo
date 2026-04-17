@@ -50,7 +50,7 @@ export class FuseMediaWatcherService {
                                     // Find the alias of the matching query
                                     const matchingAlias = Object.entries(
                                         screens
-                                    ).find(([alias, q]) => q === query)[0];
+                                    ).find((entry) => entry[1] === query)?.[0];
 
                                     // Add the matching query to the observable values
                                     if (matchingAlias) {

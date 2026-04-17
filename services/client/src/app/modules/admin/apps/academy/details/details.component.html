@@ -160,7 +160,7 @@
             </div>
             <mat-progress-bar
                 class="hidden h-0.5 w-full flex-0 lg:block"
-                [value]="(100 * (currentStep + 1)) / course.totalSteps"
+                [value]="(100 * (currentStep + 1)) / (course.totalSteps ?? 1)"
             ></mat-progress-bar>
 
             <!-- Main -->
@@ -245,7 +245,7 @@
                 </div>
                 <mat-progress-bar
                     class="ml-6 flex-auto rounded-full"
-                    [value]="(100 * (currentStep + 1)) / course.totalSteps"
+                    [value]="(100 * (currentStep + 1)) / (course.totalSteps ?? 1)"
                 ></mat-progress-bar>
                 <button
                     class="ml-4"

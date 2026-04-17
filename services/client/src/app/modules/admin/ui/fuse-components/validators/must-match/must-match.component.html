@@ -114,7 +114,7 @@
             <code>mat-form-field</code>:
         </p>
         <textarea fuse-highlight lang="html">
-            <mat-error *ngIf="resetPasswordForm.get('passwordConfirm').hasError('mustMatch')">
+            <mat-error *ngIf="resetPasswordForm.get('passwordConfirm')?.hasError('mustMatch')">
                 Passwords must match
             </mat-error>
         </textarea>

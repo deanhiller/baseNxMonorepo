@@ -59,8 +59,8 @@ import { ScrumboardBoardAddListComponent } from './add-list/add-list.component';
     ],
 })
 export class ScrumboardBoardComponent implements OnInit, OnDestroy {
-    board: Board;
-    listTitleForm: UntypedFormGroup;
+    board!: Board;
+    listTitleForm!: UntypedFormGroup;
 
     // Private
     private readonly _positionStep: number = 65536;
@@ -94,7 +94,10 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
         // Get the board
         this._scrumboardService.board$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((board: Board) => {
+            .subscribe((board) => {
+                if (!board) {
+                    return;
+                }
                 this.board = { ...board };
 
                 // Mark for check
@@ -138,9 +141,9 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
             return;
         }
 
-        // Create a new list model
+        // Create a new list model — board.id is set after the resolver loads
         const list = new List({
-            boardId: this.board.id,
+            boardId: this.board.id!,
             position: this.board.lists.length
                 ? this.board.lists[this.board.lists.length - 1].position +
                   this._positionStep
@@ -211,10 +214,10 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
      * Add new card
      */
     addCard(list: List, title: string): void {
-        // Create a new card model
+        // Create a new card model — board.id and list.id are set after load
         const card = new Card({
-            boardId: this.board.id,
-            listId: list.id,
+            boardId: this.board.id!,
+            listId: list.id!,
             position: list.cards.length
                 ? list.cards[list.cards.length - 1].position +
                   this._positionStep

@@ -28,8 +28,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class FuseFullscreenComponent {
     private _document = inject(DOCUMENT);
 
-    @Input() iconTpl: TemplateRef<any>;
-    @Input() tooltip: string;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; caller supplies template with no bound context
+    @Input() iconTpl!: TemplateRef<unknown>;
+    @Input() tooltip!: string;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

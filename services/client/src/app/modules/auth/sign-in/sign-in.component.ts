@@ -38,13 +38,13 @@ import { AuthService } from 'app/core/auth/auth.service';
     ],
 })
 export class AuthSignInComponent implements OnInit {
-    @ViewChild('signInNgForm') signInNgForm: NgForm;
+    @ViewChild('signInNgForm') signInNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
     };
-    signInForm: UntypedFormGroup;
+    signInForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**

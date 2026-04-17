@@ -52,8 +52,8 @@ import {
     ],
 })
 export class NotesDetailsComponent implements OnInit, OnDestroy {
-    note$: Observable<Note>;
-    labels$: Observable<Label[]>;
+    note$!: Observable<Note | null>;
+    labels$!: Observable<Label[] | null>;
 
     noteChanged: Subject<Note> = new Subject<Note>();
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -87,16 +87,15 @@ export class NotesDetailsComponent implements OnInit, OnDestroy {
         // Add
         else {
             // Create an empty note
-            const note = {
-                id: null,
-                title: '',
+            const note: Note = {
+                id: undefined,
+                title: undefined,
                 content: '',
-                tasks: null,
+                tasks: undefined,
                 image: null,
-                reminder: null,
                 labels: [],
                 archived: false,
-                createdAt: null,
+                createdAt: undefined,
                 updatedAt: null,
             };
 
@@ -224,7 +223,7 @@ export class NotesDetailsComponent implements OnInit, OnDestroy {
      */
     removeTaskFromNote(note: Note, task: Task): void {
         // Remove the task
-        note.tasks = note.tasks.filter((item) => item.id !== task.id);
+        note.tasks = (note.tasks ?? []).filter((item) => item.id !== task.id);
 
         // Update the note
         this.noteChanged.next(note);
@@ -251,7 +250,7 @@ export class NotesDetailsComponent implements OnInit, OnDestroy {
      * @param label
      */
     isNoteHasLabel(note: Note, label: Label): boolean {
-        return !!note.labels.find((item) => item.id === label.id);
+        return !!(note.labels ?? []).find((item) => item.id === label.id);
     }
 
     /**
@@ -261,6 +260,8 @@ export class NotesDetailsComponent implements OnInit, OnDestroy {
      * @param label
      */
     toggleLabelOnNote(note: Note, label: Label): void {
+        // Ensure labels array exists
+        note.labels = note.labels ?? [];
         // If the note already has the label
         if (this.isNoteHasLabel(note, label)) {
             note.labels = note.labels.filter((item) => item.id !== label.id);

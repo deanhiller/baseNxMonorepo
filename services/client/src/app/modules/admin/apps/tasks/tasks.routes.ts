@@ -8,8 +8,9 @@ import {
 import { TasksDetailsComponent } from 'app/modules/admin/apps/tasks/details/details.component';
 import { TasksListComponent } from 'app/modules/admin/apps/tasks/list/list.component';
 import { TasksComponent } from 'app/modules/admin/apps/tasks/tasks.component';
+import { Task } from 'app/modules/admin/apps/tasks/tasks.types';
 import { TasksService } from 'app/modules/admin/apps/tasks/tasks.service';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 /**
  * Task resolver
@@ -20,11 +21,12 @@ import { catchError, throwError } from 'rxjs';
 const taskResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+): Observable<Task> => {
     const tasksService = inject(TasksService);
     const router = inject(Router);
 
-    return tasksService.getTaskById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return tasksService.getTaskById(route.paramMap.get('id')!).pipe(
         // Error here means the requested task is not available
         catchError((error) => {
 

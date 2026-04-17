@@ -49,10 +49,10 @@
                             matInput
                             [formControlName]="'email'"
                         />
-                        @if (comingSoonForm.get('email').hasError('required')) {
+                        @if (comingSoonForm.get('email')?.hasError('required')) {
                             <mat-error> Email address is required </mat-error>
                         }
-                        @if (comingSoonForm.get('email').hasError('email')) {
+                        @if (comingSoonForm.get('email')?.hasError('email')) {
                             <mat-error>
                                 Please enter a valid email address
                             </mat-error>

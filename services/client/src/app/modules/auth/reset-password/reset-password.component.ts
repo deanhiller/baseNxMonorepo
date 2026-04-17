@@ -38,13 +38,13 @@ import { finalize } from 'rxjs';
     ],
 })
 export class AuthResetPasswordComponent implements OnInit {
-    @ViewChild('resetPasswordNgForm') resetPasswordNgForm: NgForm;
+    @ViewChild('resetPasswordNgForm') resetPasswordNgForm!: NgForm; // set by Angular after view init
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
     };
-    resetPasswordForm: UntypedFormGroup;
+    resetPasswordForm!: UntypedFormGroup; // set in ngOnInit
     showAlert: boolean = false;
 
     /**
@@ -99,7 +99,7 @@ export class AuthResetPasswordComponent implements OnInit {
 
         // Send the request to the server
         this._authService
-            .resetPassword(this.resetPasswordForm.get('password').value)
+            .resetPassword(this.resetPasswordForm.get('password')!.value) // 'password' is declared in ngOnInit
             .pipe(
                 finalize(() => {
                     // Re-enable the form

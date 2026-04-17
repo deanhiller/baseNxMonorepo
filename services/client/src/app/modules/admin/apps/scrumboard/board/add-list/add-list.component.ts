@@ -35,11 +35,11 @@ import { MatIconModule } from '@angular/material/icon';
     ],
 })
 export class ScrumboardBoardAddListComponent implements OnInit {
-    @ViewChild('titleInput') titleInput: ElementRef;
+    @ViewChild('titleInput') titleInput!: ElementRef;
     @Input() buttonTitle: string = 'Add a list';
     @Output() readonly saved: EventEmitter<string> = new EventEmitter<string>();
 
-    form: UntypedFormGroup;
+    form!: UntypedFormGroup;
     formVisible: boolean = false;
 
     /**
@@ -72,8 +72,8 @@ export class ScrumboardBoardAddListComponent implements OnInit {
      * Save
      */
     save(): void {
-        // Get the new list title
-        const title = this.form.get('title').value;
+        // Get the new list title — 'title' control declared in ngOnInit
+        const title = this.form.get('title')!.value;
 
         // Return, if the title is empty
         if (!title || title.trim() === '') {
@@ -84,7 +84,7 @@ export class ScrumboardBoardAddListComponent implements OnInit {
         this.saved.next(title.trim());
 
         // Clear the new list title and hide the form
-        this.form.get('title').setValue('');
+        this.form.get('title')!.setValue('');
         this.formVisible = false;
 
         // Mark for check

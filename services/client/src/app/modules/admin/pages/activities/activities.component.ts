@@ -21,7 +21,7 @@ import { Observable } from 'rxjs';
     imports: [MatIconModule, RouterLink, AsyncPipe, TitleCasePipe, DatePipe],
 })
 export class ActivitiesComponent implements OnInit {
-    activities$: Observable<Activity[]>;
+    activities$!: Observable<Activity[]>; // set in ngOnInit
 
     /**
      * Constructor
@@ -63,7 +63,7 @@ export class ActivitiesComponent implements OnInit {
      * @param date
      */
     getRelativeFormat(date: string): string {
-        return DateTime.fromISO(date).toRelativeCalendar();
+        return DateTime.fromISO(date).toRelativeCalendar() ?? '';
     }
 
     /**

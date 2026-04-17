@@ -41,12 +41,12 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class ChatsComponent implements OnInit, OnDestroy {
-    chats: Chat[];
-    drawerComponent: 'profile' | 'new-chat';
+    chats: Chat[] = [];
+    drawerComponent!: 'profile' | 'new-chat'; // set when drawer is opened
     drawerOpened: boolean = false;
-    filteredChats: Chat[];
-    profile: Profile;
-    selectedChat: Chat;
+    filteredChats: Chat[] = [];
+    profile!: Profile; // set in ngOnInit via subscribe
+    selectedChat!: Chat; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -68,8 +68,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
         // Chats
         this._chatService.chats$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chats: Chat[]) => {
-                this.chats = this.filteredChats = chats;
+            .subscribe((chats) => {
+                this.chats = this.filteredChats = chats ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -78,8 +78,10 @@ export class ChatsComponent implements OnInit, OnDestroy {
         // Profile
         this._chatService.profile$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((profile: Profile) => {
-                this.profile = profile;
+            .subscribe((profile) => {
+                if (profile) {
+                    this.profile = profile;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -88,8 +90,10 @@ export class ChatsComponent implements OnInit, OnDestroy {
         // Selected chat
         this._chatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) => {
-                this.selectedChat = chat;
+            .subscribe((chat) => {
+                if (chat) {
+                    this.selectedChat = chat;
+                }
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -125,7 +129,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
         }
 
         this.filteredChats = this.chats.filter((chat) =>
-            chat.contact.name.toLowerCase().includes(query.toLowerCase())
+            (chat.contact?.name ?? '')
+                .toLowerCase()
+                .includes(query.toLowerCase())
         );
     }
 

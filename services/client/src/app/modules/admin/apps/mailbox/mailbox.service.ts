@@ -21,17 +21,21 @@ import {
 @Injectable({ providedIn: 'root' })
 export class MailboxService {
     selectedMailChanged: BehaviorSubject<any> = new BehaviorSubject(null);
-    private _category: BehaviorSubject<MailCategory> = new BehaviorSubject(
-        null
-    );
-    private _filters: BehaviorSubject<MailFilter[]> = new BehaviorSubject(null);
-    private _folders: BehaviorSubject<MailFolder[]> = new BehaviorSubject(null);
-    private _labels: BehaviorSubject<MailLabel[]> = new BehaviorSubject(null);
-    private _mails: BehaviorSubject<Mail[]> = new BehaviorSubject(null);
+    private _category: BehaviorSubject<MailCategory | null> =
+        new BehaviorSubject<MailCategory | null>(null);
+    private _filters: BehaviorSubject<MailFilter[] | null> =
+        new BehaviorSubject<MailFilter[] | null>(null);
+    private _folders: BehaviorSubject<MailFolder[] | null> =
+        new BehaviorSubject<MailFolder[] | null>(null);
+    private _labels: BehaviorSubject<MailLabel[] | null> =
+        new BehaviorSubject<MailLabel[] | null>(null);
+    private _mails: BehaviorSubject<Mail[] | null> =
+        new BehaviorSubject<Mail[] | null>(null);
     private _mailsLoading: BehaviorSubject<boolean> = new BehaviorSubject(
         false
     );
-    private _mail: BehaviorSubject<Mail> = new BehaviorSubject(null);
+    private _mail: BehaviorSubject<Mail | null> =
+        new BehaviorSubject<Mail | null>(null);
     private _pagination: BehaviorSubject<any> = new BehaviorSubject(null);
 
     /**
@@ -46,35 +50,35 @@ export class MailboxService {
     /**
      * Getter for category
      */
-    get category$(): Observable<MailCategory> {
+    get category$(): Observable<MailCategory | null> {
         return this._category.asObservable();
     }
 
     /**
      * Getter for filters
      */
-    get filters$(): Observable<MailFilter[]> {
+    get filters$(): Observable<MailFilter[] | null> {
         return this._filters.asObservable();
     }
 
     /**
      * Getter for folders
      */
-    get folders$(): Observable<MailFolder[]> {
+    get folders$(): Observable<MailFolder[] | null> {
         return this._folders.asObservable();
     }
 
     /**
      * Getter for labels
      */
-    get labels$(): Observable<MailLabel[]> {
+    get labels$(): Observable<MailLabel[] | null> {
         return this._labels.asObservable();
     }
 
     /**
      * Getter for mails
      */
-    get mails$(): Observable<Mail[]> {
+    get mails$(): Observable<Mail[] | null> {
         return this._mails.asObservable();
     }
 
@@ -88,7 +92,7 @@ export class MailboxService {
     /**
      * Getter for mail
      */
-    get mail$(): Observable<Mail> {
+    get mail$(): Observable<Mail | null> {
         return this._mail.asObservable();
     }
 
@@ -261,7 +265,8 @@ export class MailboxService {
             take(1),
             map((mails) => {
                 // Find the mail
-                const mail = mails.find((item) => item.id === id) || null;
+                const mail =
+                    (mails ?? []).find((item) => item.id === id) || null;
 
                 // Update the mail
                 this._mail.next(mail);
@@ -328,7 +333,7 @@ export class MailboxService {
                     .pipe(
                         map((newLabel) => {
                             // Update the labels with the new label
-                            this._labels.next([...labels, newLabel]);
+                            this._labels.next([...(labels ?? []), newLabel]);
 
                             // Return the new label
                             return newLabel;
@@ -354,17 +359,20 @@ export class MailboxService {
                         label,
                     })
                     .pipe(
-                        map((updatedLabel: any) => {
+                        map((updatedLabel: MailLabel) => {
                             // Find the index of the updated label within the labels
-                            const index = labels.findIndex(
+                            const list = labels ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Update the label
-                            labels[index] = updatedLabel;
+                            if (index > -1) {
+                                list[index] = updatedLabel;
+                            }
 
                             // Update the labels
-                            this._labels.next(labels);
+                            this._labels.next(list);
 
                             // Return the updated label
                             return updatedLabel;
@@ -384,19 +392,22 @@ export class MailboxService {
             take(1),
             switchMap((labels) =>
                 this._httpClient
-                    .delete('api/apps/mailbox/label', { params: { id } })
+                    .delete<boolean>('api/apps/mailbox/label', { params: { id } })
                     .pipe(
-                        map((isDeleted: any) => {
+                        map((isDeleted: boolean) => {
                             // Find the index of the deleted label within the labels
-                            const index = labels.findIndex(
+                            const list = labels ?? [];
+                            const index = list.findIndex(
                                 (item) => item.id === id
                             );
 
                             // Delete the label
-                            labels.splice(index, 1);
+                            if (index > -1) {
+                                list.splice(index, 1);
+                            }
 
                             // Update the labels
-                            this._labels.next(labels);
+                            this._labels.next(list);
 
                             // Return the deleted status
                             return isDeleted;

@@ -31,8 +31,8 @@ import { Subject, takeUntil } from 'rxjs';
     ],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-    @Input() drawer: MatDrawer;
-    profile: Profile;
+    @Input() drawer!: MatDrawer; // required input
+    profile!: Profile; // set in ngOnInit via subscribe
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -51,8 +51,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         // Profile
         this._chatService.profile$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((profile: Profile) => {
-                this.profile = profile;
+            .subscribe((profile) => {
+                if (profile) {
+                    this.profile = profile;
+                }
             });
     }
 

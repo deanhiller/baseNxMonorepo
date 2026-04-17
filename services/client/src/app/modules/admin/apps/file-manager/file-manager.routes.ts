@@ -8,8 +8,9 @@ import {
 import { FileManagerDetailsComponent } from 'app/modules/admin/apps/file-manager/details/details.component';
 import { FileManagerComponent } from 'app/modules/admin/apps/file-manager/file-manager.component';
 import { FileManagerService } from 'app/modules/admin/apps/file-manager/file-manager.service';
+import { Item } from 'app/modules/admin/apps/file-manager/file-manager.types';
 import { FileManagerListComponent } from 'app/modules/admin/apps/file-manager/list/list.component';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 /**
  * Folder resolver
@@ -49,11 +50,12 @@ const folderResolver = (
 const itemResolver = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => {
+): Observable<Item> => {
     const fileManagerService = inject(FileManagerService);
     const router = inject(Router);
 
-    return fileManagerService.getItemById(route.paramMap.get('id')).pipe(
+    // 'id' is part of the route definition and always present here
+    return fileManagerService.getItemById(route.paramMap.get('id')!).pipe(
         // Error here means the requested item is not available
         catchError((error) => {
 

@@ -20,8 +20,9 @@ import { fuseAnimations } from '@fuse/animations';
     imports: [NgTemplateOutlet],
 })
 export class FuseMasonryComponent implements OnChanges, AfterViewInit {
-    @Input() columnsTemplate: TemplateRef<any>;
-    @Input() columns: number;
+    // webpieces-disable no-any-unknown -- TemplateRef accepts any context; user provides template for column rendering
+    @Input() columnsTemplate!: TemplateRef<unknown>;
+    @Input() columns!: number;
     @Input() items: any[] = [];
     distributedColumns: any[] = [];
 

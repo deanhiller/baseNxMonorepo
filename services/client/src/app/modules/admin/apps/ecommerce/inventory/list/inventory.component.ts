@@ -110,27 +110,27 @@ import {
 export class InventoryListComponent
     implements OnInit, AfterViewInit, OnDestroy
 {
-    @ViewChild(MatPaginator) private _paginator: MatPaginator;
-    @ViewChild(MatSort) private _sort: MatSort;
+    @ViewChild(MatPaginator) private _paginator!: MatPaginator;
+    @ViewChild(MatSort) private _sort!: MatSort;
 
     // webpieces-disable no-any-unknown -- InventoryProduct is an interface; cast narrows let-product to the right type for template type-checking
     protected readonly InventoryProductCtor =
         Object as unknown as new () => InventoryProduct;
 
-    products$: Observable<InventoryProduct[]>;
+    products$!: Observable<InventoryProduct[] | null>;
 
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredTags: InventoryTag[];
+    brands: InventoryBrand[] | null = null;
+    categories: InventoryCategory[] | null = null;
+    filteredTags: InventoryTag[] = [];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: InventoryPagination;
+    pagination: InventoryPagination | null = null;
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     selectedProduct: InventoryProduct | null = null;
-    selectedProductForm: UntypedFormGroup;
-    tags: InventoryTag[];
+    selectedProductForm!: UntypedFormGroup;
+    tags: InventoryTag[] = [];
     tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
+    vendors: InventoryVendor[] | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -178,7 +178,7 @@ export class InventoryListComponent
         // Get the brands
         this._inventoryService.brands$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: InventoryBrand[]) => {
+            .subscribe((brands) => {
                 // Update the brands
                 this.brands = brands;
 
@@ -189,7 +189,7 @@ export class InventoryListComponent
         // Get the categories
         this._inventoryService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: InventoryCategory[]) => {
+            .subscribe((categories) => {
                 // Update the categories
                 this.categories = categories;
 
@@ -200,7 +200,7 @@ export class InventoryListComponent
         // Get the pagination
         this._inventoryService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: InventoryPagination) => {
+            .subscribe((pagination) => {
                 // Update the pagination
                 this.pagination = pagination;
 
@@ -214,10 +214,10 @@ export class InventoryListComponent
         // Get the tags
         this._inventoryService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: InventoryTag[]) => {
+            .subscribe((tags) => {
                 // Update the tags
-                this.tags = tags;
-                this.filteredTags = tags;
+                this.tags = tags ?? [];
+                this.filteredTags = tags ?? [];
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -226,7 +226,7 @@ export class InventoryListComponent
         // Get the vendors
         this._inventoryService.vendors$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: InventoryVendor[]) => {
+            .subscribe((vendors) => {
                 // Update the vendors
                 this.vendors = vendors;
 
@@ -356,10 +356,10 @@ export class InventoryListComponent
      * Cycle through images of selected product
      */
     cycleImages(forward: boolean = true): void {
-        // Get the image count and current image index
-        const count = this.selectedProductForm.get('images').value.length;
+        // Form controls 'images' and 'currentImageIndex' are declared in ngOnInit
+        const count = this.selectedProductForm.get('images')!.value.length;
         const currentIndex =
-            this.selectedProductForm.get('currentImageIndex').value;
+            this.selectedProductForm.get('currentImageIndex')!.value;
 
         // Calculate the next and previous index
         const nextIndex = currentIndex + 1 === count ? 0 : currentIndex + 1;
@@ -368,13 +368,13 @@ export class InventoryListComponent
         // If cycling forward...
         if (forward) {
             this.selectedProductForm
-                .get('currentImageIndex')
+                .get('currentImageIndex')!
                 .setValue(nextIndex);
         }
         // If cycling backwards...
         else {
             this.selectedProductForm
-                .get('currentImageIndex')
+                .get('currentImageIndex')!
                 .setValue(prevIndex);
         }
     }
@@ -397,7 +397,7 @@ export class InventoryListComponent
 
         // Filter the tags
         this.filteredTags = this.tags.filter((tag) =>
-            tag.title.toLowerCase().includes(value)
+            (tag.title ?? '').toLowerCase().includes(value)
         );
     }
 
@@ -426,7 +426,7 @@ export class InventoryListComponent
 
         // If there is a tag...
         const tag = this.filteredTags[0];
-        const isTagApplied = this.selectedProduct.tags.find(
+        const isTagApplied = this.selectedProduct?.tags?.find(
             (id) => id === tag.id
         );
 
@@ -468,8 +468,9 @@ export class InventoryListComponent
         tag.title = event.target.value;
 
         // Update the tag on the server
+        // Tag.id is always set for tags loaded from the server
         this._inventoryService
-            .updateTag(tag.id, tag)
+            .updateTag(tag.id!, tag)
             .pipe(debounceTime(300))
             .subscribe();
 
@@ -484,7 +485,8 @@ export class InventoryListComponent
      */
     deleteTag(tag: InventoryTag): void {
         // Delete the tag from the server
-        this._inventoryService.deleteTag(tag.id).subscribe();
+        // Tag.id is always set for tags loaded from the server
+        this._inventoryService.deleteTag(tag.id!).subscribe();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -496,12 +498,17 @@ export class InventoryListComponent
      * @param tag
      */
     addTagToProduct(tag: InventoryTag): void {
+        if (!this.selectedProduct || !tag.id) {
+            return;
+        }
+        // Ensure tags array exists
+        this.selectedProduct.tags = this.selectedProduct.tags ?? [];
         // Add the tag
         this.selectedProduct.tags.unshift(tag.id);
 
         // Update the selected product form
         this.selectedProductForm
-            .get('tags')
+            .get('tags')!
             .patchValue(this.selectedProduct.tags);
 
         // Mark for check
@@ -514,6 +521,9 @@ export class InventoryListComponent
      * @param tag
      */
     removeTagFromProduct(tag: InventoryTag): void {
+        if (!this.selectedProduct?.tags) {
+            return;
+        }
         // Remove the tag
         this.selectedProduct.tags.splice(
             this.selectedProduct.tags.findIndex((item) => item === tag.id),
@@ -522,7 +532,7 @@ export class InventoryListComponent
 
         // Update the selected product form
         this.selectedProductForm
-            .get('tags')
+            .get('tags')!
             .patchValue(this.selectedProduct.tags);
 
         // Mark for check
@@ -552,7 +562,8 @@ export class InventoryListComponent
         return !!!(
             inputValue === '' ||
             this.tags.findIndex(
-                (tag) => tag.title.toLowerCase() === inputValue.toLowerCase()
+                (tag) =>
+                    (tag.title ?? '').toLowerCase() === inputValue.toLowerCase()
             ) > -1
         );
     }

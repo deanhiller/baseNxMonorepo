@@ -42,7 +42,7 @@ export class NavigationComponent {
      * @param itemId
      * @param navigationName
      */
-    getNavItem(itemId, navigationName): FuseNavigationItem | null {
+    getNavItem(itemId: string, navigationName: string): FuseNavigationItem | null {
         // Get the component -> navigation data -> item
         const navComponent =
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
@@ -67,7 +67,7 @@ export class NavigationComponent {
      * @param navigationName
      * @param title
      */
-    updateBadgeTitle(itemId, navigationName, title): void {
+    updateBadgeTitle(itemId: string, navigationName: string, title: string): void {
         // Get the component -> navigation data -> item
         const navComponent =
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
@@ -94,7 +94,7 @@ export class NavigationComponent {
      * @param itemId
      * @param navigationName
      */
-    toggleDisabled(itemId, navigationName): void {
+    toggleDisabled(itemId: string, navigationName: string): void {
         // Get the component -> navigation data -> item
         const navComponent =
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
@@ -120,7 +120,7 @@ export class NavigationComponent {
      *
      * @param navigationName
      */
-    swapNavigationData(navigationName): void {
+    swapNavigationData(navigationName: string): void {
         // Get the component -> navigation data -> item
         const navComponent =
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(

@@ -75,7 +75,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
             });
 
         // Attach SVG fill fixer to all ApexCharts
-        window['Apex'] = {
+        // webpieces-disable no-any-unknown -- window global for ApexCharts config requires Record<string, unknown> cast
+        (window as unknown as Record<string, unknown>)['Apex'] = {
             chart: {
                 events: {
                     mounted: (chart: any, options?: any): void => {

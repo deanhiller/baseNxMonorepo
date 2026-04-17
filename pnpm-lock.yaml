@@ -121,8 +121,8 @@ importers:
         specifier: 8.48.0
         version: 8.48.0(eslint@8.57.1)(typescript@5.7.2)
       '@webpieces/dev-config':
-        specifier: 0.2.108
-        version: 0.2.108(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)
+        specifier: 0.2.110
+        version: 0.2.110(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -3458,17 +3458,17 @@ packages:
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
 
-  '@webpieces/ai-hooks@0.2.108':
-    resolution: {integrity: sha512-YQxJ06ezqfyS1XNwhG4z8a5xzcHImLte22yU+J3fwQB+NNcPnOdykXy4uHIURu6hJRhEVKRcDMNZ4MeITNkH9A==}
+  '@webpieces/ai-hooks@0.2.110':
+    resolution: {integrity: sha512-Rhotlrw/B+Rrv0KsQbtYkCHoKbfIsvrob/O2x4p5oVr6piN23ZcANs542mpUxfY/Zpbj9jrKQL08LhtiXjTqXw==}
     hasBin: true
 
-  '@webpieces/architecture-validators@0.2.108':
-    resolution: {integrity: sha512-1rhwlyCdjAqteQ4tTk4zANAq8V/8ERkPVpN0vU51y/YzLN6oPY7l/8FI+aleucvFEhHwsV5WfKUlHtwgIhCJew==}
+  '@webpieces/architecture-validators@0.2.110':
+    resolution: {integrity: sha512-5EZW6/RBrlPZ2xYK9+QwvggLz84dx+tHpQkreluzz8N24ObinthCOoDCtIFM+rMme8iPgq71WsBUviFoKP6Gtg==}
     peerDependencies:
       '@nx/devkit': '>=18.0.0'
 
-  '@webpieces/config@0.2.108':
-    resolution: {integrity: sha512-UZpsDo5yC1Laloyzmfdd4llfFLrYO77jgDQxz9Fj4AQkcKntvkIo8ejX9SewjERnJz52VMH5chAz6UoMGq+MMw==}
+  '@webpieces/config@0.2.110':
+    resolution: {integrity: sha512-cGWZ9e71iMWpjClEDnMR1RFNVm2cuTBRa/udkkX0OmVBaLeQjdRlkaD+4zL/qAb/YH3KFOLR94OXffqtUREnMw==}
 
   '@webpieces/core-context@0.2.105':
     resolution: {integrity: sha512-Ta9c+7bP+LTsVFocQw6N0JKE9UyGaEP+JIDTuEW6Xm1aDYhEYXSEWm95wpJch8ZdatJstaO2XetncuRIV9CGvQ==}
@@ -3476,8 +3476,8 @@ packages:
   '@webpieces/core-util@0.2.105':
     resolution: {integrity: sha512-YFAWF6Q6rIqdoKPC+5r6bqpWopNCOx0IBwCvYdmS/c1jFoIkHW7GiHl7ruTnjTMWAPIuQv7P7HpKJsYpJbJqaw==}
 
-  '@webpieces/dev-config@0.2.108':
-    resolution: {integrity: sha512-luKxBue7zte272H0TgNMABIobK91uB6wLbYcaRcxJtrUu0qUjoAF61ByzIKYjJpuPFBhFaFRb4UPiDRer3f2NQ==}
+  '@webpieces/dev-config@0.2.110':
+    resolution: {integrity: sha512-7bDJ2BH93zR7x6PpIUuX3n/KNdoDGRkQo59S6zYYYw/dOiMKDO6f+q2z8bpVUhucyQrIIvTGPq+xCd3f3ufxHw==}
     hasBin: true
     peerDependencies:
       '@angular-eslint/eslint-plugin-template': '>=18.0.0'
@@ -3490,8 +3490,8 @@ packages:
       '@angular-eslint/template-parser':
         optional: true
 
-  '@webpieces/eslint-plugin@0.2.108':
-    resolution: {integrity: sha512-4jjGvUwDR/9QCZQwBCcKkmzGer65fRrmtqsK8aMXQ2UJnzENZkxJ9b9r6xA5ITabKWryGkHk6UqFRDxtQlxcjA==}
+  '@webpieces/eslint-plugin@0.2.110':
+    resolution: {integrity: sha512-5R+XoaMwV3x/dHAY+vo+EL6o53U+1YpnAdjEyrkSw0FNS+icGDM4wDvl5qWAXzYXVdIYUlPAg/c3Hj6g0mFkxQ==}
     peerDependencies:
       eslint: '>=8.0.0'
 
@@ -12605,16 +12605,16 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpieces/ai-hooks@0.2.108':
+  '@webpieces/ai-hooks@0.2.110':
     dependencies:
-      '@webpieces/config': 0.2.108
+      '@webpieces/config': 0.2.110
 
-  '@webpieces/architecture-validators@0.2.108(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))':
+  '@webpieces/architecture-validators@0.2.110(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))':
     dependencies:
       '@nx/devkit': 22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
-      '@webpieces/config': 0.2.108
+      '@webpieces/config': 0.2.110
 
-  '@webpieces/config@0.2.108': {}
+  '@webpieces/config@0.2.110': {}
 
   '@webpieces/core-context@0.2.105':
     dependencies:
@@ -12622,18 +12622,18 @@ snapshots:
 
   '@webpieces/core-util@0.2.105': {}
 
-  '@webpieces/dev-config@0.2.108(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)':
+  '@webpieces/dev-config@0.2.110(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)':
     dependencies:
       '@nx/devkit': 22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
-      '@webpieces/ai-hooks': 0.2.108
-      '@webpieces/architecture-validators': 0.2.108(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))
-      '@webpieces/eslint-plugin': 0.2.108(eslint@8.57.1)
+      '@webpieces/ai-hooks': 0.2.110
+      '@webpieces/architecture-validators': 0.2.110(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))
+      '@webpieces/eslint-plugin': 0.2.110(eslint@8.57.1)
       eslint: 8.57.1
     optionalDependencies:
       '@angular-eslint/eslint-plugin-template': 20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
       '@angular-eslint/template-parser': 20.7.0(eslint@8.57.1)(typescript@5.7.2)
 
-  '@webpieces/eslint-plugin@0.2.108(eslint@8.57.1)':
+  '@webpieces/eslint-plugin@0.2.110(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
 

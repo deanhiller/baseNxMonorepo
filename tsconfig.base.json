@@ -24,6 +24,7 @@
         "noFallthroughCasesInSwitch": true,
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
+        "noImplicitAny": true,
         "baseUrl": ".",
         "paths": {
             "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],

@@ -391,9 +391,9 @@ export class InventoryListComponent
      *
      * @param event
      */
-    filterTags(event): void {
+    filterTags(event: Event): void {
         // Get the value
-        const value = event.target.value.toLowerCase();
+        const value = (event.target as HTMLInputElement).value.toLowerCase();
 
         // Filter the tags
         this.filteredTags = this.tags.filter((tag) =>
@@ -406,7 +406,7 @@ export class InventoryListComponent
      *
      * @param event
      */
-    filterTagsInputKeyDown(event): void {
+    filterTagsInputKeyDown(event: KeyboardEvent): void {
         // Return if the pressed key is not 'Enter'
         if (event.key !== 'Enter') {
             return;
@@ -415,10 +415,10 @@ export class InventoryListComponent
         // If there is no tag available...
         if (this.filteredTags.length === 0) {
             // Create the tag
-            this.createTag(event.target.value);
+            this.createTag((event.target as HTMLInputElement).value);
 
             // Clear the input
-            event.target.value = '';
+            (event.target as HTMLInputElement).value = '';
 
             // Return
             return;
@@ -463,9 +463,9 @@ export class InventoryListComponent
      * @param tag
      * @param event
      */
-    updateTagTitle(tag: InventoryTag, event): void {
+    updateTagTitle(tag: InventoryTag, event: Event): void {
         // Update the title on the tag
-        tag.title = event.target.value;
+        tag.title = (event.target as HTMLInputElement).value;
 
         // Update the tag on the server
         // Tag.id is always set for tags loaded from the server

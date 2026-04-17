@@ -47,9 +47,9 @@ export class ScrumboardMockApi {
                 // Go through the boards and inject the members
                 boards = boards.map((board) => ({
                     ...board,
-                    members: board.members.map((boardMember) =>
+                    members: board.members.map((boardMember: string) =>
                         this._members.find(
-                            (member) => boardMember === member.id
+                            (member: { id: string }) => boardMember === member.id
                         )
                     ),
                 }));
@@ -78,13 +78,14 @@ export class ScrumboardMockApi {
                 let cards = this._cards.filter((item) => item.boardId === id);
                 cards = cards.map((card) => ({
                     ...card,
-                    labels: card.labels.map((cardLabelId) =>
-                        this._labels.find((label) => label.id === cardLabelId)
+                    labels: card.labels.map((cardLabelId: string) =>
+                        this._labels.find((label: { id: string }) => label.id === cardLabelId)
                     ),
                 }));
 
                 // Attach the board cards into corresponding lists
-                board.lists.forEach((list, index, array) => {
+                // webpieces-disable no-implicit-any -- board.lists items are untyped mock records
+                board.lists.forEach((list: { id: string }, index: number, array: { id: string; cards?: unknown[] }[]) => {
                     array[index].cards = cards
                         .filter(
                             (item) =>
@@ -159,10 +160,10 @@ export class ScrumboardMockApi {
                 const updatedLists: any[] = [];
 
                 // Go through the lists
-                lists.forEach((item) => {
+                lists.forEach((item: { id: string }) => {
                     // Find the list
                     const index = this._lists.findIndex(
-                        (list) => item.id === list.id
+                        (list: { id: string }) => item.id === list.id
                     );
 
                     // Update the list
@@ -227,10 +228,10 @@ export class ScrumboardMockApi {
                 let updatedCard: any = null;
 
                 // Go through the labels and leave only ids of them
-                card.labels = card.labels.map((itemLabel) => itemLabel.id);
+                card.labels = card.labels.map((itemLabel: { id: string }) => itemLabel.id);
 
                 // Find the card and update it
-                this._cards.forEach((item, index, cards) => {
+                this._cards.forEach((item: { id: string }, index: number, cards: { id: string }[]) => {
                     if (item.id === id) {
                         // Update the card
                         cards[index] = assign({}, cards[index], card);
@@ -243,9 +244,9 @@ export class ScrumboardMockApi {
                 // Attach the labels of the card
                 if (updatedCard) {
                     updatedCard.labels = updatedCard.labels.map(
-                        (cardLabelId) =>
+                        (cardLabelId: string) =>
                             this._labels.find(
-                                (label) => label.id === cardLabelId
+                                (label: { id: string }) => label.id === cardLabelId
                             )
                     );
                 }
@@ -267,21 +268,23 @@ export class ScrumboardMockApi {
                 const updatedCards: any[] = [];
 
                 // Go through the cards
-                cards.forEach((item) => {
+                cards.forEach((item: { id: string; labels: ({ id: string } | string)[] }) => {
                     // Find the card
                     const index = this._cards.findIndex(
-                        (card) => item.id === card.id
+                        (card: { id: string }) => item.id === card.id
                     );
 
                     // Go through the labels and leave only ids of them
-                    item.labels = item.labels.map((itemLabel) => itemLabel.id);
+                    item.labels = item.labels.map((itemLabel: { id: string } | string) =>
+                        typeof itemLabel === 'string' ? itemLabel : itemLabel.id
+                    );
 
                     // Update the card
                     this._cards[index] = assign({}, this._cards[index], item);
 
                     // Attach the labels of the card
-                    item.labels = item.labels.map((cardLabelId) =>
-                        this._labels.find((label) => label.id === cardLabelId)
+                    item.labels = (item.labels as string[]).map((cardLabelId: string) =>
+                        this._labels.find((label: { id: string }) => label.id === cardLabelId)
                     );
 
                     // Store in the updated cards
@@ -321,7 +324,7 @@ export class ScrumboardMockApi {
                     // Find this card's index within the cards array that comes with the request
                     // and assign that index as the new position number for the card
                     card.position = cards.findIndex(
-                        (item) =>
+                        (item: { id: string; listId: string; boardId: string }) =>
                             item.id === card.id &&
                             item.listId === card.listId &&
                             item.boardId === card.boardId

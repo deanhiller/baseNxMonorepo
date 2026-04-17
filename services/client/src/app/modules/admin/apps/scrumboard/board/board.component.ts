@@ -187,7 +187,7 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
      *
      * @param id
      */
-    deleteList(id): void {
+    deleteList(id: string): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title: 'Delete list',

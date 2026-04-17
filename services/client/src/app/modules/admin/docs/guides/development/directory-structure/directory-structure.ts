@@ -192,7 +192,7 @@ export class DirectoryStructureComponent implements OnInit {
 
         // Add 'last:true' to the last child
         this.appTree.treeControl.dataNodes.forEach(
-            (node: FlatDirNode, index, nodes) => {
+            (node: FlatDirNode, index: number, nodes: FlatDirNode[]) => {
                 nodes[index].last = false;
                 if (nodes[index + 1]) {
                     nodes[index].last =
@@ -204,7 +204,7 @@ export class DirectoryStructureComponent implements OnInit {
         );
 
         this.generalTree.treeControl.dataNodes.forEach(
-            (node: FlatDirNode, index, nodes) => {
+            (node: FlatDirNode, index: number, nodes: FlatDirNode[]) => {
                 nodes[index].last = false;
                 if (nodes[index + 1]) {
                     nodes[index].last =
@@ -239,7 +239,7 @@ export class DirectoryStructureComponent implements OnInit {
     /**
      * Create a new tree
      */
-    createTree(data): DirTree {
+    createTree(data: DirNode[]): DirTree {
         // Create tree control and data source
         const treeControl = new FlatTreeControl<FlatDirNode>(
             (node) => node.level,

@@ -198,7 +198,7 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
                 type: 'basic',
                 icon: 'heroicons_outline:tag',
                 classes: {
-                    icon: labelColorDefs[label.color].text,
+                    icon: (labelColorDefs as Record<string, { text: string; bg: string; combined: string }>)[label.color].text,
                 },
                 link: '/apps/mailbox/label/' + label.slug,
             });

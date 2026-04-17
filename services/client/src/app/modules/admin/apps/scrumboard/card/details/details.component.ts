@@ -176,9 +176,9 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
      *
      * @param event
      */
-    filterLabels(event): void {
+    filterLabels(event: Event): void {
         // Get the value
-        const value = event.target.value.toLowerCase();
+        const value = (event.target as HTMLInputElement).value.toLowerCase();
 
         // Filter the labels
         this.filteredLabels = this.labels.filter((label) =>
@@ -191,7 +191,7 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
      *
      * @param event
      */
-    filterLabelsInputKeyDown(event): void {
+    filterLabelsInputKeyDown(event: KeyboardEvent): void {
         // Return if the pressed key is not 'Enter'
         if (event.key !== 'Enter') {
             return;

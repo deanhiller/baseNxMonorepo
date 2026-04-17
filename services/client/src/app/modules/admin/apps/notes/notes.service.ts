@@ -216,7 +216,7 @@ export class NotesService {
 
         // Before sending the note to the server, handle the labels
         if (updatedNote.labels.length) {
-            updatedNote.labels = updatedNote.labels.map((label) => label.id);
+            updatedNote.labels = updatedNote.labels.map((label: Label) => label.id);
         }
 
         return this._httpClient

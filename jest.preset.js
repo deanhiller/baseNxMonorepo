@@ -4,4 +4,6 @@ export default {
     passWithNoTests: true,
     ...(process.env.JEST_SILENT ? { silent: true } : {}),
     ...nxPreset,
+    maxWorkers: 2,
+    workerIdleMemoryLimit: '1GB',
 };

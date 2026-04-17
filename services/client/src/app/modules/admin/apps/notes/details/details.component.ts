@@ -194,7 +194,7 @@ export class NotesDetailsComponent implements OnInit, OnDestroy {
      *
      * @param note
      */
-    addTasksToNote(note): void {
+    addTasksToNote(note: Note): void {
         if (!note.tasks) {
             note.tasks = [];
         }

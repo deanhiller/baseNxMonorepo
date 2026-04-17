@@ -6,6 +6,7 @@ import {
     labels as labelsData,
     notes as notesData,
 } from 'app/mock-api/apps/notes/data';
+import { Label } from 'app/modules/admin/apps/notes/notes.types';
 import { cloneDeep } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
@@ -149,7 +150,7 @@ export class NotesMockApi {
             notes = notes.map((note) => ({
                 ...note,
                 labels: note.labels.map((labelId: string) =>
-                    labels.find((label: { id: string; title: string }) => label.id === labelId)
+                    labels.find((label: Label) => label.id === labelId)
                 ),
             }));
 

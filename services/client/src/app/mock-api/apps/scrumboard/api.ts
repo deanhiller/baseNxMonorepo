@@ -8,6 +8,12 @@ import {
     lists as listsData,
     members as membersData,
 } from 'app/mock-api/apps/scrumboard/data';
+import {
+    ICard,
+    ILabel,
+    IList,
+    IMember,
+} from 'app/modules/admin/apps/scrumboard/scrumboard.types';
 import { assign, cloneDeep } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
@@ -49,7 +55,7 @@ export class ScrumboardMockApi {
                     ...board,
                     members: board.members.map((boardMember: string) =>
                         this._members.find(
-                            (member: { id: string }) => boardMember === member.id
+                            (member: IMember) => boardMember === member.id
                         )
                     ),
                 }));
@@ -79,13 +85,12 @@ export class ScrumboardMockApi {
                 cards = cards.map((card) => ({
                     ...card,
                     labels: card.labels.map((cardLabelId: string) =>
-                        this._labels.find((label: { id: string }) => label.id === cardLabelId)
+                        this._labels.find((label: ILabel) => label.id === cardLabelId)
                     ),
                 }));
 
                 // Attach the board cards into corresponding lists
-                // webpieces-disable no-implicit-any -- board.lists items are untyped mock records
-                board.lists.forEach((list: { id: string }, index: number, array: { id: string; cards?: unknown[] }[]) => {
+                board.lists.forEach((list: IList, index: number, array: IList[]) => {
                     array[index].cards = cards
                         .filter(
                             (item) =>
@@ -160,10 +165,10 @@ export class ScrumboardMockApi {
                 const updatedLists: any[] = [];
 
                 // Go through the lists
-                lists.forEach((item: { id: string }) => {
+                lists.forEach((item: IList) => {
                     // Find the list
                     const index = this._lists.findIndex(
-                        (list: { id: string }) => item.id === list.id
+                        (list: IList) => item.id === list.id
                     );
 
                     // Update the list
@@ -228,10 +233,10 @@ export class ScrumboardMockApi {
                 let updatedCard: any = null;
 
                 // Go through the labels and leave only ids of them
-                card.labels = card.labels.map((itemLabel: { id: string }) => itemLabel.id);
+                card.labels = card.labels.map((itemLabel: ILabel) => itemLabel.id);
 
                 // Find the card and update it
-                this._cards.forEach((item: { id: string }, index: number, cards: { id: string }[]) => {
+                this._cards.forEach((item: ICard, index: number, cards: ICard[]) => {
                     if (item.id === id) {
                         // Update the card
                         cards[index] = assign({}, cards[index], card);
@@ -246,7 +251,7 @@ export class ScrumboardMockApi {
                     updatedCard.labels = updatedCard.labels.map(
                         (cardLabelId: string) =>
                             this._labels.find(
-                                (label: { id: string }) => label.id === cardLabelId
+                                (label: ILabel) => label.id === cardLabelId
                             )
                     );
                 }
@@ -268,24 +273,32 @@ export class ScrumboardMockApi {
                 const updatedCards: any[] = [];
 
                 // Go through the cards
-                cards.forEach((item: { id: string; labels: ({ id: string } | string)[] }) => {
+                cards.forEach((item: ICard) => {
                     // Find the card
                     const index = this._cards.findIndex(
-                        (card: { id: string }) => item.id === card.id
+                        (card: ICard) => item.id === card.id
                     );
 
-                    // Go through the labels and leave only ids of them
-                    item.labels = item.labels.map((itemLabel: { id: string } | string) =>
-                        typeof itemLabel === 'string' ? itemLabel : itemLabel.id
+                    // Go through the labels and extract IDs for server update
+                    const labelIds: string[] = (item.labels ?? [])
+                        .map((itemLabel: ILabel) => itemLabel.id)
+                        .filter((id): id is string => id !== null);
+
+                    // Update the card with label IDs
+                    this._cards[index] = assign(
+                        {},
+                        this._cards[index],
+                        { ...item, labels: labelIds }
                     );
 
-                    // Update the card
-                    this._cards[index] = assign({}, this._cards[index], item);
-
-                    // Attach the labels of the card
-                    item.labels = (item.labels as string[]).map((cardLabelId: string) =>
-                        this._labels.find((label: { id: string }) => label.id === cardLabelId)
-                    );
+                    // Re-attach the full label objects for response
+                    item.labels = labelIds
+                        .map((cardLabelId: string) =>
+                            this._labels.find(
+                                (label: ILabel) => label.id === cardLabelId
+                            )
+                        )
+                        .filter((l): l is ILabel => l != null);
 
                     // Store in the updated cards
                     updatedCards.push(item);
@@ -324,7 +337,7 @@ export class ScrumboardMockApi {
                     // Find this card's index within the cards array that comes with the request
                     // and assign that index as the new position number for the card
                     card.position = cards.findIndex(
-                        (item: { id: string; listId: string; boardId: string }) =>
+                        (item: ICard) =>
                             item.id === card.id &&
                             item.listId === card.listId &&
                             item.boardId === card.boardId

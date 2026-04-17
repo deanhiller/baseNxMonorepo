@@ -504,7 +504,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
      *
      * @param priority
      */
-    setTaskPriority(priority: string): void {
+    setTaskPriority(priority: number): void {
         // 'priority' form control is declared in ngOnInit
         this.taskForm.get('priority')!.setValue(priority);
     }

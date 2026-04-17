@@ -39,6 +39,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ContactsService } from 'app/modules/admin/apps/contacts/contacts.service';
 import {
     Contact,
+    ContactEmail,
+    ContactPhoneNumber,
     Country,
     Tag,
 } from 'app/modules/admin/apps/contacts/contacts.types';
@@ -300,14 +302,16 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
      * Update the contact
      */
     updateContact(): void {
-        // Get the contact object
-        const contact = this.contactForm.getRawValue();
+        // Get the contact object — form mirrors Contact shape
+        const contact = this.contactForm.getRawValue() as Contact;
 
         // Go through the contact object and clear empty values
-        contact.emails = contact.emails.filter((email: { email: string; label: string }) => email.email);
+        contact.emails = (contact.emails ?? []).filter(
+            (email: ContactEmail) => email.email
+        );
 
-        contact.phoneNumbers = contact.phoneNumbers.filter(
-            (phoneNumber: { country: string; phoneNumber: string; label: string }) => phoneNumber.phoneNumber
+        contact.phoneNumbers = (contact.phoneNumbers ?? []).filter(
+            (phoneNumber: ContactPhoneNumber) => phoneNumber.phoneNumber
         );
 
         // Update the contact on the server

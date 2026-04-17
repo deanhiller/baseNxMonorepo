@@ -14,7 +14,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { AnalyticsService } from 'app/modules/admin/dashboards/analytics/analytics.service';
-import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+import { ApexChart, ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+
+interface WindowWithApex extends Window {
+    Apex?: { chart?: Partial<ApexChart> };
+}
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -74,9 +78,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
                 this._prepareChartData();
             });
 
-        // Attach SVG fill fixer to all ApexCharts
-        // webpieces-disable no-any-unknown -- window global for ApexCharts config requires Record<string, unknown> cast
-        (window as unknown as Record<string, unknown>)['Apex'] = {
+        // Attach SVG fill fixer to all ApexCharts — Apex is a global partial config overlay
+        (window as WindowWithApex).Apex = {
             chart: {
                 events: {
                     mounted: (chart: any, options?: any): void => {

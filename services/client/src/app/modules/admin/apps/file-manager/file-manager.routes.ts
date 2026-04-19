@@ -25,7 +25,9 @@ const folderResolver = (
     const fileManagerService = inject(FileManagerService);
     const router = inject(Router);
 
-    return fileManagerService.getItems(route.paramMap.get('folderId')).pipe(
+    return fileManagerService
+        .getItems(route.paramMap.get('folderId') ?? undefined)
+        .pipe(
         // Error here means the requested folder is not available
         catchError((error) => {
 

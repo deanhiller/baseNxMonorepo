@@ -53,13 +53,15 @@ export class FileManagerService {
     /**
      * Get items
      */
-    getItems(folderId: string | null = null): Observable<Items> {
+    getItems(folderId?: string): Observable<Items> {
         return this._httpClient
             .get<Items>('api/apps/file-manager', {
-                params: { folderId: folderId ?? '' },
+                // Angular stringifies null → "null" and undefined → "undefined"
+                // in HttpParams, so omit the key entirely for root folder.
+                params: folderId ? { folderId } : {},
             })
             .pipe(
-                tap((response) => {
+                tap((response: Items) => {
                     this._items.next(response);
                 })
             );

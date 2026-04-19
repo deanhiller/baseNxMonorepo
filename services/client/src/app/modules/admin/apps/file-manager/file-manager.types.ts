@@ -1,12 +1,13 @@
 export interface Items {
     folders: Item[];
     files: Item[];
-    path: any[];
+    path: Item[];
 }
 
 export interface Item {
     id?: string;
-    folderId?: string;
+    // null = root (no parent folder); string = parent folder id
+    folderId?: string | null;
     name?: string;
     createdBy?: string;
     createdAt?: string;

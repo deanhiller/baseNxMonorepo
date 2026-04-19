@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api/mock-api.service';
 import { items as itemsData } from 'app/mock-api/apps/file-manager/data';
+import { Item } from 'app/modules/admin/apps/file-manager/file-manager.types';
 import { cloneDeep } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class FileManagerMockApi {
-    private _items: any[] = itemsData;
+    private _items: Item[] = itemsData;
 
     /**
      * Constructor
@@ -32,15 +33,10 @@ export class FileManagerMockApi {
                 // Clone the items
                 let items = cloneDeep(this._items);
 
-                // See if the folder id exist
-                const folderId =
-                    request.params.get('folderId') === 'null'
-                        ? null
-                        : request.params.get('folderId');
+                // HttpParams.get() returns null when the param is absent,
+                // which is exactly what root items have for folderId.
+                const folderId = request.params.get('folderId');
 
-                // Filter the items by folder id. If folder id is null,
-                // that means we want to root items which have folder id
-                // of null
                 items = items.filter((item) => item.folderId === folderId);
 
                 // Separate the items by folders and files
@@ -48,26 +44,22 @@ export class FileManagerMockApi {
                 const files = items.filter((item) => item.type !== 'folder');
 
                 // Sort the folders and files alphabetically by filename
-                folders.sort((a, b) => a.name.localeCompare(b.name));
-                files.sort((a, b) => a.name.localeCompare(b.name));
+                folders.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
+                files.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
 
                 // Figure out the path and attach it to the response
-                // Prepare the empty paths array
-                // webpieces-disable no-any-unknown -- items are heterogeneous demo records loaded from JSON
-                const pathItems: any[] = cloneDeep(this._items);
-                // webpieces-disable no-any-unknown -- path entries match pathItems shape (demo records)
-                const path: any[] = [];
-
-                // Prepare the current folder
-                // webpieces-disable no-any-unknown -- demo record, any[] above
-                let currentFolder: any = null;
+                const pathItems: Item[] = cloneDeep(this._items);
+                const path: Item[] = [];
+                let currentFolder: Item | undefined;
 
                 // Get the current folder and add it as the first entry
                 if (folderId) {
                     currentFolder = pathItems.find(
                         (item) => item.id === folderId
                     );
-                    path.push(currentFolder);
+                    if (currentFolder) {
+                        path.push(currentFolder);
+                    }
                 }
 
                 // Start traversing and storing the folders as a path array

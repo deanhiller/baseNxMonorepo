@@ -5,6 +5,12 @@
     "projectType": "library",
     "tags": [],
     "targets": {
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "vitest run --config libraries/apis/vitest.config.mts"
+            }
+        },
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],

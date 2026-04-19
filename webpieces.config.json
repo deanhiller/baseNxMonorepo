@@ -67,12 +67,12 @@
         },
         "file-location": {
             "enabled": true,
-            "allowedRootFiles": ["jest.setup.ts"],
+            "allowedRootFiles": ["vitest.config.mts"],
             "excludePaths": ["scripts", "tmp", "architecture"]
         },
         "validate-ts-in-src": {
             "enabled": true,
-            "allowedRootFiles": ["jest.setup.ts", "jest.config.ts"]
+            "allowedRootFiles": ["vitest.config.mts"]
         }
     },
     "rulesDir": []

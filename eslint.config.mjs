@@ -1,6 +1,5 @@
 // ESLint Flat Configuration
 // TypeScript and WebPieces configurations
-
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
@@ -8,7 +7,6 @@ import webpiecesConfig from './eslint.webpieces.config.mjs';
 import angularConfig from './eslint.webpieces-angular.config.mjs';
 
 export default [
-
     // WebPieces ESLint rules (no-unmanaged-exceptions, catch-error-pattern, etc.)
     ...webpiecesConfig,
     // Angular-specific rules (template rules, no-console, signal bans, etc.)
@@ -35,7 +33,6 @@ export default [
             '@typescript-eslint/no-inferrable-types': 'off',
         },
     },
-
     // JavaScript files configuration
     {
         files: ['**/*.js', '**/*.jsx'],
@@ -47,8 +44,7 @@ export default [
             },
         },
     },
-
-    // Test files: Jest globals
+    // Test files: Vitest globals (describe, it, expect, vi, etc.)
     {
         files: [
             '**/*.spec.ts',
@@ -60,8 +56,20 @@ export default [
         ],
         languageOptions: {
             globals: {
-                ...globals.jest,
+                // Vitest globals
+                describe: 'readonly',
+                it: 'readonly',
+                expect: 'readonly',
+                test: 'readonly',
+                vi: 'readonly',
+                beforeEach: 'readonly',
+                afterEach: 'readonly',
+                beforeAll: 'readonly',
+                afterAll: 'readonly',
             },
         },
+    },
+    {
+        ignores: ['**/vitest.config.*.timestamp*'],
     },
 ];

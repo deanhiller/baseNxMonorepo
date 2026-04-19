@@ -19,6 +19,10 @@
             ],
             "inputs": ["default", "^default"]
         },
+        "test": {
+            "cache": true,
+            "inputs": ["default", "^default"]
+        },
         "lint": {
             "cache": true,
             "inputs": [
@@ -34,12 +38,6 @@
             "options": {
                 "targetName": "lint",
                 "useFlatConfig": true
-            }
-        },
-        {
-            "plugin": "@nx/jest/plugin",
-            "options": {
-                "targetName": "test"
             }
         },
         {

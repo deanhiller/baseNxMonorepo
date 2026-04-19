@@ -40,3 +40,5 @@ node_modules_*/
 
 # Generated @webpieces/ai-hooks artifacts
 .webpieces/
+
+vitest.config.*.timestamp*

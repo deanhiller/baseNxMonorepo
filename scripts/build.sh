@@ -5,10 +5,8 @@ set -euo pipefail
 # build.sh — Cross-platform node_modules manager + build runner
 #
 # Usage:
-#   ./scripts/build.sh              # swap to current platform & build
+#   ./scripts/build.sh              # swap to current platform & run CI (lint, build, test)
 #   ./scripts/build.sh swap         # just swap node_modules (no build)
-#   ./scripts/build.sh build        # just build (assume correct node_modules)
-#   ./scripts/build.sh lint         # just lint
 #   ./scripts/build.sh clean        # remove all node_modules (all platforms)
 # ─────────────────────────────────────────────────────────────────────
 
@@ -124,28 +122,10 @@ check_and_install() {
     echo "✅ Install complete, hash recorded"
 }
 
-do_build() {
+do_ci() {
     echo ""
-    echo "🔨 Running build..."
-    if [ -f "nx.json" ]; then
-        NX_DAEMON=false pnpm nx run-many --target=build --all
-    elif grep -q '"build"' package.json 2>/dev/null; then
-        pnpm run build
-    else
-        echo "⚠️  No build target found (no nx.json, no 'build' script)"
-    fi
-}
-
-do_lint() {
-    echo ""
-    echo "🔍 Running lint..."
-    if [ -f "nx.json" ]; then
-        NX_DAEMON=false pnpm nx run-many --target=lint --all
-    elif grep -q '"lint"' package.json 2>/dev/null; then
-        pnpm run lint
-    else
-        echo "⚠️  No lint target found"
-    fi
+    echo "🚀 Running CI (lint, build, test) — matches CI pipeline exactly..."
+    NX_DAEMON=false pnpm run webpieces:ci
 }
 
 do_clean() {
@@ -165,23 +145,17 @@ case "$ACTION" in
         swap_node_modules
         check_and_install
         ;;
-    build)
-        do_build
-        ;;
-    lint)
-        do_lint
-        ;;
     clean)
         do_clean
         ;;
     default)
         swap_node_modules
         check_and_install
-        do_lint
+        do_ci
         ;;
     *)
-        echo "Usage: $0 [swap|build|lint|clean]"
-        echo "  (no args) = swap + lint"
+        echo "Usage: $0 [swap|clean]"
+        echo "  (no args) = swap + CI (lint, build, test)"
         exit 1
         ;;
 esac

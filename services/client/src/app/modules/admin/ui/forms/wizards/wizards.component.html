@@ -67,7 +67,7 @@
                 <mat-horizontal-stepper [linear]="true" #horizontalStepper>
                     <mat-step
                         [formGroupName]="'step1'"
-                        [stepControl]="horizontalStepperForm.get('step1')"
+                        [stepControl]="horizontalStepperForm.get('step1')!"
                         #horizontalStepperStep1
                     >
                         <ng-template matStepLabel
@@ -158,7 +158,7 @@
 
                     <mat-step
                         [formGroupName]="'step2'"
-                        [stepControl]="horizontalStepperForm.get('step2')"
+                        [stepControl]="horizontalStepperForm.get('step2')!"
                         #horizontalStepperStep2
                     >
                         <ng-template matStepLabel>Profile</ng-template>
@@ -251,7 +251,7 @@
 
                     <mat-step
                         [formGroupName]="'step3'"
-                        [stepControl]="horizontalStepperForm.get('step3')"
+                        [stepControl]="horizontalStepperForm.get('step3')!"
                     >
                         <ng-template matStepLabel>Notifications</ng-template>
                         <p class="my-6 font-medium">
@@ -378,7 +378,7 @@
                 <mat-vertical-stepper [linear]="true" #verticalStepper>
                     <mat-step
                         [formGroupName]="'step1'"
-                        [stepControl]="verticalStepperForm.get('step1')"
+                        [stepControl]="verticalStepperForm.get('step1')!"
                         #verticalStepperStep1
                     >
                         <ng-template matStepLabel
@@ -468,7 +468,7 @@
 
                     <mat-step
                         [formGroupName]="'step2'"
-                        [stepControl]="verticalStepperForm.get('step2')"
+                        [stepControl]="verticalStepperForm.get('step2')!"
                         #verticalStepperStep2
                     >
                         <ng-template matStepLabel>Profile</ng-template>
@@ -560,7 +560,7 @@
 
                     <mat-step
                         [formGroupName]="'step3'"
-                        [stepControl]="verticalStepperForm.get('step3')"
+                        [stepControl]="verticalStepperForm.get('step3')!"
                     >
                         <ng-template matStepLabel>Notifications</ng-template>
                         <p class="my-6 font-medium">

@@ -98,7 +98,7 @@
                                     </button>
                                     <button
                                         mat-menu-item
-                                        (click)="deleteList(list.id)"
+                                        (click)="deleteList(list.id!)"
                                     >
                                         <mat-icon
                                             class="icon-size-5"
@@ -115,7 +115,7 @@
                             class="mt-2 rounded-xl bg-gray-400 bg-opacity-12 dark:border dark:bg-transparent"
                         >
                             <div
-                                [id]="list.id"
+                                [id]="list.id!"
                                 class="p-3 pb-0"
                                 cdkDropList
                                 [cdkDropListData]="list.cards"
@@ -132,11 +132,11 @@
                                         cdkDrag
                                     >
                                         <!-- Cover image -->
-                                        @if (card.coverImage) {
+                                        @if ($any(card).coverImage) {
                                             <div class="-mx-5 -mt-5 mb-2">
                                                 <img
                                                     class="w-full object-cover"
-                                                    [src]="card.coverImage"
+                                                    [src]="$any(card).coverImage"
                                                 />
                                             </div>
                                         }

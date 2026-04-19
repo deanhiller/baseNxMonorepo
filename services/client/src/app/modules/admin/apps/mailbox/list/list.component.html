@@ -20,7 +20,7 @@
                     </button>
                     <!-- Category name -->
                     <div class="ml-2 font-semibold uppercase">
-                        {{ category.name }}
+                        {{ category?.name }}
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@
                             <div class="flex w-full items-center">
                                 <!-- Sender name -->
                                 <div class="mr-2 truncate font-semibold">
-                                    {{ mail.from.contact.split('<')[0].trim() }}
+                                    {{ mail.from?.contact?.split('<')?.[0]?.trim() }}
                                 </div>
                                 <!-- Important indicator -->
                                 @if (mail.important) {

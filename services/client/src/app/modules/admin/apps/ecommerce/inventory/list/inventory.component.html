@@ -238,9 +238,9 @@
                     <mat-paginator
                         class="z-10 border-b bg-gray-50 dark:bg-transparent sm:absolute sm:inset-x-0 sm:bottom-0 sm:border-b-0 sm:border-t"
                         [ngClass]="{ 'pointer-events-none': isLoading }"
-                        [length]="pagination.length"
-                        [pageIndex]="pagination.page"
-                        [pageSize]="pagination.size"
+                        [length]="pagination?.length"
+                        [pageIndex]="pagination?.page"
+                        [pageSize]="pagination?.size"
                         [pageSizeOptions]="[5, 10, 25, 100]"
                         [showFirstLastButtons]="true"
                     ></mat-paginator>
@@ -277,17 +277,15 @@
                                             @if (
                                                 selectedProductForm.get(
                                                     'images'
-                                                ).value.length
+                                                )!.value.length
                                             ) {
                                                 <img
                                                     class="h-full w-full object-cover"
                                                     [src]="
-                                                        selectedProductForm.get(
-                                                            'images'
-                                                        ).value[
+                                                        selectedProductForm.get('images')!.value[
                                                             selectedProductForm.get(
                                                                 'currentImageIndex'
-                                                            ).value
+                                                            )!.value
                                                         ]
                                                     "
                                                 />
@@ -299,7 +297,7 @@
                                             }
                                         </div>
                                         @if (
-                                            selectedProductForm.get('images')
+                                            selectedProductForm.get('images')!
                                                 .value.length
                                         ) {
                                             <div
@@ -318,15 +316,11 @@
                                                 </button>
                                                 <span class="font-sm mx-2">
                                                     {{
-                                                        selectedProductForm.get(
-                                                            'currentImageIndex'
-                                                        ).value + 1
+                                                        selectedProductForm.get('currentImageIndex')!.value + 1
                                                     }}
                                                     of
                                                     {{
-                                                        selectedProductForm.get(
-                                                            'images'
-                                                        ).value.length
+                                                        selectedProductForm.get('images')!.value.length
                                                     }}
                                                 </span>
                                                 <button
@@ -354,7 +348,7 @@
                                             {{
                                                 selectedProductForm.get(
                                                     'active'
-                                                ).value === true
+                                                )!.value === true
                                                     ? 'Active'
                                                     : 'Disabled'
                                             }}
@@ -609,8 +603,8 @@
                                                             class="flex h-10 min-h-10 items-center pl-1 pr-4"
                                                             [color]="'primary'"
                                                             [checked]="
-                                                                selectedProduct.tags.includes(
-                                                                    tag.id
+                                                                selectedProduct?.tags?.includes(
+                                                                    tag.id!
                                                                 )
                                                             "
                                                             (change)="

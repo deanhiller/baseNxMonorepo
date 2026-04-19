@@ -45,22 +45,22 @@
             <!-- Details -->
             <div class="mt-10 space-y-4">
                 <div class="mb-3 text-lg font-medium">Details</div>
-                @if (chat.contact?.details?.emails.length) {
+                @if (chat.contact?.details?.emails?.length) {
                     <div>
                         <div class="text-secondary font-medium">Email</div>
                         <div class="">
-                            {{ chat.contact?.details?.emails[0].email }}
+                            {{ chat.contact?.details?.emails?.[0]?.email }}
                         </div>
                     </div>
                 }
-                @if (chat.contact?.details?.phoneNumbers.length) {
+                @if (chat.contact?.details?.phoneNumbers?.length) {
                     <div>
                         <div class="text-secondary font-medium">
                             Phone number
                         </div>
                         <div class="">
                             {{
-                                chat.contact?.details?.phoneNumbers[0].phoneNumber
+                                chat.contact?.details?.phoneNumbers?.[0]?.phoneNumber
                             }}
                         </div>
                     </div>

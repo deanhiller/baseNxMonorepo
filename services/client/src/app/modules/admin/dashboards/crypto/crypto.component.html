@@ -67,16 +67,16 @@
                             </div>
                             <apx-chart
                                 class="flex h-10 flex-auto items-center overflow-hidden"
-                                [chart]="watchlistChartOptions.chart"
+                                [chart]="watchlistChartOptions.chart!"
                                 [colors]="
                                     item.trend.dir === 'up'
                                         ? ['#48BB78']
                                         : ['#F56565']
                                 "
                                 [series]="item.series"
-                                [stroke]="watchlistChartOptions.stroke"
-                                [tooltip]="watchlistChartOptions.tooltip"
-                                [xaxis]="watchlistChartOptions.xaxis"
+                                [stroke]="watchlistChartOptions.stroke!"
+                                [tooltip]="watchlistChartOptions.tooltip!"
+                                [xaxis]="watchlistChartOptions.xaxis!"
                             ></apx-chart>
                         </div>
                     }
@@ -185,7 +185,7 @@
                                             class="text-normal font-mono font-medium"
                                         >
                                             {{
-                                                buyAmount.value *
+                                                +buyAmount.value *
                                                     data.prices[
                                                         walletSelector.value
                                                     ]
@@ -204,7 +204,7 @@
                                             class="text-normal font-mono font-medium"
                                         >
                                             {{
-                                                buyAmount.value /
+                                                +buyAmount.value /
                                                     data.prices[
                                                         walletSelector.value
                                                     ] | number: '1.2-6'
@@ -258,7 +258,7 @@
                                             class="text-normal font-mono font-medium"
                                         >
                                             {{
-                                                sellAmount.value *
+                                                +sellAmount.value *
                                                     data.prices[
                                                         walletSelector.value
                                                     ]
@@ -275,7 +275,7 @@
                                             class="text-normal font-mono font-medium"
                                         >
                                             {{
-                                                sellAmount.value /
+                                                +sellAmount.value /
                                                     data.prices[
                                                         walletSelector.value
                                                     ] | number: '1.2-6'
@@ -419,16 +419,16 @@
                 >
                     <apx-chart
                         class="relative h-160 w-full overflow-hidden md:absolute md:inset-0 md:h-auto"
-                        [chart]="btcOptions.chart"
-                        [colors]="btcOptions.colors"
-                        [dataLabels]="btcOptions.dataLabels"
-                        [grid]="btcOptions.grid"
-                        [legend]="btcOptions.legend"
-                        [series]="btcOptions.series"
-                        [stroke]="btcOptions.stroke"
-                        [tooltip]="btcOptions.tooltip"
-                        [xaxis]="btcOptions.xaxis"
-                        [yaxis]="btcOptions.yaxis"
+                        [chart]="btcOptions.chart!"
+                        [colors]="btcOptions.colors!"
+                        [dataLabels]="btcOptions.dataLabels!"
+                        [grid]="btcOptions.grid!"
+                        [legend]="btcOptions.legend!"
+                        [series]="btcOptions.series!"
+                        [stroke]="btcOptions.stroke!"
+                        [tooltip]="btcOptions.tooltip!"
+                        [xaxis]="btcOptions.xaxis!"
+                        [yaxis]="btcOptions.yaxis!"
                         #btcChartComponent
                     ></apx-chart>
                 </div>

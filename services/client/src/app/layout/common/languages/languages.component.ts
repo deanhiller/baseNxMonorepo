@@ -14,7 +14,7 @@ import {
     FuseVerticalNavigationComponent,
 } from '@fuse/components/navigation';
 import { TypedTemplateOutletDirective } from '@fuse/directives/typed-template-outlet/typed-template-outlet.directive';
-import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
+import { LangDefinition, TranslocoService } from '@ngneat/transloco';
 import { take } from 'rxjs';
 
 @Component({
@@ -32,7 +32,7 @@ import { take } from 'rxjs';
     ],
 })
 export class LanguagesComponent implements OnInit, OnDestroy {
-    availableLangs!: AvailableLangs; // set in ngOnInit
+    availableLangs!: LangDefinition[]; // set in ngOnInit
     activeLang!: string; // set in ngOnInit via langChanges$ subscription
     // webpieces-disable no-any-unknown -- flagCodes is a dynamic lookup map for country flag codes
     flagCodes: any;
@@ -56,7 +56,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Get the available languages from transloco
-        this.availableLangs = this._translocoService.getAvailableLangs();
+        this.availableLangs = this._translocoService.getAvailableLangs() as LangDefinition[];
 
         // Subscribe to language changes
         this._translocoService.langChanges$.subscribe((activeLang) => {

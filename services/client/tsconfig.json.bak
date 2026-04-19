@@ -15,11 +15,6 @@
             "@myorg/apis": ["libraries/apis/src/index.ts"]
         }
     },
-    "angularCompilerOptions": {
-        "strictTemplates": true,
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true
-    },
     "files": [],
     "include": [],
     "references": [

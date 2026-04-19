@@ -37,7 +37,7 @@
                             <mat-checkbox
                                 class="pointer-events-none"
                                 [color]="'primary'"
-                                [checked]="mail.labels.includes(label.id)"
+                                [checked]="mail.labels?.includes(label.id)"
                                 [disableRipple]="true"
                             >
                                 {{ label.title }}
@@ -179,7 +179,7 @@
                         >
                             <img
                                 class="h-full w-full"
-                                [src]="mail.from.avatar"
+                                [src]="mail.from?.avatar"
                                 alt="User avatar"
                             />
                         </div>
@@ -188,23 +188,23 @@
                         <div class="ml-4 min-w-0">
                             <!-- From -->
                             <div class="truncate font-semibold">
-                                {{ mail.from.contact.split('<')[0].trim() }}
+                                {{ mail.from?.contact?.split('<')?.[0]?.trim() }}
                             </div>
 
                             <!-- To -->
                             <div class="mt-0.5 flex items-center leading-5">
                                 <div>to</div>
                                 <div class="ml-1 font-semibold">me</div>
-                                @if (mail.ccCount + mail.bccCount > 0) {
+                                @if ((mail.ccCount ?? 0) + (mail.bccCount ?? 0) > 0) {
                                     <div>
                                         <span class="ml-1">and</span>
                                         <span class="ml-1 font-semibold">{{
-                                            mail.ccCount + mail.bccCount
+                                            (mail.ccCount ?? 0) + (mail.bccCount ?? 0)
                                         }}</span>
                                         <span
                                             class="ml-1 font-semibold"
                                             [ngPlural]="
-                                                mail.ccCount + mail.bccCount
+                                                (mail.ccCount ?? 0) + (mail.bccCount ?? 0)
                                             "
                                         >
                                             <ng-template ngPluralCase="=1"
@@ -247,7 +247,7 @@
                                             <div
                                                 class="whitespace-pre-wrap pl-2"
                                             >
-                                                {{ mail.from.contact }}
+                                                {{ mail.from?.contact }}
                                             </div>
                                         </div>
                                         <!-- To -->
@@ -358,7 +358,7 @@
                                     <div class="m-3 flex items-center">
                                         <!-- Preview -->
                                         @if (
-                                            attachment.type.startsWith('image/')
+                                            attachment.type?.startsWith('image/')
                                         ) {
                                             <img
                                                 class="h-10 w-10 overflow-hidden rounded-md"
@@ -369,7 +369,7 @@
                                             />
                                         }
                                         @if (
-                                            attachment.type.startsWith(
+                                            attachment.type?.startsWith(
                                                 'application/'
                                             )
                                         ) {
@@ -380,7 +380,7 @@
                                                     class="text-primary-500-800 flex items-center justify-center text-sm font-semibold"
                                                 >
                                                     {{
-                                                        attachment.type
+                                                        attachment.type!
                                                             .split('/')[1]
                                                             .trim()
                                                             .toUpperCase()
@@ -401,7 +401,7 @@
                                                 [title]="attachment.size"
                                             >
                                                 {{
-                                                    attachment.size / 1000
+                                                    (attachment.size ?? 0) / 1000
                                                         | number: '1.0-2'
                                                 }}
                                                 KB

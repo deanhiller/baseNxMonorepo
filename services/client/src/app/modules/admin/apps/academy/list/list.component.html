@@ -73,7 +73,7 @@ f
                                 <div class="flex items-center justify-between">
                                     <!-- Course category -->
                                     @if (
-                                        course.category
+                                        course.category!
                                             | fuseFindByKey
                                                 : 'slug'
                                                 : categories;
@@ -98,7 +98,7 @@ f
                                     }
                                     <!-- Completed at least once -->
                                     <div class="flex items-center">
-                                        @if (course.progress.completed > 0) {
+                                        @if ((course.progress?.completed ?? 0) > 0) {
                                             <mat-icon
                                                 class="text-green-600 icon-size-5"
                                                 [svgIcon]="
@@ -141,41 +141,37 @@ f
                                             'heroicons_solid:academic-cap'
                                         "
                                     ></mat-icon>
-                                    @if (course.progress.completed === 0) {
+                                    @if ((course.progress?.completed ?? 0) === 0) {
                                         <div class="ml-1.5">
                                             Never completed
                                         </div>
                                     }
-                                    @if (course.progress.completed > 0) {
+                                    @if ((course.progress?.completed ?? 0) > 0) {
                                         <div class="ml-1.5">
                                             <span>Completed</span>
                                             <span class="ml-1">
                                                 <!-- Once -->
                                                 @if (
-                                                    course.progress
-                                                        .completed === 1
+                                                    (course.progress?.completed ?? 0) === 1
                                                 ) {
                                                     once
                                                 }
                                                 <!-- Twice -->
                                                 @if (
-                                                    course.progress
-                                                        .completed === 2
+                                                    (course.progress?.completed ?? 0) === 2
                                                 ) {
                                                     twice
                                                 }
                                                 <!-- Others -->
                                                 @if (
-                                                    course.progress.completed >
+                                                    (course.progress?.completed ?? 0) >
                                                     2
                                                 ) {
                                                     {{
-                                                        course.progress
-                                                            .completed
+                                                        course.progress?.completed
                                                     }}
                                                     {{
-                                                        course.progress
-                                                            .completed
+                                                        course.progress?.completed
                                                             | i18nPlural
                                                                 : {
                                                                       '=0': 'time',
@@ -196,8 +192,8 @@ f
                                     <div
                                         class="absolute inset-x-0 z-10 -mt-3 h-6"
                                         [matTooltip]="
-                                            course.progress.currentStep /
-                                                course.totalSteps | percent
+                                            (course.progress?.currentStep ?? 0) /
+                                                (course.totalSteps ?? 1) | percent
                                         "
                                         [matTooltipPosition]="'above'"
                                         [matTooltipClass]="'-mb-0.5'"
@@ -205,9 +201,8 @@ f
                                     <mat-progress-bar
                                         class="h-0.5"
                                         [value]="
-                                            (100 *
-                                                course.progress.currentStep) /
-                                            course.totalSteps
+                                            (100 * (course.progress?.currentStep ?? 0)) /
+                                            (course.totalSteps ?? 1)
                                         "
                                     ></mat-progress-bar>
                                 </div>
@@ -223,19 +218,18 @@ f
                                         <span class="inline-flex items-center">
                                             <!-- Not started -->
                                             @if (
-                                                course.progress.currentStep ===
+                                                (course.progress?.currentStep ?? 0) ===
                                                 0
                                             ) {
                                                 <!-- Never completed -->
                                                 @if (
-                                                    course.progress
-                                                        .completed === 0
+                                                    (course.progress?.completed ?? 0) === 0
                                                 ) {
                                                     <span>Start</span>
                                                 }
                                                 <!-- Completed before -->
                                                 @if (
-                                                    course.progress.completed >
+                                                    (course.progress?.completed ?? 0) >
                                                     0
                                                 ) {
                                                     <span>Start again</span>
@@ -244,7 +238,7 @@ f
 
                                             <!-- Started -->
                                             @if (
-                                                course.progress.currentStep > 0
+                                                (course.progress?.currentStep ?? 0) > 0
                                             ) {
                                                 <span>Continue</span>
                                             }

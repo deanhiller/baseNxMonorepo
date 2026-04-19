@@ -122,7 +122,7 @@
                     }
 
                     <!-- Emails -->
-                    @if (contact.emails.length) {
+                    @if (contact.emails?.length) {
                         <div class="flex">
                             <mat-icon
                                 [svgIcon]="'heroicons_outline:envelope'"
@@ -157,7 +157,7 @@
                     }
 
                     <!-- Phone -->
-                    @if (contact.phoneNumbers.length) {
+                    @if (contact.phoneNumbers?.length) {
                         <div class="flex">
                             <mat-icon
                                 [svgIcon]="'heroicons_outline:phone'"
@@ -173,7 +173,7 @@
                                             [matTooltip]="
                                                 getCountryByIso(
                                                     phoneNumber.country
-                                                ).name
+                                                )?.name
                                             "
                                             [style.background]="
                                                 'url(\'/images/apps/contacts/flags.png\') no-repeat 0 0'
@@ -184,14 +184,14 @@
                                             [style.backgroundPosition]="
                                                 getCountryByIso(
                                                     phoneNumber.country
-                                                ).flagImagePos
+                                                )?.flagImagePos
                                             "
                                         ></div>
                                         <div class="font-mono sm:ml-3">
                                             {{
                                                 getCountryByIso(
                                                     phoneNumber.country
-                                                ).code
+                                                )?.code
                                             }}
                                         </div>
                                         <div class="ml-2.5 font-mono">
@@ -312,7 +312,7 @@
                                         [multiple]="false"
                                         [accept]="'image/jpeg, image/png'"
                                         (change)="
-                                            uploadAvatar(avatarFileInput.files)
+                                            uploadAvatar(avatarFileInput.files!)
                                         "
                                         #avatarFileInput
                                     />
@@ -501,7 +501,7 @@
                                                         class="pointer-events-none flex h-10 min-h-10 items-center"
                                                         [checked]="
                                                             contact.tags.includes(
-                                                                tag.id
+                                                                tag.id!
                                                             )
                                                         "
                                                         [color]="'primary'"
@@ -641,7 +641,7 @@
                     <div class="mt-8">
                         <div class="space-y-4">
                             @for (
-                                email of contactForm.get('emails')['controls'];
+                                email of $any(contactForm.get('emails'))['controls'];
                                 track trackByFn(i, email);
                                 let i = $index;
                                 let first = $first;
@@ -730,7 +730,7 @@
                     <div class="mt-8">
                         <div class="space-y-4">
                             @for (
-                                phoneNumber of contactForm.get('phoneNumbers')[
+                                phoneNumber of $any(contactForm.get('phoneNumbers'))[
                                     'controls'
                                 ];
                                 track trackByFn(i, phoneNumber);
@@ -775,7 +775,7 @@
                                                                 phoneNumber.get(
                                                                     'country'
                                                                 ).value
-                                                            ).flagImagePos
+                                                            )?.flagImagePos
                                                         "
                                                     ></span>
                                                     <span
@@ -785,7 +785,7 @@
                                                                 phoneNumber.get(
                                                                     'country'
                                                                 ).value
-                                                            ).code
+                                                            )?.code
                                                         }}</span
                                                     >
                                                 </span>

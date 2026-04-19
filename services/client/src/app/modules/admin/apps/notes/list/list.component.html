@@ -63,7 +63,7 @@
                                     'text-hint hover:bg-hover':
                                         'label:' + label.id !== filterStatus,
                                 }"
-                                (click)="filterByLabel(label.id)"
+                                (click)="filterByLabel(label.id!)"
                                 matRipple
                                 [matRippleDisabled]="
                                     'label:' + label.id === filterStatus

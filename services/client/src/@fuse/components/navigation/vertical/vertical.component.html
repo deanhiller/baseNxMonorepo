@@ -30,7 +30,7 @@
                     <fuse-vertical-navigation-aside-item
                         [item]="item"
                         [name]="name"
-                        [activeItemId]="activeAsideItemId"
+                        [activeItemId]="activeAsideItemId ?? ''"
                         [autoCollapse]="autoCollapse"
                         [skipChildren]="true"
                         (click)="toggleAside(item)"

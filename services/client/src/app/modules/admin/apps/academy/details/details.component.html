@@ -26,7 +26,7 @@
                 </a>
                 <!-- Course category -->
                 @if (
-                    course.category | fuseFindByKey: 'slug' : categories;
+                    course.category! | fuseFindByKey: 'slug' : categories;
                     as category
                 ) {
                     <div
@@ -72,54 +72,54 @@
                     ) {
                         <li
                             class="group relative py-6"
-                            [class.current-step]="step.order === currentStep"
+                            [class.current-step]="step.order! === currentStep"
                         >
                             @if (!last) {
                                 <div
                                     class="absolute left-4 top-6 -ml-px h-full w-0.5"
                                     [ngClass]="{
-                                        'bg-primary': step.order < currentStep,
+                                        'bg-primary': step.order! < currentStep,
                                         'bg-gray-300 dark:bg-gray-600':
-                                            step.order >= currentStep,
+                                            step.order! >= currentStep,
                                     }"
                                 ></div>
                             }
                             <div
                                 class="relative flex cursor-pointer items-start"
-                                (click)="goToStep(step.order)"
+                                (click)="goToStep(step.order!)"
                             >
                                 <div
                                     class="bg-card flex h-8 w-8 flex-0 items-center justify-center rounded-full ring-2 ring-inset dark:bg-default"
                                     [ngClass]="{
                                         'bg-primary text-on-primary ring-transparent group-hover:bg-primary-800 dark:bg-primary':
-                                            step.order < currentStep,
+                                            step.order! < currentStep,
                                         'ring-primary':
-                                            step.order === currentStep,
+                                            step.order! === currentStep,
                                         'ring-gray-300 group-hover:ring-gray-400 dark:ring-gray-600':
-                                            step.order > currentStep,
+                                            step.order! > currentStep,
                                     }"
                                 >
                                     <!-- Check icon, show if the step is completed -->
-                                    @if (step.order < currentStep) {
+                                    @if (step.order! < currentStep) {
                                         <mat-icon
                                             class="text-current icon-size-5"
                                             [svgIcon]="'heroicons_solid:check'"
                                         ></mat-icon>
                                     }
                                     <!-- Step order, show if the step is the current step -->
-                                    @if (step.order === currentStep) {
+                                    @if (step.order! === currentStep) {
                                         <div
                                             class="text-md font-semibold text-primary dark:text-primary-500"
                                         >
-                                            {{ step.order + 1 }}
+                                            {{ step.order! + 1 }}
                                         </div>
                                     }
                                     <!-- Step order, show if the step is not completed -->
-                                    @if (step.order > currentStep) {
+                                    @if (step.order! > currentStep) {
                                         <div
                                             class="text-hint text-md font-semibold group-hover:text-secondary"
                                         >
-                                            {{ step.order + 1 }}
+                                            {{ step.order! + 1 }}
                                         </div>
                                     }
                                 </div>

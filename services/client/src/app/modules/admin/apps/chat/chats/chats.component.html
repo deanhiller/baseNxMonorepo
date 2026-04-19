@@ -46,7 +46,7 @@
                                         <div
                                             class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                                         >
-                                            {{ profile.name.charAt(0) }}
+                                            {{ profile.name?.charAt(0) }}
                                         </div>
                                     }
                                 </div>
@@ -172,7 +172,7 @@
                                     <div
                                         class="relative flex h-10 w-10 flex-0 items-center justify-center"
                                     >
-                                        @if (chat.unreadCount > 0) {
+                                        @if (chat.unreadCount! > 0) {
                                             <div
                                                 class="ring-bg-card absolute bottom-0 right-0 -ml-0.5 h-2 w-2 flex-0 rounded-full bg-primary text-on-primary ring-2 dark:bg-primary-500 dark:ring-gray-900"
                                                 [class.ring-primary-50]="
@@ -181,19 +181,19 @@
                                                 "
                                             ></div>
                                         }
-                                        @if (chat.contact.avatar) {
+                                        @if (chat.contact?.avatar) {
                                             <img
                                                 class="h-full w-full rounded-full object-cover"
-                                                [src]="chat.contact.avatar"
+                                                [src]="chat.contact?.avatar"
                                                 alt="Contact avatar"
                                             />
                                         }
-                                        @if (!chat.contact.avatar) {
+                                        @if (!chat.contact?.avatar) {
                                             <div
                                                 class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                                             >
                                                 {{
-                                                    chat.contact.name.charAt(0)
+                                                    chat.contact?.name?.charAt(0)
                                                 }}
                                             </div>
                                         }
@@ -202,15 +202,15 @@
                                         <div
                                             class="truncate font-medium leading-5"
                                         >
-                                            {{ chat.contact.name }}
+                                            {{ chat.contact?.name }}
                                         </div>
                                         <div
                                             class="text-secondary truncate leading-5"
                                             [class.text-primary]="
-                                                chat.unreadCount > 0
+                                                chat.unreadCount! > 0
                                             "
                                             [class.dark:text-primary-500]="
-                                                chat.unreadCount > 0
+                                                chat.unreadCount! > 0
                                             "
                                         >
                                             {{ chat.lastMessage }}

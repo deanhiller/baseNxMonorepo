@@ -406,44 +406,44 @@
                                             <apx-chart
                                                 class="h-80 w-full flex-auto"
                                                 [chart]="
-                                                    chartGithubIssues.chart
+                                                    chartGithubIssues.chart!
                                                 "
                                                 [colors]="
-                                                    chartGithubIssues.colors
+                                                    chartGithubIssues.colors!
                                                 "
                                                 [dataLabels]="
-                                                    chartGithubIssues.dataLabels
+                                                    chartGithubIssues.dataLabels!
                                                 "
-                                                [grid]="chartGithubIssues.grid"
+                                                [grid]="chartGithubIssues.grid!"
                                                 [labels]="
-                                                    chartGithubIssues.labels
+                                                    chartGithubIssues.labels!
                                                 "
                                                 [legend]="
-                                                    chartGithubIssues.legend
+                                                    chartGithubIssues.legend!
                                                 "
                                                 [plotOptions]="
-                                                    chartGithubIssues.plotOptions
+                                                    chartGithubIssues.plotOptions!
                                                 "
                                                 [series]="
-                                                    chartGithubIssues.series[
+                                                    $any(chartGithubIssues.series)![
                                                         githubIssuesWeekSelector
                                                             .value
                                                     ]
                                                 "
                                                 [states]="
-                                                    chartGithubIssues.states
+                                                    chartGithubIssues.states!
                                                 "
                                                 [stroke]="
-                                                    chartGithubIssues.stroke
+                                                    chartGithubIssues.stroke!
                                                 "
                                                 [tooltip]="
-                                                    chartGithubIssues.tooltip
+                                                    chartGithubIssues.tooltip!
                                                 "
                                                 [xaxis]="
-                                                    chartGithubIssues.xaxis
+                                                    chartGithubIssues.xaxis!
                                                 "
                                                 [yaxis]="
-                                                    chartGithubIssues.yaxis
+                                                    chartGithubIssues.yaxis!
                                                 "
                                             ></apx-chart>
                                         </div>
@@ -615,25 +615,25 @@
                                 <div class="mt-6 flex flex-auto flex-col">
                                     <apx-chart
                                         class="h-80 w-full flex-auto"
-                                        [chart]="chartTaskDistribution.chart"
-                                        [labels]="chartTaskDistribution.labels"
-                                        [legend]="chartTaskDistribution.legend"
+                                        [chart]="chartTaskDistribution.chart!"
+                                        [labels]="chartTaskDistribution.labels!"
+                                        [legend]="chartTaskDistribution.legend!"
                                         [plotOptions]="
-                                            chartTaskDistribution.plotOptions
+                                            chartTaskDistribution.plotOptions!
                                         "
                                         [series]="
-                                            chartTaskDistribution.series[
+                                            $any(chartTaskDistribution.series)![
                                                 taskDistributionWeekSelector
                                                     .value
                                             ]
                                         "
-                                        [states]="chartTaskDistribution.states"
-                                        [stroke]="chartTaskDistribution.stroke"
-                                        [theme]="chartTaskDistribution.theme"
+                                        [states]="chartTaskDistribution.states!"
+                                        [stroke]="chartTaskDistribution.stroke!"
+                                        [theme]="chartTaskDistribution.theme!"
                                         [tooltip]="
-                                            chartTaskDistribution.tooltip
+                                            chartTaskDistribution.tooltip!
                                         "
-                                        [yaxis]="chartTaskDistribution.yaxis"
+                                        [yaxis]="chartTaskDistribution.yaxis!"
                                     ></apx-chart>
                                 </div>
                                 <div
@@ -797,30 +797,30 @@
                                 <div class="flex flex-auto flex-col">
                                     <apx-chart
                                         class="h-80 w-full flex-auto"
-                                        [chart]="chartBudgetDistribution.chart"
+                                        [chart]="chartBudgetDistribution.chart!"
                                         [colors]="
-                                            chartBudgetDistribution.colors
+                                            chartBudgetDistribution.colors!
                                         "
                                         [dataLabels]="
-                                            chartBudgetDistribution.dataLabels
+                                            chartBudgetDistribution.dataLabels!
                                         "
                                         [markers]="
-                                            chartBudgetDistribution.markers
+                                            chartBudgetDistribution.markers!
                                         "
                                         [plotOptions]="
-                                            chartBudgetDistribution.plotOptions
+                                            chartBudgetDistribution.plotOptions!
                                         "
                                         [series]="
-                                            chartBudgetDistribution.series
+                                            chartBudgetDistribution.series!
                                         "
                                         [stroke]="
-                                            chartBudgetDistribution.stroke
+                                            chartBudgetDistribution.stroke!
                                         "
                                         [tooltip]="
-                                            chartBudgetDistribution.tooltip
+                                            chartBudgetDistribution.tooltip!
                                         "
-                                        [xaxis]="chartBudgetDistribution.xaxis"
-                                        [yaxis]="chartBudgetDistribution.yaxis"
+                                        [xaxis]="chartBudgetDistribution.xaxis!"
+                                        [yaxis]="chartBudgetDistribution.yaxis!"
                                     ></apx-chart>
                                 </div>
                             </div>
@@ -902,25 +902,25 @@
                                             <apx-chart
                                                 class="h-16 w-full flex-auto"
                                                 [chart]="
-                                                    chartWeeklyExpenses.chart
+                                                    chartWeeklyExpenses.chart!
                                                 "
                                                 [colors]="
-                                                    chartWeeklyExpenses.colors
+                                                    chartWeeklyExpenses.colors!
                                                 "
                                                 [series]="
-                                                    chartWeeklyExpenses.series
+                                                    chartWeeklyExpenses.series!
                                                 "
                                                 [stroke]="
-                                                    chartWeeklyExpenses.stroke
+                                                    chartWeeklyExpenses.stroke!
                                                 "
                                                 [tooltip]="
-                                                    chartWeeklyExpenses.tooltip
+                                                    chartWeeklyExpenses.tooltip!
                                                 "
                                                 [xaxis]="
-                                                    chartWeeklyExpenses.xaxis
+                                                    chartWeeklyExpenses.xaxis!
                                                 "
                                                 [yaxis]="
-                                                    chartWeeklyExpenses.yaxis
+                                                    chartWeeklyExpenses.yaxis!
                                                 "
                                             ></apx-chart>
                                         </div>
@@ -1000,25 +1000,25 @@
                                             <apx-chart
                                                 class="h-16 w-full flex-auto"
                                                 [chart]="
-                                                    chartMonthlyExpenses.chart
+                                                    chartMonthlyExpenses.chart!
                                                 "
                                                 [colors]="
-                                                    chartMonthlyExpenses.colors
+                                                    chartMonthlyExpenses.colors!
                                                 "
                                                 [series]="
-                                                    chartMonthlyExpenses.series
+                                                    chartMonthlyExpenses.series!
                                                 "
                                                 [stroke]="
-                                                    chartMonthlyExpenses.stroke
+                                                    chartMonthlyExpenses.stroke!
                                                 "
                                                 [tooltip]="
-                                                    chartMonthlyExpenses.tooltip
+                                                    chartMonthlyExpenses.tooltip!
                                                 "
                                                 [xaxis]="
-                                                    chartMonthlyExpenses.xaxis
+                                                    chartMonthlyExpenses.xaxis!
                                                 "
                                                 [yaxis]="
-                                                    chartMonthlyExpenses.yaxis
+                                                    chartMonthlyExpenses.yaxis!
                                                 "
                                             ></apx-chart>
                                         </div>
@@ -1098,25 +1098,25 @@
                                             <apx-chart
                                                 class="h-16 w-full flex-auto"
                                                 [chart]="
-                                                    chartYearlyExpenses.chart
+                                                    chartYearlyExpenses.chart!
                                                 "
                                                 [colors]="
-                                                    chartYearlyExpenses.colors
+                                                    chartYearlyExpenses.colors!
                                                 "
                                                 [series]="
-                                                    chartYearlyExpenses.series
+                                                    chartYearlyExpenses.series!
                                                 "
                                                 [stroke]="
-                                                    chartYearlyExpenses.stroke
+                                                    chartYearlyExpenses.stroke!
                                                 "
                                                 [tooltip]="
-                                                    chartYearlyExpenses.tooltip
+                                                    chartYearlyExpenses.tooltip!
                                                 "
                                                 [xaxis]="
-                                                    chartYearlyExpenses.xaxis
+                                                    chartYearlyExpenses.xaxis!
                                                 "
                                                 [yaxis]="
-                                                    chartYearlyExpenses.yaxis
+                                                    chartYearlyExpenses.yaxis!
                                                 "
                                             ></apx-chart>
                                         </div>

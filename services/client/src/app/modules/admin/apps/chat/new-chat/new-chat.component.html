@@ -23,12 +23,12 @@
                 <!-- Group -->
                 @if (
                     i === 0 ||
-                    contact.name.charAt(0) !== contacts[i - 1].name.charAt(0)
+                    contact.name?.charAt(0) !== contacts[i - 1].name?.charAt(0)
                 ) {
                     <div
                         class="text-secondary sticky top-0 z-10 -mt-px border-b border-t bg-gray-100 px-6 py-1 font-medium uppercase dark:bg-gray-900 md:px-8"
                     >
-                        {{ contact.name.charAt(0) }}
+                        {{ contact.name?.charAt(0) }}
                     </div>
                 }
                 <!-- Contact -->
@@ -49,7 +49,7 @@
                             <div
                                 class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                             >
-                                {{ contact.name.charAt(0) }}
+                                {{ contact.name?.charAt(0) }}
                             </div>
                         }
                     </div>

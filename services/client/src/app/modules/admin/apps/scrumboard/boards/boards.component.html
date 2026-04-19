@@ -25,7 +25,7 @@
                     >
                         <mat-icon
                             class="text-current"
-                            [svgIcon]="board.icon"
+                            [svgIcon]="board.icon!"
                         ></mat-icon>
                     </div>
                     <!-- Title -->
@@ -34,7 +34,7 @@
                     </div>
                     <!-- Description -->
                     <div class="text-secondary mt-0.5 line-clamp-2">
-                        {{ board.description }}
+                        {{ board.description ?? '' }}
                     </div>
                     <!-- Members -->
                     @if (board.members?.length) {
@@ -65,7 +65,7 @@
                     <div class="font-md mt-4 flex items-center text-md">
                         <div class="text-secondary">Edited:</div>
                         <div class="ml-1">
-                            {{ formatDateAsRelative(board.lastActivity) }}
+                            {{ formatDateAsRelative(board.lastActivity!) }}
                         </div>
                     </div>
                 </a>

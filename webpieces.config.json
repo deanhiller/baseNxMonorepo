@@ -5,14 +5,14 @@
             "limit": 80,
             "mode": "NEW_AND_MODIFIED_METHODS",
             "disableAllowed": false,
-            "ignoreModifiedUntilEpoch": 1776470399
+            "ignoreModifiedUntilEpoch": 1779062399
         },
         "max-file-lines": {
             "enabled": true,
             "limit": 902,
             "mode": "MODIFIED_FILES",
             "disableAllowed": false,
-            "ignoreModifiedUntilEpoch": 1776470399
+            "ignoreModifiedUntilEpoch": 1779062399
         },
         "require-return-type": {
             "enabled": true,

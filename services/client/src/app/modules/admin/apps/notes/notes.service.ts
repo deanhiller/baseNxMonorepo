@@ -222,7 +222,7 @@ export class NotesService {
         return this._httpClient
             .patch<Note>('api/apps/notes', { updatedNote })
             .pipe(
-                tap((response) => {
+                tap(() => {
                     // Update the notes
                     this.getNotes().subscribe();
                 })

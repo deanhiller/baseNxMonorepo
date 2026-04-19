@@ -46,7 +46,7 @@ export class ScrumboardMockApi {
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
             .onGet('api/apps/scrumboard/boards')
-            .reply(({ request }) => {
+            .reply(() => {
                 // Clone the boards
                 let boards = cloneDeep(this._boards);
 

@@ -52,10 +52,10 @@ const contactResolver = (
  */
 const canDeactivateContactsDetails = (
     component: ContactsDetailsComponent,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
+    _currentRoute: ActivatedRouteSnapshot,
+    _currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
-) => {
+): boolean | Promise<boolean> => {
     // Get the next route
     let nextRoute: ActivatedRouteSnapshot = nextState.root;
     while (nextRoute.firstChild) {

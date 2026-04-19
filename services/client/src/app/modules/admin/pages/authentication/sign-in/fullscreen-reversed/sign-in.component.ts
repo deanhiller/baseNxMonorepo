@@ -48,7 +48,7 @@ export class SignInFullscreenReversedComponent implements OnInit {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        protected _authService: AuthService,
         private _formBuilder: UntypedFormBuilder
     ) {}
 

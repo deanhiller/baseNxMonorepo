@@ -33,7 +33,7 @@ export class FuseValidators {
             // Delete the mustMatch error to reset the error on the matching control
             if (matchingControl.hasError('mustMatch')) {
                 // hasError('mustMatch') implies errors is non-null and contains mustMatch
-                delete matchingControl.errors!.mustMatch;
+                delete matchingControl.errors!['mustMatch'];
                 matchingControl.updateValueAndValidity();
             }
 

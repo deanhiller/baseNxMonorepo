@@ -44,7 +44,7 @@ export class FuseMediaWatcherService {
                                 // Get the matching breakpoints and use them to fill the subject
                                 const matchingBreakpoints =
                                     Object.entries(state.breakpoints).filter(
-                                        ([query, matches]) => matches
+                                        (entry: [string, boolean]) => entry[1]
                                     ) ?? [];
                                 for (const [query] of matchingBreakpoints) {
                                     // Find the alias of the matching query

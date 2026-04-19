@@ -63,7 +63,7 @@ export class FuseCardComponent implements OnChanges {
         if ('expanded' in changes) {
             // Coerce the value to a boolean
             this.expanded = coerceBooleanProperty(
-                changes.expanded.currentValue
+                changes['expanded'].currentValue
             );
         }
 
@@ -71,7 +71,7 @@ export class FuseCardComponent implements OnChanges {
         if ('flippable' in changes) {
             // Coerce the value to a boolean
             this.flippable = coerceBooleanProperty(
-                changes.flippable.currentValue
+                changes['flippable'].currentValue
             );
         }
     }

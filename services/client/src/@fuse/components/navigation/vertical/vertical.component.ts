@@ -225,7 +225,7 @@ export class FuseVerticalNavigationComponent
      * @private
      */
     @HostListener('mouseenter')
-    private _onMouseenter(): void {
+    onMouseenter(): void {
         // Enable the animations
         this._enableAnimations();
 
@@ -235,11 +235,9 @@ export class FuseVerticalNavigationComponent
 
     /**
      * On mouseleave
-     *
-     * @private
      */
     @HostListener('mouseleave')
-    private _onMouseleave(): void {
+    onMouseleave(): void {
         // Enable the animations
         this._enableAnimations();
 
@@ -260,20 +258,20 @@ export class FuseVerticalNavigationComponent
         // Appearance
         if ('appearance' in changes) {
             // Execute the observable
-            this.appearanceChanged.next(changes.appearance.currentValue);
+            this.appearanceChanged.next(changes['appearance'].currentValue);
         }
 
         // Inner
         if ('inner' in changes) {
             // Coerce the value to a boolean
-            this.inner = coerceBooleanProperty(changes.inner.currentValue);
+            this.inner = coerceBooleanProperty(changes['inner'].currentValue);
         }
 
         // Mode
         if ('mode' in changes) {
             // Get the previous and current values
-            const currentMode = changes.mode.currentValue;
-            const previousMode = changes.mode.previousValue;
+            const currentMode = changes['mode'].currentValue;
+            const previousMode = changes['mode'].previousValue;
 
             // Disable the animations
             this._disableAnimations();
@@ -316,7 +314,7 @@ export class FuseVerticalNavigationComponent
         // Opened
         if ('opened' in changes) {
             // Coerce the value to a boolean
-            this.opened = coerceBooleanProperty(changes.opened.currentValue);
+            this.opened = coerceBooleanProperty(changes['opened'].currentValue);
 
             // Open/close the navigation
             this._toggleOpened(this.opened);
@@ -325,14 +323,14 @@ export class FuseVerticalNavigationComponent
         // Position
         if ('position' in changes) {
             // Execute the observable
-            this.positionChanged.next(changes.position.currentValue);
+            this.positionChanged.next(changes['position'].currentValue);
         }
 
         // Transparent overlay
         if ('transparentOverlay' in changes) {
             // Coerce the value to a boolean
             this.transparentOverlay = coerceBooleanProperty(
-                changes.transparentOverlay.currentValue
+                changes['transparentOverlay'].currentValue
             );
         }
     }

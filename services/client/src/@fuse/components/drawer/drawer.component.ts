@@ -109,7 +109,7 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
      * @private
      */
     @HostListener('mouseenter')
-    private _onMouseenter(): void {
+    onMouseenter(): void {
         // Enable the animations
         this._enableAnimations();
 
@@ -119,11 +119,9 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * On mouseleave
-     *
-     * @private
      */
     @HostListener('mouseleave')
-    private _onMouseleave(): void {
+    onMouseleave(): void {
         // Enable the animations
         this._enableAnimations();
 
@@ -144,7 +142,7 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
         // Fixed
         if ('fixed' in changes) {
             // Coerce the value to a boolean
-            this.fixed = coerceBooleanProperty(changes.fixed.currentValue);
+            this.fixed = coerceBooleanProperty(changes['fixed'].currentValue);
 
             // Execute the observable
             this.fixedChanged.next(this.fixed);
@@ -153,8 +151,8 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
         // Mode
         if ('mode' in changes) {
             // Get the previous and current values
-            const previousMode = changes.mode.previousValue;
-            const currentMode = changes.mode.currentValue;
+            const previousMode = changes['mode'].previousValue;
+            const currentMode = changes['mode'].currentValue;
 
             // Disable the animations
             this._disableAnimations();
@@ -188,7 +186,7 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
         // Opened
         if ('opened' in changes) {
             // Coerce the value to a boolean
-            const open = coerceBooleanProperty(changes.opened.currentValue);
+            const open = coerceBooleanProperty(changes['opened'].currentValue);
 
             // Open/close the drawer
             this._toggleOpened(open);
@@ -204,7 +202,7 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
         if ('transparentOverlay' in changes) {
             // Coerce the value to a boolean
             this.transparentOverlay = coerceBooleanProperty(
-                changes.transparentOverlay.currentValue
+                changes['transparentOverlay'].currentValue
             );
         }
     }

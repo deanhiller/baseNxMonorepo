@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import {
     Component,
-    Inject, Input,
+    Inject,
     OnDestroy,
     OnInit,
     Renderer2,
@@ -208,10 +208,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
             if (
                 path.routeConfig &&
                 path.routeConfig.data &&
-                path.routeConfig.data.layout
+                path.routeConfig.data['layout']
             ) {
                 // Set the layout
-                this.layout = path.routeConfig.data.layout;
+                this.layout = path.routeConfig.data['layout'];
             }
         });
     }

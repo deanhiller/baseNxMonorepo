@@ -113,14 +113,14 @@ export class AuthResetPasswordComponent implements OnInit {
                 })
             )
             .subscribe(
-                (response) => {
+                () => {
                     // Set the alert
                     this.alert = {
                         type: 'success',
                         message: 'Your password has been reset.',
                     };
                 },
-                (response) => {
+                () => {
                     // Set the alert
                     this.alert = {
                         type: 'error',

@@ -23,7 +23,7 @@ export class SignOutClassicComponent {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
-        private _router: Router
+        protected _authService: AuthService,
+        protected _router: Router
     ) {}
 }

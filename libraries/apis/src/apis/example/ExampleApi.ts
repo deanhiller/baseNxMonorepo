@@ -13,7 +13,7 @@ export interface GreetResponse {
 @ApiPath('/example')
 export abstract class ExampleApi {
     @Endpoint('/greet')
-    greet(request: GreetRequest): Promise<GreetResponse> {
+    greet(_request: GreetRequest): Promise<GreetResponse> {
         throw new Error('Method greet() must be implemented by subclass');
     }
 }

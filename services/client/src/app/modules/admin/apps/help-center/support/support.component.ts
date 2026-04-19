@@ -48,7 +48,7 @@ export class HelpCenterSupportComponent implements OnInit {
      */
     constructor(
         private _formBuilder: UntypedFormBuilder,
-        private _helpCenterService: HelpCenterService
+        protected _helpCenterService: HelpCenterService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------

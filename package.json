@@ -1,6 +1,7 @@
 {
   "name": "monorepo",
   "private": true,
+  "license": "MPL-2.0",
   "scripts": {
     "webpieces:ci": "pnpm nx affected --target=ci"
   },

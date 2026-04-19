@@ -110,9 +110,9 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _elementRef: ElementRef,
+        protected _elementRef: ElementRef,
         private _httpClient: HttpClient,
-        private _renderer2: Renderer2
+        protected _renderer2: Renderer2
     ) {}
 
     // -----------------------------------------------------------------------------------------------------

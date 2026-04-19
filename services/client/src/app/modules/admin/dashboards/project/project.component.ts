@@ -95,10 +95,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         (window as WindowWithApex).Apex = {
             chart: {
                 events: {
-                    mounted: (chart: any, options?: any): void => {
+                    // webpieces-disable no-any-unknown -- ApexCharts third-party callback signature requires any
+                    mounted: (chart: any, _options?: any): void => {
                         this._fixSvgFill(chart.el);
                     },
-                    updated: (chart: any, options?: any): void => {
+                    // webpieces-disable no-any-unknown -- ApexCharts third-party callback signature requires any
+                    updated: (chart: any, _options?: any): void => {
                         this._fixSvgFill(chart.el);
                     },
                 },

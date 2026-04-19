@@ -292,31 +292,4 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
 
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Read the given file for demonstration purposes
-     *
-     * @param file
-     */
-    private _readAsDataURL(file: File): Promise<any> {
-        // Return a new promise
-        return new Promise((resolve, reject) => {
-            // Create a new reader
-            const reader = new FileReader();
-
-            // Resolve the promise on success
-            reader.onload = (): void => {
-                resolve(reader.result);
-            };
-
-            // Reject the promise on error
-            reader.onerror = (e): void => {
-                reject(e);
-            };
-
-            // Read the file as the
-            reader.readAsDataURL(file);
-        });
-    }
 }

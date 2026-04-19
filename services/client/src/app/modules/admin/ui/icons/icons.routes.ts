@@ -19,7 +19,7 @@ export default [
         component: IconsComponent,
         resolve: {
             icons: (
-                route: ActivatedRouteSnapshot,
+                _route: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot
             ) => inject(IconsService).getIcons(state.url),
         },

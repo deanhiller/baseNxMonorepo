@@ -262,7 +262,7 @@ export class MailboxSidebarComponent implements OnInit, OnDestroy {
      * @param folders
      * @private
      */
-    private _updateNavigationBadge(folders: MailFolder[]): void {
+    private _updateNavigationBadge(_folders: MailFolder[]): void {
         // Get the inbox folder
         const inboxFolder = this.folders.find(
             (folder) => folder.slug === 'inbox'

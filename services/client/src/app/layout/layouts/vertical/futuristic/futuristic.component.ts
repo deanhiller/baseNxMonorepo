@@ -53,8 +53,8 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
+        protected _activatedRoute: ActivatedRoute,
+        protected _router: Router,
         private _navigationService: NavigationService,
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,

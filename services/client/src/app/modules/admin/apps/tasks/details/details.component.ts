@@ -95,7 +95,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _formBuilder: UntypedFormBuilder,
         private _fuseConfirmationService: FuseConfirmationService,
-        private _renderer2: Renderer2,
+        protected _renderer2: Renderer2,
         private _router: Router,
         private _tasksListComponent: TasksListComponent,
         private _tasksService: TasksService,

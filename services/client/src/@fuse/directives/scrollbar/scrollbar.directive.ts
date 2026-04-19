@@ -74,7 +74,7 @@ export class FuseScrollbarDirective implements OnChanges, OnInit, OnDestroy {
         if ('fuseScrollbar' in changes) {
             // Interpret empty string as 'true'
             this.fuseScrollbar = coerceBooleanProperty(
-                changes.fuseScrollbar.currentValue
+                changes['fuseScrollbar'].currentValue
             );
 
             // If enabled, init the directive
@@ -93,7 +93,7 @@ export class FuseScrollbarDirective implements OnChanges, OnInit, OnDestroy {
             this._options = merge(
                 {},
                 this._options,
-                changes.fuseScrollbarOptions.currentValue
+                changes['fuseScrollbarOptions'].currentValue
             );
 
             // Return if not initialized

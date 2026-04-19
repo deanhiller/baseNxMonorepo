@@ -81,7 +81,7 @@ export class CardsComponent implements AfterViewInit {
     /**
      * Constructor
      */
-    constructor(private _renderer2: Renderer2) {}
+    constructor(protected _renderer2: Renderer2) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

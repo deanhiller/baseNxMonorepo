@@ -21,7 +21,7 @@ export class IconsResolver {
      * @param state
      */
     resolve(
-        route: ActivatedRouteSnapshot,
+        _route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> {
         return this._iconsService.getIcons(state.url);

@@ -42,7 +42,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
+        protected _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
         private _translocoService: TranslocoService
     ) {}
@@ -113,7 +113,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
      * @param lang
      * @private
      */
-    private _updateNavigation(lang: string): void {
+    private _updateNavigation(_lang: string): void {
         // For the demonstration purposes, we will only update the Dashboard names
         // from the navigation but you can do a full swap and change the entire
         // navigation data.

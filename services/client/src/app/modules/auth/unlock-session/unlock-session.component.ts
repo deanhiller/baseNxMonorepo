@@ -123,7 +123,7 @@ export class AuthUnlockSessionComponent implements OnInit {
                     // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
                 },
-                (response) => {
+                () => {
                     // Re-enable the form
                     this.unlockSessionForm.enable();
 

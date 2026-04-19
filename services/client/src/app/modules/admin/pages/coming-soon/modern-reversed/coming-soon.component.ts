@@ -45,7 +45,7 @@ export class ComingSoonModernReversedComponent implements OnInit {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        protected _authService: AuthService,
         private _formBuilder: UntypedFormBuilder
     ) {}
 

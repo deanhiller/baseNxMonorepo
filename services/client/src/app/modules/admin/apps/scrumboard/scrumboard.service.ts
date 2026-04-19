@@ -306,7 +306,7 @@ export class ScrumboardService {
                 params: { id },
             })
             .pipe(
-                tap((isDeleted) => {
+                tap(() => {
                     // Get the board value
                     const board = this._board.value;
                     if (!board) {

@@ -153,7 +153,7 @@ export class NotificationsService {
                     .pipe(
                         map((isUpdated: boolean) => {
                             // Go through all notifications and set them as read
-                            notifications.forEach((notification, index) => {
+                            notifications.forEach((_notification: Notification, index: number) => {
                                 notifications[index].read = true;
                             });
 

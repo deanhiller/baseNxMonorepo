@@ -57,7 +57,7 @@ export class AcademyDetailsComponent implements OnInit, OnDestroy {
         @Inject(DOCUMENT) private _document: Document,
         private _academyService: AcademyService,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _elementRef: ElementRef,
+        protected _elementRef: ElementRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService
     ) {}
 

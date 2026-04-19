@@ -89,7 +89,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     @HostListener('input')
     @HostListener('ngModelChange')
-    private _resizeMessageInput(): void {
+    resizeMessageInput(): void {
         // This doesn't need to trigger Angular's change detection by itself
         this._ngZone.runOutsideAngular(() => {
             setTimeout(() => {

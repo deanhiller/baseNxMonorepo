@@ -118,7 +118,8 @@ export class NotificationsMockApi {
             .reply(() => {
                 // Go through all notifications
                 this._notifications.forEach(
-                    (item: any, index: number, notifications: any[]) => {
+                    // webpieces-disable no-any-unknown -- mock-api data has extra fields (seen) not in Notification type
+                    (_item: any, index: number, notifications: any[]) => {
                         // Mark it as read
                         notifications[index].read = true;
                         notifications[index].seen = true;

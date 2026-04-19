@@ -34,9 +34,9 @@ export class TypedTemplateOutletDirective<T> {
 
     // webpieces-disable no-any-unknown -- ngTemplateContextGuard requires unknown per Angular API
     static ngTemplateContextGuard<T>(
-        dir: TypedTemplateOutletDirective<T>,
-        ctx: unknown
-    ): ctx is TemplateOutletContext<T> {
+        _dir: TypedTemplateOutletDirective<T>,
+        _ctx: unknown
+    ): _ctx is TemplateOutletContext<T> {
         return true;
     }
 }

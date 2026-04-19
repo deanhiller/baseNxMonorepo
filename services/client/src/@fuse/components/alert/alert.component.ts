@@ -102,7 +102,7 @@ export class FuseAlertComponent implements OnChanges, OnInit, OnDestroy {
         if ('dismissed' in changes) {
             // Coerce the value to a boolean
             this.dismissed = coerceBooleanProperty(
-                changes.dismissed.currentValue
+                changes['dismissed'].currentValue
             );
 
             // Dismiss/show the alert
@@ -113,7 +113,7 @@ export class FuseAlertComponent implements OnChanges, OnInit, OnDestroy {
         if ('dismissible' in changes) {
             // Coerce the value to a boolean
             this.dismissible = coerceBooleanProperty(
-                changes.dismissible.currentValue
+                changes['dismissible'].currentValue
             );
         }
 
@@ -121,7 +121,7 @@ export class FuseAlertComponent implements OnChanges, OnInit, OnDestroy {
         if ('showIcon' in changes) {
             // Coerce the value to a boolean
             this.showIcon = coerceBooleanProperty(
-                changes.showIcon.currentValue
+                changes['showIcon'].currentValue
             );
         }
     }

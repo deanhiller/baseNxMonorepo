@@ -57,7 +57,7 @@ export class FormsFieldsComponent {
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(protected _formBuilder: UntypedFormBuilder) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

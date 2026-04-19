@@ -25,6 +25,9 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "noImplicitAny": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
         "baseUrl": ".",
         "paths": {
             "@myorg/root-api-util": ["libraries/root-api-util/src/index.ts"],

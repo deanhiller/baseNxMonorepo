@@ -72,7 +72,7 @@ export class FuseMasonryComponent implements OnChanges, AfterViewInit {
         }
 
         // Prepare the distributed columns array
-        this.distributedColumns = Array.from(Array(this.columns), (item) => ({
+        this.distributedColumns = Array.from(Array(this.columns), (_item: number) => ({
             items: [],
         }));
 

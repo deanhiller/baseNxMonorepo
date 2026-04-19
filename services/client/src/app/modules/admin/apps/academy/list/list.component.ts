@@ -70,9 +70,9 @@ export class AcademyListComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
+        protected _activatedRoute: ActivatedRoute,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
+        protected _router: Router,
         private _academyService: AcademyService
     ) {}
 

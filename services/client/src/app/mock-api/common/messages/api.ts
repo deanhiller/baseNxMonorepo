@@ -118,7 +118,8 @@ export class MessagesMockApi {
             .reply(() => {
                 // Go through all messages
                 this._messages.forEach(
-                    (item: any, index: number, messages: any[]) => {
+                    // webpieces-disable no-any-unknown -- mock-api data has extra fields (seen) not in Message type
+                    (_item: any, index: number, messages: any[]) => {
                         // Mark it as read
                         messages[index].read = true;
                         messages[index].seen = true;

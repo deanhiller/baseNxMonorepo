@@ -144,7 +144,7 @@ export class MessagesService {
                     .pipe(
                         map((isUpdated: boolean) => {
                             // Go through all messages and set them as read
-                            messages.forEach((message, index) => {
+                            messages.forEach((_message: Message, index: number) => {
                                 messages[index].read = true;
                             });
 

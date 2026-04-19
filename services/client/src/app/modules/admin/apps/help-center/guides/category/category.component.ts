@@ -21,9 +21,9 @@ export class HelpCenterGuidesCategoryComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
+        protected _activatedRoute: ActivatedRoute,
         private _helpCenterService: HelpCenterService,
-        private _router: Router
+        protected _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------

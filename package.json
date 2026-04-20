@@ -52,6 +52,8 @@
         "zone.js": "0.15.0"
     },
     "dependencies": {
+        "@fontsource/ibm-plex-mono": "5.2.7",
+        "@fontsource/material-icons": "5.2.7",
         "@inversifyjs/binding-decorators": "1.1.5",
         "express": "5.1.0",
         "inversify": "7.10.4",

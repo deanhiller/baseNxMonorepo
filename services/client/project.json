@@ -38,6 +38,11 @@
                     "includePaths": ["services/client/src/@fuse/styles"]
                 },
                 "styles": [
+                    "node_modules/@fontsource/ibm-plex-mono/400.css",
+                    "node_modules/@fontsource/ibm-plex-mono/500.css",
+                    "node_modules/@fontsource/ibm-plex-mono/600.css",
+                    "node_modules/@fontsource/ibm-plex-mono/400-italic.css",
+                    "node_modules/@fontsource/material-icons/index.css",
                     "services/client/src/@fuse/styles/tailwind.scss",
                     "services/client/src/@fuse/styles/themes.scss",
                     "services/client/src/styles/vendors.scss",

@@ -1,8 +1,8 @@
-// @webpieces/dev-config Angular ESLint Configuration
+// @webpieces/nx-webpieces-rules Angular ESLint Configuration
 // This is the canonical template for Angular projects using external clients
 //
 // IMPORTANT: When modifying rules here, also update:
-// - /eslint.webpieces-angular.config.mjs (webpieces workspace version with loadWorkspaceRules)
+// - /eslint.webpieces-angular.config.mjs (webpieces workspace version)
 //
 // ┌─────────────────────────────────────────────────────────────────────────┐
 // │ NOT USING ANGULAR?                                                      │
@@ -10,7 +10,7 @@
 // │   2. Remove its import from eslint.config.mjs                          │
 // └─────────────────────────────────────────────────────────────────────────┘
 
-import webpiecesPlugin from '@webpieces/eslint-plugin';
+import webpiecesPlugin from '@webpieces/eslint-rules';
 import angularTemplatePlugin from '@angular-eslint/eslint-plugin-template';
 import angularTemplateParser from '@angular-eslint/template-parser';
 

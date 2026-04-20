@@ -1,13 +1,13 @@
-// @webpieces/dev-config ESLint Configuration
+// @webpieces/nx-webpieces-rules ESLint Configuration
 // This is the canonical template for external clients
 //
 // IMPORTANT: When modifying rules here, also update:
-// - /eslint.webpieces.config.mjs (webpieces workspace version with loadWorkspaceRules)
+// - /eslint.webpieces.config.mjs (webpieces workspace version)
 //
 // Only includes @webpieces custom rules
 // Configure your own TypeScript and general rules in your main eslint.config.mjs as needed
 
-import webpiecesPlugin from '@webpieces/eslint-plugin';
+import webpiecesPlugin from '@webpieces/eslint-rules';
 
 export default [
     {

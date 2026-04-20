@@ -120,9 +120,9 @@ importers:
       '@typescript-eslint/utils':
         specifier: 8.48.0
         version: 8.48.0(eslint@8.57.1)(typescript@5.7.2)
-      '@webpieces/dev-config':
-        specifier: 0.2.110
-        version: 0.2.110(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)
+      '@webpieces/nx-webpieces-rules':
+        specifier: 0.2.117
+        version: 0.2.117(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -166,8 +166,8 @@ importers:
         specifier: workspace:*
         version: link:../root-api-util
       '@webpieces/http-api':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       tslib:
         specifier: 2.8.1
         version: 2.8.1
@@ -187,11 +187,11 @@ importers:
         specifier: 6.0.4
         version: 6.0.4(@angular/core@19.2.14(rxjs@7.8.1)(zone.js@0.15.0))(typescript@5.9.3)
       '@webpieces/core-util':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       '@webpieces/http-client':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       apexcharts:
         specifier: 3.53.0
         version: 3.53.0
@@ -257,23 +257,23 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/apis
       '@webpieces/core-context':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       '@webpieces/core-util':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       '@webpieces/http-api':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       '@webpieces/http-filters':
-        specifier: 0.2.105
-        version: 0.2.105
+        specifier: 0.2.117
+        version: 0.2.117
       '@webpieces/http-routing':
-        specifier: 0.2.105
-        version: 0.2.105(reflect-metadata@0.2.2)
+        specifier: 0.2.117
+        version: 0.2.117(reflect-metadata@0.2.2)
       '@webpieces/http-server':
-        specifier: 0.2.105
-        version: 0.2.105(reflect-metadata@0.2.2)
+        specifier: 0.2.117
+        version: 0.2.117(reflect-metadata@0.2.2)
       express:
         specifier: 5.1.0
         version: 5.1.0
@@ -3516,57 +3516,47 @@ packages:
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
 
-  '@webpieces/ai-hooks@0.2.110':
-    resolution: {integrity: sha512-Rhotlrw/B+Rrv0KsQbtYkCHoKbfIsvrob/O2x4p5oVr6piN23ZcANs542mpUxfY/Zpbj9jrKQL08LhtiXjTqXw==}
+  '@webpieces/ai-hook-rules@0.2.117':
+    resolution: {integrity: sha512-eo6tpbtwPQZUsWrusyc87H54ytghQylFGcshigdBvCoXrf2ypWv1y8rAmjTi9XvYyu7hHJLr8HiVXF2/L/uG0g==}
     hasBin: true
 
-  '@webpieces/architecture-validators@0.2.110':
-    resolution: {integrity: sha512-5EZW6/RBrlPZ2xYK9+QwvggLz84dx+tHpQkreluzz8N24ObinthCOoDCtIFM+rMme8iPgq71WsBUviFoKP6Gtg==}
-    peerDependencies:
-      '@nx/devkit': '>=18.0.0'
-
-  '@webpieces/config@0.2.110':
-    resolution: {integrity: sha512-cGWZ9e71iMWpjClEDnMR1RFNVm2cuTBRa/udkkX0OmVBaLeQjdRlkaD+4zL/qAb/YH3KFOLR94OXffqtUREnMw==}
-
-  '@webpieces/core-context@0.2.105':
-    resolution: {integrity: sha512-Ta9c+7bP+LTsVFocQw6N0JKE9UyGaEP+JIDTuEW6Xm1aDYhEYXSEWm95wpJch8ZdatJstaO2XetncuRIV9CGvQ==}
-
-  '@webpieces/core-util@0.2.105':
-    resolution: {integrity: sha512-YFAWF6Q6rIqdoKPC+5r6bqpWopNCOx0IBwCvYdmS/c1jFoIkHW7GiHl7ruTnjTMWAPIuQv7P7HpKJsYpJbJqaw==}
-
-  '@webpieces/dev-config@0.2.110':
-    resolution: {integrity: sha512-7bDJ2BH93zR7x6PpIUuX3n/KNdoDGRkQo59S6zYYYw/dOiMKDO6f+q2z8bpVUhucyQrIIvTGPq+xCd3f3ufxHw==}
+  '@webpieces/code-rules@0.2.117':
+    resolution: {integrity: sha512-uAJmjn2ztlAsRjDAD8xsu3FwKRKcPzuTSxAZAw+Lg1oOouwDD79hTh26R3tmKlf3z5am82NkOQCt+M6vjbgv4Q==}
     hasBin: true
-    peerDependencies:
-      '@angular-eslint/eslint-plugin-template': '>=18.0.0'
-      '@angular-eslint/template-parser': '>=18.0.0'
-      '@nx/devkit': '>=18.0.0'
-      eslint: '>=8.0.0'
-    peerDependenciesMeta:
-      '@angular-eslint/eslint-plugin-template':
-        optional: true
-      '@angular-eslint/template-parser':
-        optional: true
 
-  '@webpieces/eslint-plugin@0.2.110':
-    resolution: {integrity: sha512-5R+XoaMwV3x/dHAY+vo+EL6o53U+1YpnAdjEyrkSw0FNS+icGDM4wDvl5qWAXzYXVdIYUlPAg/c3Hj6g0mFkxQ==}
+  '@webpieces/core-context@0.2.117':
+    resolution: {integrity: sha512-CLdoXtQe/UYnOqREyQ0bJUSVfw53eDcfyLKIoO+CtlwLHNynM6xgTxVDbhCr2yrlcXcygI2+24Qs6pTr/s6hhg==}
+
+  '@webpieces/core-util@0.2.117':
+    resolution: {integrity: sha512-vBuokc+vn3jdGqwmlg3OBadgYBKC/AuWXW+a3UqJIiSu4uZkYD0X6BN0vzI0leoIYXGANJShs6DCnaN1tQ5pRw==}
+
+  '@webpieces/eslint-rules@0.2.117':
+    resolution: {integrity: sha512-QADB/BKOU/VNYG6iNBseygPUc0zGFwMcgpYbQDMB/F9ZpJdNASjLXX1usoxyRXm2fy5ns8eSB8hEIcMvCiUKmQ==}
     peerDependencies:
       eslint: '>=8.0.0'
 
-  '@webpieces/http-api@0.2.105':
-    resolution: {integrity: sha512-CZ7Aic/jWwRc9Z7+xiA2ytWc41r56M4yCwPEqCmJPL4a9BRwC+GHDfuJbb3G3x8r646PkW1wvrqWE+zTuxEUnQ==}
+  '@webpieces/http-api@0.2.117':
+    resolution: {integrity: sha512-+U/mxWK6UCzYti0Pn3xexoaYK03I2398boPMXaR/KMZz2i9Bv8l5nM9B2feA5JKm/CG4iC51UkkXHm8UUKvj5A==}
 
-  '@webpieces/http-client@0.2.105':
-    resolution: {integrity: sha512-41cOxyjygth99/vzzNRHvPfv3zxlw/ANiIfPhKuSu2hAnFajSfJN7j4j5s4Eq/bNv8LzFSi/WjF8Se9JN9Xf2g==}
+  '@webpieces/http-client@0.2.117':
+    resolution: {integrity: sha512-mTPeyBMIxzyex6a37NY1TY9XtI0lDOfg1lTtP7K7H3IssuwqG/4Ghgy33fF20kpeS4vrn4OS35je4covyr4tBw==}
 
-  '@webpieces/http-filters@0.2.105':
-    resolution: {integrity: sha512-a4Sc1rIeSW58vjilzxPLHoOPwyvnYiLF3imV4XirZNZOx0qrJcgBPhPmrR3cEfeuB0wvjaO6c5gsqzDGREg0yQ==}
+  '@webpieces/http-filters@0.2.117':
+    resolution: {integrity: sha512-wjl5us+UCnHEgjaR4gTVJLwl7ZhSIxsiaHe4mrslW35Depe0AJyUKORnwCvMYXG8OLTpPevz+7CCPH2RU7MPYA==}
 
-  '@webpieces/http-routing@0.2.105':
-    resolution: {integrity: sha512-wX7Z9gqrK48g/M3nYNitT2uqnFtsf4LnK63RKDgPvItiUjg9XtN/uHZWhiVwTpeIwVRP3+2VyOBabNhveF1Sxw==}
+  '@webpieces/http-routing@0.2.117':
+    resolution: {integrity: sha512-4oH/njhClkmFerZrg8yLNBUirCMzoir7J2Ck0dwD+tiiITAi42NGELzbF7Dbd6sU+SsLjfq4ylM+rxGS2x921g==}
 
-  '@webpieces/http-server@0.2.105':
-    resolution: {integrity: sha512-nRXQOHcStO03D8JukP5G0pJ+OicbfhQ7L0Qsd2Mb1kwvhr6zrINCmazYX1b5D4dUxliJfDCam5VqVfabcsMISQ==}
+  '@webpieces/http-server@0.2.117':
+    resolution: {integrity: sha512-6A6T558zpslw5k9CZ/ScmERq5qJhhlt4m6nZM/7SjlUltkVGWaUiWplU3GSCWnqYtS/MBt8xF2ds4Gl97Xx6TA==}
+
+  '@webpieces/nx-webpieces-rules@0.2.117':
+    resolution: {integrity: sha512-0zvZAoZNS4n1ZbhP5m5vj2qj0lh1biTawnm9/7nnnitOoZhu+dGU13lWeO94g7P/QEoVZaQsrZBTwGQLd79Wnw==}
+    peerDependencies:
+      '@nx/devkit': '>=18.0.0'
+
+  '@webpieces/rules-config@0.2.117':
+    resolution: {integrity: sha512-BUcgclDt5z7EkVL/l7TlktWnUPG3eo20q9pOSoxs3PCh/iqjAzxwRLxbSdrF/zJ+DI+5r2PPB0niKXJVCItViQ==}
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -12691,65 +12681,64 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpieces/ai-hooks@0.2.110':
+  '@webpieces/ai-hook-rules@0.2.117':
     dependencies:
-      '@webpieces/config': 0.2.110
+      '@webpieces/rules-config': 0.2.117
 
-  '@webpieces/architecture-validators@0.2.110(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))':
+  '@webpieces/code-rules@0.2.117':
     dependencies:
-      '@nx/devkit': 22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
-      '@webpieces/config': 0.2.110
+      '@webpieces/rules-config': 0.2.117
 
-  '@webpieces/config@0.2.110': {}
-
-  '@webpieces/core-context@0.2.105':
+  '@webpieces/core-context@0.2.117':
     dependencies:
-      '@webpieces/core-util': 0.2.105
+      '@webpieces/core-util': 0.2.117
 
-  '@webpieces/core-util@0.2.105': {}
+  '@webpieces/core-util@0.2.117': {}
 
-  '@webpieces/dev-config@0.2.110(@angular-eslint/eslint-plugin-template@20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)':
+  '@webpieces/eslint-rules@0.2.117(eslint@8.57.1)':
     dependencies:
-      '@nx/devkit': 22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
-      '@webpieces/ai-hooks': 0.2.110
-      '@webpieces/architecture-validators': 0.2.110(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))
-      '@webpieces/eslint-plugin': 0.2.110(eslint@8.57.1)
-      eslint: 8.57.1
-    optionalDependencies:
-      '@angular-eslint/eslint-plugin-template': 20.7.0(@angular-eslint/template-parser@20.7.0(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/types@8.57.2)(@typescript-eslint/utils@8.48.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
-      '@angular-eslint/template-parser': 20.7.0(eslint@8.57.1)(typescript@5.7.2)
-
-  '@webpieces/eslint-plugin@0.2.110(eslint@8.57.1)':
-    dependencies:
+      '@webpieces/rules-config': 0.2.117
       eslint: 8.57.1
 
-  '@webpieces/http-api@0.2.105':
+  '@webpieces/http-api@0.2.117':
     dependencies:
-      '@webpieces/core-util': 0.2.105
+      '@webpieces/core-util': 0.2.117
 
-  '@webpieces/http-client@0.2.105':
+  '@webpieces/http-client@0.2.117':
     dependencies:
-      '@webpieces/http-api': 0.2.105
+      '@webpieces/http-api': 0.2.117
 
-  '@webpieces/http-filters@0.2.105':
+  '@webpieces/http-filters@0.2.117':
     dependencies:
-      '@webpieces/core-context': 0.2.105
+      '@webpieces/core-context': 0.2.117
 
-  '@webpieces/http-routing@0.2.105(reflect-metadata@0.2.2)':
+  '@webpieces/http-routing@0.2.117(reflect-metadata@0.2.2)':
     dependencies:
-      '@webpieces/http-api': 0.2.105
-      '@webpieces/http-filters': 0.2.105
+      '@webpieces/http-api': 0.2.117
+      '@webpieces/http-filters': 0.2.117
       inversify: 7.10.4(reflect-metadata@0.2.2)
       minimatch: 10.0.1
     transitivePeerDependencies:
       - reflect-metadata
 
-  '@webpieces/http-server@0.2.105(reflect-metadata@0.2.2)':
+  '@webpieces/http-server@0.2.117(reflect-metadata@0.2.2)':
     dependencies:
-      '@webpieces/http-routing': 0.2.105(reflect-metadata@0.2.2)
+      '@webpieces/http-routing': 0.2.117(reflect-metadata@0.2.2)
       cors: 2.8.5
     transitivePeerDependencies:
       - reflect-metadata
+
+  '@webpieces/nx-webpieces-rules@0.2.117(@nx/devkit@22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17))))(eslint@8.57.1)':
+    dependencies:
+      '@nx/devkit': 22.0.2(nx@22.0.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.26)(typescript@5.7.2))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
+      '@webpieces/ai-hook-rules': 0.2.117
+      '@webpieces/code-rules': 0.2.117
+      '@webpieces/eslint-rules': 0.2.117(eslint@8.57.1)
+      '@webpieces/rules-config': 0.2.117
+    transitivePeerDependencies:
+      - eslint
+
+  '@webpieces/rules-config@0.2.117': {}
 
   '@xtuc/ieee754@1.2.0': {}
 

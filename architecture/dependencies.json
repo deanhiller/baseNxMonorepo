@@ -5,10 +5,6 @@
             "root-api-util"
         ]
     },
-    "architecture": {
-        "level": 0,
-        "dependsOn": []
-    },
     "client": {
         "level": 2,
         "dependsOn": [

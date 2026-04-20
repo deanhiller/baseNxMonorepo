@@ -41,7 +41,7 @@
             }
         },
         {
-            "plugin": "@webpieces/dev-config",
+            "plugin": "@webpieces/nx-webpieces-rules",
             "options": {}
         }
     ]

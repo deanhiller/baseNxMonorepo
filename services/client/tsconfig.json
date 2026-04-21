@@ -18,7 +18,10 @@
     "angularCompilerOptions": {
         "strictTemplates": true,
         "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true
+        "strictInputAccessModifiers": true,
+        "extendedDiagnostics": {
+            "defaultCategory": "error"
+        }
     },
     "files": [],
     "include": [],

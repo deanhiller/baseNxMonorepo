@@ -98,7 +98,6 @@
                                             'heroicons_outline:speaker-x-mark'
                                         "
                                     ></mat-icon>
-                                    Mute notifications
                                 }
                                 @if (chat.muted) {
                                     <mat-icon
@@ -106,6 +105,11 @@
                                             'heroicons_outline:speaker-wave'
                                         "
                                     ></mat-icon>
+                                }
+                                @if (!chat.muted) {
+                                    Mute notifications
+                                }
+                                @if (chat.muted) {
                                     Unmute notifications
                                 }
                             </button>
